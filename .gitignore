@@ -8,3 +8,6 @@
 *.code-workspace
 sftp-config.json
 .DS_Store
+
+/blueprints/ember-junction/files/app/models
+!/blueprints/ember-junction/files/app/models/webapp.js
