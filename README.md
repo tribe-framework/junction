@@ -1,38 +1,18 @@
-# Flame
+## Junction Installation
 
-## Install
-
-1. Use this Git repository as template or use tribe-framework.org
-
-2. Open command line in the directory that has been installed
-
-3. Install ember-tribe by running following command
 ```
-chmod +x ./install/build.sh; bash ./install/build.sh;
+wget https://raw.githubusercontent.com/tribe-framework/flame-junction-src/master/install/build.sh; chmod +x build.sh; bash ./build.sh;
 ```
-4. Serve to start coding
+Then fill in the .env file with Tribe credentials and run:
 ```
-ember s
+php sync-types.php
 ```
 
-## Deploy
-
-1. Change project name in app/index.html, app/templates/application.hbs and config/manifest.js
-
-2. Build
-```
-ember build -prod
-```
-3. Deploy to Netlify or Cloudflare Pages
-
-
-------------------------------------------------------------------------------
-
-## Tribe - a web project management framework.
-
-Tribe is a project management framework that allows us to build platforms, products, applications and web interfaces, using a modular approach. It provides a coherent language for UX, content, design and code collaborations.
-
-## License
-
-The GNU General Public License is a free, copyleft license for
-software and other kinds of works.
+## Build for ember-junction blueprint (after installation)
+After installation make a copy of the "app" folder outside the project and:
+- Replace "<title>Junction</title>" with "<title><%= classifiedPackageName %></title>"
+- Replace "from 'junction/config/environment'" with "from '<%= dasherizedPackageName %>/config/environment'"
+- Replace "assets/junction." with "assets/<%= dasherizedPackageName %>."
+- Replace "{{page-title "Junction"}}" with "{{page-title "<%= classifiedPackageName %>"}}"
+- Move this new "app" folder to ember-junction/blueprints/ember-junction/files/app
+- "npm publish" in ember-junction
