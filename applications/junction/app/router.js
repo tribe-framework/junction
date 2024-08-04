@@ -1,5 +1,5 @@
 import EmberRouter from '@ember/routing/router';
-import config from 'junction/config/environment';
+import config from '<%= dasherizedPackageName %>/config/environment';
 
 export default class Router extends EmberRouter {
   location = config.locationType;
@@ -11,4 +11,5 @@ Router.map(function () {
   this.route('type', { path: '/track/:slug' });
   this.route('files');
   this.route('public', { path: '/public/form/:slug' });
+  this.route('interface');
 });

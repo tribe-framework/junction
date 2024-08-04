@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="utf-8">
-    <title>Junction</title>
+    <title><%= classifiedPackageName %></title>
     <meta name="description" content="Frame your data.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,7 +12,7 @@
     {{content-for "head"}}
 
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/junction.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/<%= dasherizedPackageName %>.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/fontawesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.2/tinymce.min.js"></script>
 
@@ -29,7 +29,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
     <script src="https://unpkg.com/@root/passphrase"></script>
     <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/junction.js"></script>
+    <script src="{{rootURL}}assets/<%= dasherizedPackageName %>.js"></script>
     <script>
     document.addEventListener('focusin', (e) => {
       if (e.target.closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {

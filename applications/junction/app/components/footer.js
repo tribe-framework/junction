@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import ENV from 'junction/config/environment';
+import ENV from '<%= dasherizedPackageName %>/config/environment';
 import { service } from '@ember/service';
 
 export default class FooterComponent extends Component {

@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import ENV from 'junction/config/environment';
+import ENV from '<%= dasherizedPackageName %>/config/environment';
 
 export default class CookiesService extends Service {
   @tracked days = 365;

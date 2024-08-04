@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { later } from '@ember/runloop';
-import ENV from 'junction/config/environment';
+import ENV from '<%= dasherizedPackageName %>/config/environment';
 
 export default class TypesTrackApiModalComponent extends Component {
   @service type;

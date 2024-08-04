@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { Queue } from 'ember-file-upload';
-import ENV from 'junction/config/environment';
+import ENV from '<%= dasherizedPackageName %>/config/environment';
 import { later } from '@ember/runloop';
 
 export default class FilesUploaderComponent extends Component {
@@ -43,11 +43,10 @@ export default class FilesUploaderComponent extends Component {
             },
           });
           await obj.save();
-          
+
           if (this.args.updateOnUpload !== undefined)
             this.args.updateOnUpload(data.file);
-          else
-            this.args.reload();
+          else this.args.reload();
         } else if (data.status == 'error') {
           alert(data.error_message);
         }

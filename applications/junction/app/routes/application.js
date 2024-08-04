@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { later } from '@ember/runloop';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import ENV from 'junction/config/environment';
+import ENV from '<%= dasherizedPackageName %>/config/environment';
 import * as bootstrap from 'bootstrap';
 
 export default class ApplicationRoute extends Route {
@@ -17,7 +17,11 @@ export default class ApplicationRoute extends Route {
   @tracked currentSlugName = window.location.pathname.split('/')[2];
 
   async beforeModel() {
-    this.auth.goToRouteAfterLogin = (this.currentRouteName ? (this.currentRouteName == 'track' ? 'type' : this.currentRouteName) : 'index');
+    this.auth.goToRouteAfterLogin = this.currentRouteName
+      ? this.currentRouteName == 'track'
+        ? 'type'
+        : this.currentRouteName
+      : 'index';
     this.auth.goToSlugAfterLogin = this.currentSlugName;
     await this.types.fetchAgain();
 

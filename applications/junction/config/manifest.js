@@ -7,8 +7,7 @@ module.exports = function (/* environment, appConfig */) {
   return {
     name: 'Junction',
     short_name: 'Junction',
-    description:
-      'A data management system by Wildfire.',
+    description: 'A data management system by Wildfire.',
     start_url: '/',
     scope: '/',
     display: 'standalone',
