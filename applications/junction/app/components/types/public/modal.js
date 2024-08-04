@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import ENV from '<%= dasherizedPackageName %>/config/environment';
+import ENV from 'junction/config/environment';
 import { later } from '@ember/runloop';
 
 export default class TypesPublicModalComponent extends Component {

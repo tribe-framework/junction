@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { later } from '@ember/runloop';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import ENV from '<%= dasherizedPackageName %>/config/environment';
+import ENV from 'junction/config/environment';
 import * as bootstrap from 'bootstrap';
 
 export default class ApplicationRoute extends Route {

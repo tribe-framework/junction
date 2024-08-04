@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { service } from '@ember/service';
-import ENV from '<%= dasherizedPackageName %>/config/environment';
+import ENV from 'junction/config/environment';
 
 export default class IndexController extends Controller {
   @service types;

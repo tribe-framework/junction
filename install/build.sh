@@ -6,6 +6,8 @@ if test -f "$FILE"; then
     ember init;
     yes | ember install ember-tribe;
     yes | ember install ember-junction;
+    cd ../../;
+    rm build.sh;
 else
     echo "This is not a Flame folder."
 fi

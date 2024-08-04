@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import { A } from '@ember/array';
-import ENV from '<%= dasherizedPackageName %>/config/environment';
+import ENV from 'junction/config/environment';
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
 import Header from '@editorjs/header';

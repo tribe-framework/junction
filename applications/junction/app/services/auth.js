@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import ENV from '<%= dasherizedPackageName %>/config/environment';
+import ENV from 'junction/config/environment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
