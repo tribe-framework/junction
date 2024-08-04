@@ -1,0 +1,50 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { later } from '@ember/runloop';
+
+export default class TypesModulesListComponent extends Component {
+  @service type;
+  @service colormodes;
+  @service module;
+  @service store;
+  @service types;
+  @tracked reloadTypes = false;
+
+  @action
+  async ignoreReordering() {
+    this.type.loadingSearchResults = true;
+    this.args.stopWobble();
+    this.reloadTypes = true;
+
+    later(
+      this,
+      () => {
+        this.reloadTypes = false;
+      },
+      1,
+    );
+
+    later(
+      this,
+      () => {
+        this.type.loadingSearchResults = false;
+      },
+      500,
+    );
+  }
+
+  @action
+  async saveReordering() {
+    this.type.loadingSearchResults = true;
+    await this.types.json.save();
+    later(
+      this,
+      async () => {
+        window.location.reload(true);
+      },
+      500,
+    );
+  }
+}
