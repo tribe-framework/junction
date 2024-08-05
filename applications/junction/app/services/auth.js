@@ -19,7 +19,7 @@ export default class AuthService extends Service {
 
   checkIfLoggedIn = async () => {
     let cookiePassword = this.cookies.getCookie(ENV.JUNCTION_SLUG);
-
+    
     if (
       cookiePassword !== '' &&
       this.junctionPassword !== '' &&
@@ -33,6 +33,7 @@ export default class AuthService extends Service {
     ) {
       this.inputPassword = cookiePassword;
       await this.submitPassword();
+      return true;
     } else {
       return false;
     }
