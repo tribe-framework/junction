@@ -17,22 +17,26 @@ export default class ApplicationRoute extends Route {
   @tracked currentSlugName = window.location.pathname.split('/')[2];
 
   async beforeModel() {
-    this.auth.goToRouteAfterLogin = this.currentRouteName
-      ? this.currentRouteName == 'track'
-        ? 'type'
-        : this.currentRouteName
-      : 'index';
-    this.auth.goToSlugAfterLogin = this.currentSlugName;
+    await this.auth.getJunctionPassword();
     await this.types.fetchAgain();
 
-    await this.auth.getJunctionPassword();
-    if (
-      this.currentRouteName != 'auth' &&
-      this.currentRouteName != 'public' &&
-      !this.auth.checkIfLoggedIn()
-    ) {
-      this.router.transitionTo('auth');
-    }
+    this.auth.checkIfLoggedIn().then(async (checkIfLoggedIn)=>{
+
+      this.auth.goToRouteAfterLogin = this.currentRouteName
+        ? this.currentRouteName == 'track'
+          ? 'type'
+          : this.currentRouteName
+        : 'index';
+      this.auth.goToSlugAfterLogin = this.currentSlugName;
+
+      if (
+        this.currentRouteName != 'auth' &&
+        this.currentRouteName != 'public' &&
+        !checkIfLoggedIn
+      ) {
+        this.router.transitionTo('auth');
+      }
+    });
   }
 
   async model() {

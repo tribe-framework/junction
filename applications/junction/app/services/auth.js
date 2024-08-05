@@ -28,8 +28,7 @@ export default class AuthService extends Service {
       return true;
     } else if (
       cookiePassword !== null &&
-      ENV.JUNCTION_SLUG !== undefined &&
-      ENV.JUNCTION_SLUG != '' &&
+      ENV.JUNCTION_SLUG &&
       this.junctionPassword == ''
     ) {
       this.inputPassword = cookiePassword;
