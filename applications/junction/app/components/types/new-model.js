@@ -34,7 +34,11 @@ export default class TypesNewModelComponent extends Component {
 
   @action
   async save() {
-    if (this.trackName != '' && this.trackPlural != '' && this.trackPrimary != '') {
+    if (
+      this.trackName != '' &&
+      this.trackPlural != '' &&
+      this.trackPrimary != ''
+    ) {
       var exists = false;
       Object.keys(this.types.json.modules).forEach((track) => {
         if (track != 'webapp') {
