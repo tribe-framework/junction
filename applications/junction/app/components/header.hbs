@@ -85,6 +85,10 @@
                   <li><a {{on 'click' (fn this.blueprints.revertBlueprint blueprint.modules.types_json)}} class="dropdown-item" href="#">{{blueprint.modules.title}}</a></li>
                 {{/each}}
               {{/if}}
+              
+              <li><hr class="dropdown-divider"></li>
+              <li><a {{on 'click' this.blueprints.clearBlueprint}} class="dropdown-item" href="#">Clear the canvas</a></li>
+
             </ul>
           </div>
         </HeaderNavItem>

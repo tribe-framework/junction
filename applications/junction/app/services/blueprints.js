@@ -51,6 +51,31 @@ export default class BlueprintsService extends Service {
   }
 
   @action
+
+  @action
+  async clearBlueprint() {
+    this.type.loadingSearchResults = true;
+
+    await this.types.saveCurrentTypes(this.types.json.modules);
+
+    var types_json = [];
+    Object.entries(this.types.json.modules).forEach((v, i) => {
+      let type_slug = v[0];
+      let type_obj = v[1];
+
+      if (type_slug == 'webapp') {
+        types_json['webapp'] = type_obj;
+      }
+    });
+
+    this.types.json.modules = {
+      ...Object.assign({}, types_json),
+    };
+    await this.types.json.save();
+    window.location.href = '/';
+  }
+
+  @action
   async revertBlueprint(t) {
     this.type.loadingSearchResults = true;
     this.types.json.modules = t;
