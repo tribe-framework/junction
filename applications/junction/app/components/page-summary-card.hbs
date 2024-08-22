@@ -20,11 +20,16 @@
           <button type="button" class="btn-lg fw-light fs-5 btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-circle-nodes"></i> Use a Blueprint to get started <i class="fa-solid fa-caret-down"></i>
           </button>
-          <ul class="dropdown-menu dropdown-menu-md-end" {{did-insert this.blueprints.getBlueprints}}>
+          <ul class="dropdown-menu dropdown-menu-md-end overflow-y-scroll" style="max-height:360px" {{did-insert this.blueprints.getBlueprints}}>
             <li><h6 class="dropdown-header text-capitalize">Blueprints available</h6></li>
             {{#each this.blueprints.junctionBlueprints as |blueprint|}}
               <li><a {{on 'click' (fn this.blueprints.changeBlueprint blueprint.attributes.modules.link)}} href="#" class="dropdown-item fs-5 fw-light">{{blueprint.attributes.modules.title}}</a></li>
             {{/each}}
+              
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header text-capitalize">Start Again</h6></li>
+            <li><a {{on 'click' this.blueprints.clearBlueprint}} class="dropdown-item" href="#">Clear the canvas</a></li>
+
             {{#if this.blueprints.myBlueprints}}
               <li><hr class="dropdown-divider"></li>
 
@@ -32,17 +37,9 @@
               {{#each this.blueprints.myBlueprints as |blueprint|}}
                 <li><a {{on 'click' (fn this.blueprints.revertBlueprint blueprint.modules.types_json)}} class="dropdown-item" href="#">{{blueprint.modules.title}}</a></li>
               {{/each}}
-              
-              <li><hr class="dropdown-divider"></li>
-              <li><a {{on 'click' this.blueprints.clearBlueprint}} class="dropdown-item" href="#">Clear the canvas</a></li>
             {{/if}}
           </ul>
-          <div class="fst-italic fs-4 mt-4 fw-light">or start by adding a <a class="text-{{this.colormodes.inverseMode}}" href="#newModel" data-bs-toggle="modal">new track.</a></div>
-        </div>
-        <div class="border-top border-light border-1 mt-5 pt-5">
-          <div class="fst-italic fs-4 mb-4 fw-light">or enter your project description:</div>
-          <Textarea @value={{this.blueprints.projectDescription}} class="form-control w-100 rounded-3 border-primary" rows="4" placeholder="Describe your project" />
-          <button {{on 'click' this.blueprints.getAI}} type="button" class="btn mt-3 btn-sm btn-primary rounded-3">Get response</button>
+          <div class="fs-5 mt-4 fw-light mx-auto col-lg-7">Alternatively, you can start by manually adding a <a class="text-{{this.colormodes.inverseMode}}" href="#newModel" data-bs-toggle="modal">new track</a> or by using <a class="text-{{this.colormodes.inverseMode}}" href="#blueprintAIPromptModal" data-bs-toggle="modal">Junction AI</a> to help you get started.</div>
         </div>
       </div>
       {{/if}}

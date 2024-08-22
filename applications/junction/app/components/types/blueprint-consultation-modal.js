@@ -5,13 +5,21 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class TypesBlueprintConsultationModalComponent extends Component {
-	@service types;
-
+  @service types;
 
   @action
   initModel() {
-  	console.log(this.types.json.webapp);
-    let m = new Modal(document.getElementById('blueprintConsultationModal'), {});
-    m.show();
+    if (this.types.json.modules.webapp.implementation_summary) {
+      if (!this.types.json.modules.webapp.implementation_summary.seen) {
+        this.types.json.modules.webapp.implementation_summary.seen = true;
+        this.types.json.save();
+      }
+      
+      let m = new Modal(
+        document.getElementById('blueprintConsultationModal'),
+        {},
+      );
+      m.show();
+    }
   }
 }

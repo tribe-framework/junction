@@ -33,22 +33,26 @@ export default class BlueprintsService extends Service {
       }
     });
 
-    var link_json = [];
-    Object.entries(data_json).forEach((v, i) => {
-      let type_slug = v[0];
-      let type_obj = v[1];
+    if (data_json !== undefined && data_json) {
+      var link_json = [];
+      Object.entries(data_json).forEach((v, i) => {
+        let type_slug = v[0];
+        let type_obj = v[1];
 
-      if (type_slug != 'webapp') {
-        link_json[type_slug] = type_obj;
-      }
-    });
+        if (type_slug != 'webapp') {
+          link_json[type_slug] = type_obj;
+        }
+      });
 
-    this.types.json.modules = {
-      ...Object.assign({}, types_json),
-      ...Object.assign({}, link_json),
-    };
-    await this.types.json.save();
-    window.location.href = '/';
+      this.types.json.modules = {
+        ...Object.assign({}, types_json),
+        ...Object.assign({}, link_json),
+      };
+      await this.types.json.save();
+      window.location.href = '/';
+    } else {
+      this.type.loadingSearchResults = false;
+    }
   }
 
   @action
@@ -115,40 +119,46 @@ export default class BlueprintsService extends Service {
       return response.json();
     });
 
-    let data_json = JSON.parse(data.json);
+    if (data !== undefined && data && data.json) {
+      let data_json = JSON.parse(data.json);
 
-    var types_json = [];
-    Object.entries(this.types.json.modules).forEach((v, i) => {
-      let type_slug = v[0];
-      let type_obj = v[1];
+      var types_json = [];
+      Object.entries(this.types.json.modules).forEach((v, i) => {
+        let type_slug = v[0];
+        let type_obj = v[1];
 
-      if (type_slug == 'webapp') {
-        types_json['webapp'] = type_obj;
+        if (type_slug == 'webapp') {
+          types_json['webapp'] = type_obj;
+        }
+      });
+
+      var link_json = [];
+      Object.entries(data_json).forEach((v, i) => {
+        let type_slug = v[0];
+        let type_obj = v[1];
+
+        if (type_slug != 'webapp') {
+          link_json[type_slug] = type_obj;
+        }
+      });
+
+      types_json['webapp']['implementation_summary'] = [];
+      types_json['webapp']['implementation_summary']['html'] = data.html;
+      types_json['webapp']['implementation_summary']['seen'] = false;
+
+      if (data_json) {
+        this.types.json.modules = {
+          ...Object.assign({}, types_json),
+          ...Object.assign({}, link_json),
+        };
+        await this.types.json.save();
+
+        this.type.loadingSearchResults = false;
       }
-    });
 
-    var link_json = [];
-    Object.entries(data_json).forEach((v, i) => {
-      let type_slug = v[0];
-      let type_obj = v[1];
-
-      if (type_slug != 'webapp') {
-        link_json[type_slug] = type_obj;
-      }
-    });
-
-    types_json['webapp']['wildfire_consultation_summary'] = data.html;
-
-    if (data_json) {
-      this.types.json.modules = {
-        ...Object.assign({}, types_json),
-        ...Object.assign({}, link_json),
-      };
-      await this.types.json.save();
-
+      window.location.href = '/';
+    } else {
       this.type.loadingSearchResults = false;
     }
-
-    window.location.href = '/';
   }
 }

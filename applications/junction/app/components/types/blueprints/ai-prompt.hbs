@@ -1,10 +1,9 @@
-{{#unless this.types.json.modules.webapp.implementation_summary.seen}}
 {{!-- Modal --}}
-<div class="modal fade" id="blueprintConsultationModal" tabindex="-1" aria-labelledby="blueprintConsultationModalLabel" aria-hidden="true">
+<div class="modal fade" id="blueprintAIPromptModal" tabindex="-1" aria-labelledby="blueprintAIPromptModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fst-italic fs-5" id="blueprintConsultationModalLabel">{ Consultation Summary }</h1>
+        <h1 class="modal-title fst-italic fs-5" id="blueprintAIPromptModalLabel">Describe your project</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -18,5 +17,3 @@
     </div>
   </div>
 </div>
-<div class="d-none" {{did-insert this.initModel}}></div>
-{{/unless}}
