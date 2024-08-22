@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import ENV from 'junction/config/environment';
 
 export default class BlueprintsService extends Service {
   @service colormodes;
@@ -51,8 +52,6 @@ export default class BlueprintsService extends Service {
   }
 
   @action
-
-  @action
   async clearBlueprint() {
     this.type.loadingSearchResults = true;
 
@@ -94,5 +93,57 @@ export default class BlueprintsService extends Service {
     this.myBlueprints = await this.store.query('deleted_record', {
       modules: { deleted_type: 'blueprint_record' },
     });
+  }
+
+  @tracked projectDescription = '';
+
+  @action
+  async getAI() {
+    this.type.loadingSearchResults = true;
+    await this.types.saveCurrentTypes(this.types.json.modules);
+
+    let data = await fetch(
+      'https://tribe.junction.express/custom/anthropic/get-response.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ project_description: this.projectDescription }),
+      }
+    ).then(function (response) {
+      return response.json();
+    });
+
+    console.log(data.html);
+
+    let data_json = JSON.parse(data.json);
+
+    var types_json = [];
+    Object.entries(this.types.json.modules).forEach((v, i) => {
+      let type_slug = v[0];
+      let type_obj = v[1];
+
+      if (type_slug == 'webapp') {
+        types_json['webapp'] = type_obj;
+      }
+    });
+
+    var link_json = [];
+    Object.entries(data_json).forEach((v, i) => {
+      let type_slug = v[0];
+      let type_obj = v[1];
+
+      if (type_slug != 'webapp') {
+        link_json[type_slug] = type_obj;
+      }
+    });
+
+    this.types.json.modules = {
+      ...Object.assign({}, types_json),
+      ...Object.assign({}, link_json),
+    };
+    await this.types.json.save();
+    
+    //window.location.href = '/';
   }
 }
