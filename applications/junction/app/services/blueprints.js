@@ -32,6 +32,8 @@ export default class BlueprintsService extends Service {
         types_json['webapp'] = type_obj;
       }
     });
+    
+    types_json['webapp']['implementation_summary'] = '';
 
     if (data_json !== undefined && data_json) {
       var link_json = [];
@@ -71,6 +73,8 @@ export default class BlueprintsService extends Service {
       }
     });
 
+    types_json['webapp']['implementation_summary'] = '';
+
     this.types.json.modules = {
       ...Object.assign({}, types_json),
     };
@@ -103,62 +107,62 @@ export default class BlueprintsService extends Service {
 
   @action
   async getAI() {
-    this.type.loadingSearchResults = true;
-    await this.types.saveCurrentTypes(this.types.json.modules);
+    if (this.projectDescription != '') {
+      this.type.loadingSearchResults = true;
+      await this.types.saveCurrentTypes(this.types.json.modules);
 
-    let data = await fetch(
-      'https://tribe.junction.express/custom/anthropic/get-response.php',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      let data = await fetch(
+        'https://tribe.junction.express/custom/anthropic/get-response.php',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ project_description: this.projectDescription }),
         },
-        body: JSON.stringify({ project_description: this.projectDescription }),
-      },
-    ).then(function (response) {
-      return response.json();
-    });
-
-    if (data !== undefined && data && data.json) {
-      let data_json = JSON.parse(data.json);
-
-      var types_json = [];
-      Object.entries(this.types.json.modules).forEach((v, i) => {
-        let type_slug = v[0];
-        let type_obj = v[1];
-
-        if (type_slug == 'webapp') {
-          types_json['webapp'] = type_obj;
-        }
+      ).then(function (response) {
+        return response.json();
       });
 
-      var link_json = [];
-      Object.entries(data_json).forEach((v, i) => {
-        let type_slug = v[0];
-        let type_obj = v[1];
+      if (data !== undefined && data && data.json) {
+        let data_json = JSON.parse(data.json);
 
-        if (type_slug != 'webapp') {
-          link_json[type_slug] = type_obj;
+        var types_json = [];
+        Object.entries(this.types.json.modules).forEach((v, i) => {
+          let type_slug = v[0];
+          let type_obj = v[1];
+
+          if (type_slug == 'webapp') {
+            types_json['webapp'] = type_obj;
+          }
+        });
+
+        var link_json = [];
+        Object.entries(data_json).forEach((v, i) => {
+          let type_slug = v[0];
+          let type_obj = v[1];
+
+          if (type_slug != 'webapp') {
+            link_json[type_slug] = type_obj;
+          }
+        });
+
+        types_json['webapp']['implementation_summary'] = data.html;
+
+        if (data_json) {
+          this.types.json.modules = {
+            ...Object.assign({}, types_json),
+            ...Object.assign({}, link_json),
+          };
+          await this.types.json.save();
+
+          this.type.loadingSearchResults = false;
         }
-      });
 
-      types_json['webapp']['implementation_summary'] = [];
-      types_json['webapp']['implementation_summary']['html'] = data.html;
-      types_json['webapp']['implementation_summary']['seen'] = false;
-
-      if (data_json) {
-        this.types.json.modules = {
-          ...Object.assign({}, types_json),
-          ...Object.assign({}, link_json),
-        };
-        await this.types.json.save();
-
+        window.location.href = '/';
+      } else {
         this.type.loadingSearchResults = false;
       }
-
-      window.location.href = '/';
-    } else {
-      this.type.loadingSearchResults = false;
     }
   }
 }

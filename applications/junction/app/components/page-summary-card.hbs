@@ -13,6 +13,9 @@
       {{/each-in}}
 
       {{#if (gt this.typesCount 4)}}
+        {{#if this.types.json.modules.webapp.implementation_summary}}
+          <div class="ignore-elements btn-group me-3 my-3" role="group"><button type="button" data-bs-toggle="modal" data-bs-target="#blueprintConsultationModal" class="text-capitalize btn-lg fw-normal btn btn-outline-{{this.colormodes.inverseMode}}"><i class="fa-solid fa-list"></i></button></div>
+        {{/if}}
         <div class="ignore-elements btn-group me-3 my-3" role="group"><button id="track-new" type="button" data-bs-toggle="modal" data-bs-target="#newModel" class="text-capitalize btn-lg fw-normal btn btn-{{this.colormodes.inverseMode}}"><i class="fa-solid fa-plus"></i></button></div>
       {{else}}
       <div class="d-flex flex-column align-items-center justify-content-center text-center">
