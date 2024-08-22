@@ -103,18 +103,17 @@ export default class BlueprintsService extends Service {
     await this.types.saveCurrentTypes(this.types.json.modules);
 
     let data = await fetch(
-      'https://tribe.junction.express/custom/anthropic/get-response.php', {
+      'https://tribe.junction.express/custom/anthropic/get-response.php',
+      {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ project_description: this.projectDescription }),
-      }
+      },
     ).then(function (response) {
       return response.json();
     });
-
-    console.log(data.html);
 
     let data_json = JSON.parse(data.json);
 
@@ -138,12 +137,18 @@ export default class BlueprintsService extends Service {
       }
     });
 
-    this.types.json.modules = {
-      ...Object.assign({}, types_json),
-      ...Object.assign({}, link_json),
-    };
-    await this.types.json.save();
-    
-    //window.location.href = '/';
+    types_json['webapp']['wildfire_consultation_summary'] = data.html;
+
+    if (data_json) {
+      this.types.json.modules = {
+        ...Object.assign({}, types_json),
+        ...Object.assign({}, link_json),
+      };
+      await this.types.json.save();
+
+      this.type.loadingSearchResults = false;
+    }
+
+    window.location.href = '/';
   }
 }

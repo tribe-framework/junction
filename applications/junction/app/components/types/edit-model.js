@@ -35,40 +35,40 @@ export default class TypesEditModelComponent extends Component {
       this.types.fetchAgain();
     });
     myModalEl.addEventListener('show.bs.modal', async (event) => {
-      	let typeSlug = this.type.currentType.slug;
-      	console.log(typeSlug);
-        this.trackName = this.types.json.modules[typeSlug]['name'];
-        this.trackPlural = this.types.json.modules[typeSlug]['plural'];
-        this.trackDescription = this.types.json.modules[typeSlug]['description'];
-        this.sendable = this.types.json.modules[typeSlug]['sendable'];
-        this.readonly = this.types.json.modules[typeSlug]['readonly'];
-        this.editable = this.types.json.modules[typeSlug]['editable'] !== undefined ? this.types.json.modules[typeSlug]['editable'] : true;
+      let typeSlug = this.type.currentType.slug;
+      console.log(typeSlug);
+      this.trackName = this.types.json.modules[typeSlug]['name'];
+      this.trackPlural = this.types.json.modules[typeSlug]['plural'];
+      this.trackDescription = this.types.json.modules[typeSlug]['description'];
+      this.sendable = this.types.json.modules[typeSlug]['sendable'];
+      this.readonly = this.types.json.modules[typeSlug]['readonly'];
+      this.editable =
+        this.types.json.modules[typeSlug]['editable'] !== undefined
+          ? this.types.json.modules[typeSlug]['editable']
+          : true;
     });
   }
 
   @action
   async save() {
-    if (
-      this.trackName != '' &&
-      this.trackPlural != ''
-    ) {
-    	let typeSlug = this.type.currentType.slug;
-        this.types.json.modules[typeSlug]['name'] = this.trackName;
-        this.types.json.modules[typeSlug]['plural'] = this.trackPlural;
-        this.types.json.modules[typeSlug]['description'] = this.trackDescription;
-        this.types.json.modules[typeSlug]['sendable'] = this.sendable;
-        this.types.json.modules[typeSlug]['readonly'] = this.readonly;
-        this.types.json.modules[typeSlug]['editable'] = this.editable;
+    if (this.trackName != '' && this.trackPlural != '') {
+      let typeSlug = this.type.currentType.slug;
+      this.types.json.modules[typeSlug]['name'] = this.trackName;
+      this.types.json.modules[typeSlug]['plural'] = this.trackPlural;
+      this.types.json.modules[typeSlug]['description'] = this.trackDescription;
+      this.types.json.modules[typeSlug]['sendable'] = this.sendable;
+      this.types.json.modules[typeSlug]['readonly'] = this.readonly;
+      this.types.json.modules[typeSlug]['editable'] = this.editable;
 
-        await this.types.json.save();
-        this.modelBox.hide();
-        later(
-          this,
-          () => {
-            window.location.reload(true);
-          },
-          1000,
-        );
+      await this.types.json.save();
+      this.modelBox.hide();
+      later(
+        this,
+        () => {
+          window.location.reload(true);
+        },
+        1000,
+      );
     } else {
       alert('Name and plural are compulsory.');
     }
