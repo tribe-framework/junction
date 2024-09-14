@@ -112,7 +112,7 @@ export default class TypesEditObjectModalComponent extends Component {
       const promise = new Promise((resolve, reject) => {
         if (
           module.input_type == 'editorjs' ||
-          ((module.input_type == 'text' || module.input_type == 'textarea') &&
+          ((module.input_type == 'text' || module.input_type == 'textarea' || module.input_type == 'color' || module.input_type == 'date' || module.input_type == 'datetime-local' || module.input_type == 'email' || module.input_type == 'url') &&
             module.input_multiple === true)
         ) {
           if (module.input_type == 'editorjs') {
@@ -134,12 +134,17 @@ export default class TypesEditObjectModalComponent extends Component {
               "[name='" + mtxtId + "[]']",
             );
             for (let i = 0; i < inputs.length; i++) {
-              this.mutObjectModuleValue(
-                module.input_slug,
-                inputs[i].value,
-                true,
-                i,
-              );
+              let j = 0;
+              console.log(i + " " + (inputs[i].value).trim());
+              if ((inputs[i].value).trim() !== "") {
+                this.mutObjectModuleValue(
+                  module.input_slug,
+                  inputs[i].value,
+                  true,
+                  j,
+                );
+                j++;
+              }
             }
             resolve();
           }
