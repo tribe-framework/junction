@@ -75,7 +75,7 @@
     "ember-fetch": "^8.1.2",
     "ember-file-upload": "^9.1.0",
     "ember-flatpickr": "^8.0.1",
-    "ember-junction": "^2.2.24",
+    "ember-junction": "^2.2.25",
     "ember-keyboard": "^9.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-math-helpers": "^4.0.0",
