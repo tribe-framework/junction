@@ -206,7 +206,7 @@ export default class TypeService extends Service {
     this.sortFieldQuery = this.sortFieldQuery;
     this.sortOrder = this.sortOrder;
 
-    if (searchResults === true) {
+    if (searchResults !== false) {
       await this.search();
     } else {
       await this.clearSearch();
@@ -267,7 +267,10 @@ export default class TypeService extends Service {
         filter: { title: this.searchQuery },
       });
       this.loadingSearchResults = false;
-      if (this.objectsInType.meta.total_objects !== undefined)
+      if (
+        this.objectsInType.meta !== undefined &&
+        this.objectsInType.meta.total_objects !== undefined
+      )
         this.totalObjects = this.objectsInType.meta.total_objects;
     } else this.clearSearch();
   }
@@ -309,7 +312,10 @@ export default class TypeService extends Service {
 
     this.showClearSearchButton = true;
     this.loadingSearchResults = false;
-    if (this.objectsInType.meta.total_objects !== undefined)
+    if (
+      this.objectsInType.meta !== undefined &&
+      this.objectsInType.meta.total_objects !== undefined
+    )
       this.totalObjects = this.objectsInType.meta.total_objects;
   }
 
