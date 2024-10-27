@@ -277,19 +277,21 @@ export default class TypeService extends Service {
 
   @action
   async clearSearch() {
-    this.isAdvancedSearch = false;
-    this.totalObjects = this.currentType.total_objects;
-    this.loadingSearchResults = true;
-    this.objectsInType = null;
+    if (this.currentType !== null) {
+      this.isAdvancedSearch = false;
+      this.totalObjects = this.currentType.total_objects;
+      this.loadingSearchResults = true;
+      this.objectsInType = null;
 
-    this.objectsInType = await this.store.query(this.currentType.slug, {
-      show_public_objects_only: false,
-      sort: this.sortFieldQuery[this.currentType.slug],
-      page: {
-        limit: this.currentPageLength[this.currentType.slug],
-        offset: this.currentPageOffset[this.currentType.slug],
-      },
-    });
+      this.objectsInType = await this.store.query(this.currentType.slug, {
+        show_public_objects_only: false,
+        sort: this.sortFieldQuery[this.currentType.slug],
+        page: {
+          limit: this.currentPageLength[this.currentType.slug],
+          offset: this.currentPageOffset[this.currentType.slug],
+        },
+      });
+    }
 
     this.showClearSearchButton = false;
     this.loadingSearchResults = false;
