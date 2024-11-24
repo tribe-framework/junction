@@ -4,9 +4,13 @@ Use this repository to make changes to ember-junction blueprint. Always build ne
 
 ## Steps to publish ember-junction blueprint
 
-- chmod +x ./install/app.sh; bash ./install/app.sh
-- "npm publish" in ember-junction
-- Match version number of flame-junction-src and flame-junction-dist repos.
+```
+chmod +x ./install/app.sh; bash ./install/app.sh;
+```
+
+```
+chmod +x ./install/publish.sh; bash ./install/publish.sh;
+```
 
 ## To re-build latest Junction
 
@@ -14,7 +18,7 @@ Use this repository to make changes to ember-junction blueprint. Always build ne
 wget https://raw.githubusercontent.com/tribe-framework/flame-junction-src/master/install/build.sh; chmod +x build.sh; bash ./build.sh;
 ```
 
-Then fill in the .env file with Tribe credentials and run:
+- Then fill in the .env file with Tribe credentials and run:
 
 ```
 php sync-types.php
