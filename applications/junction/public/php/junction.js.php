@@ -6,7 +6,7 @@ $types = json_decode(
                         $_ENV['DOCKER_INTERNAL_TRIBE_URL'].'/api.php/webapp/0', 
                         false, 
                         stream_context_create(
-                                array('http' => array('header' => "Authorization: Bearer ".session_id()))
+                                array('http' => array('header' => "Authorization: Bearer ".trim(file_get_contents('/etc/machine-id'))))
                         )
                 ), true
         )['data']['attributes']['modules'];
