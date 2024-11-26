@@ -26,5 +26,5 @@ php sync-types.php
 
 ## Validate
 
-- Test and validate the changes by using instructions in "Build New Junction".
+- Test and validate the changes by using instructions in "To re-build latest Junction".
 - Make sure, after testing,
