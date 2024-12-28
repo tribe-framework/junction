@@ -15,6 +15,57 @@ export default class BlueprintsService extends Service {
   @tracked myBlueprints = [];
 
   @action
+  downloadCurrentBlueprint() {
+    this.type.loadingSearchResults = true;
+
+    var types_json = [];
+    Object.entries(this.types.json.modules).forEach((v, i) => {
+      let type_slug = v[0];
+      let type_obj = v[1];
+
+      if (
+        type_slug != 'deleted_record' &&
+        type_slug != 'blueprint_record' &&
+        type_slug != 'file_record' &&
+        type_slug != 'apikey_record'
+      ) {
+        types_json[type_slug] = type_obj;
+      }
+    });
+
+    later(
+      this,
+      () => {
+        const jsonString = JSON.stringify(
+          Object.fromEntries(Object.entries(types_json)),
+          null,
+          2,
+        );
+
+        // Create a Blob from the JSON string
+        const blob = new Blob([jsonString], { type: 'application/json' });
+
+        // Create a link element
+        let t = Math.floor(new Date().getTime() / 1000);
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Blueprint-' + t + '.types.json';
+
+        // Append to the document and trigger the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up and remove the link
+        document.body.removeChild(link);
+
+        this.type.loadingSearchResults = false;
+      },
+      1000,
+    );
+  }
+
+  @action
   async changeBlueprint(link) {
     this.type.loadingSearchResults = true;
 

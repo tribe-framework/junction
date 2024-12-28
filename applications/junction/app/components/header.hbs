@@ -124,6 +124,11 @@
                   class="dropdown-item"
                   href="#"
                 >Clear the canvas</a></li>
+              <li><a
+                  {{on "click" this.blueprints.downloadCurrentBlueprint}}
+                  class="dropdown-item"
+                  href="#"
+                >Download current blueprint</a></li>
 
               {{#if this.blueprints.myBlueprints}}
                 <li><hr class="dropdown-divider" /></li>
@@ -155,24 +160,50 @@
               <i class="fa-solid fa-ellipsis-vertical"></i>
             </div>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" {{on
-              "click"
-              (fn this.changeType (get this.types.json.modules "file_record"))
-            }}><i class="fa-solid fa-cloud"></i> File Uploads</a></li>
-              <li><a class="dropdown-item" {{on
-              "click"
-              (fn this.changeType (get this.types.json.modules "deleted_record"))
-            }}><i class="fa-solid fa-recycle"></i> Deleted Records</a></li>
+              <li><a
+                  class="dropdown-item"
+                  {{on
+                    "click"
+                    (fn
+                      this.changeType
+                      (get this.types.json.modules "file_record")
+                    )
+                  }}
+                ><i class="fa-solid fa-cloud"></i> File Uploads</a></li>
+              <li><a
+                  class="dropdown-item"
+                  {{on
+                    "click"
+                    (fn
+                      this.changeType
+                      (get this.types.json.modules "deleted_record")
+                    )
+                  }}
+                ><i class="fa-solid fa-recycle"></i> Deleted Records</a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#typesWebapp"><i class="fa-solid fa-gear"></i> Settings</a></li>
-              <li><a target="new" class="dropdown-item" href="https://junction.express/junctions"><i class="fa-solid fa-arrow-up-right-from-square"></i> My Junctions</a></li>
+              <li><a
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#typesWebapp"
+                ><i class="fa-solid fa-gear"></i> Settings</a></li>
+              <li><a
+                  target="new"
+                  class="dropdown-item"
+                  href="https://junction.express/junctions"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  My Junctions</a></li>
               <li><a
                   {{on "click" this.auth.logout}}
                   class="dropdown-item"
                   href="#"
-                ><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                ><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  Logout</a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a target="new" class="dropdown-item" href="https://junction.express">&larr; Visit homepage</a></li>
+              <li><a
+                  target="new"
+                  class="dropdown-item"
+                  href="https://junction.express"
+                >&larr; Visit homepage</a></li>
             </ul>
           </div>
         </HeaderNavItem>
