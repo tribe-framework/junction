@@ -8,7 +8,9 @@ import { later } from '@ember/runloop';
 export default class TypesEditModelComponent extends Component {
   @tracked trackName = '';
   @tracked trackPlural = '';
+  @tracked trackURL = '';
   @tracked trackDescription = '';
+  @tracked apiHooks = [];
   @tracked sendable = false;
   @tracked readonly = false;
   @tracked editable = true;
@@ -40,7 +42,9 @@ export default class TypesEditModelComponent extends Component {
       console.log(typeSlug);
       this.trackName = this.types.json.modules[typeSlug]['name'];
       this.trackPlural = this.types.json.modules[typeSlug]['plural'];
+      this.trackURL = this.types.json.modules[typeSlug]['url'];
       this.trackDescription = this.types.json.modules[typeSlug]['description'];
+      this.apiHooks = this.types.json.modules[typeSlug]['api_hooks'];
       this.sendable = this.types.json.modules[typeSlug]['sendable'];
       this.readonly = this.types.json.modules[typeSlug]['readonly'];
       this.editable =
@@ -57,7 +61,9 @@ export default class TypesEditModelComponent extends Component {
       let typeSlug = this.type.currentType.slug;
       this.types.json.modules[typeSlug]['name'] = this.trackName;
       this.types.json.modules[typeSlug]['plural'] = this.trackPlural;
+      this.types.json.modules[typeSlug]['url'] = this.trackURL;
       this.types.json.modules[typeSlug]['description'] = this.trackDescription;
+      this.types.json.modules[typeSlug]['api_hooks'] = this.apiHooks;
       this.types.json.modules[typeSlug]['sendable'] = this.sendable;
       this.types.json.modules[typeSlug]['readonly'] = this.readonly;
       this.types.json.modules[typeSlug]['editable'] = this.editable;
