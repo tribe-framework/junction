@@ -8,30 +8,35 @@
 ##################
 ##################
 
-# Function to get the latest version tag
-get_latest_version() {
-    git fetch --tags > /dev/null 2>&1
-    latest_tag=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
-    
-    if [ -z "$latest_tag" ]; then
-        echo "0.0.0"
-    else
-        echo "$latest_tag"
-    fi
-}
-
 # Function to increment version
 increment_version() {
     local version=$1
     local major minor patch
     
+    # Check if version is empty
+    if [ -z "$version" ]; then
+        echo "0.0.0"
+        return
+    }
+    
     # Split version into major.minor.patch
     IFS='.' read -r major minor patch <<< "$version"
     
-    # Convert to integers
-    patch=$((10#$patch))
-    minor=$((10#$minor))
-    major=$((10#$major))
+    # Provide defaults if parts are empty
+    major=${major:-0}
+    minor=${minor:-0}
+    patch=${patch:-0}
+    
+    # Convert to integers with error checking
+    if ! patch=$(($patch + 0)) 2>/dev/null; then
+        patch=0
+    fi
+    if ! minor=$(($minor + 0)) 2>/dev/null; then
+        minor=0
+    fi
+    if ! major=$(($major + 0)) 2>/dev/null; then
+        major=0
+    fi
     
     # Increment patch, if patch reaches 24, increment minor and reset patch
     if [ $patch -ge 24 ]; then
@@ -42,6 +47,18 @@ increment_version() {
     fi
     
     echo "$major.$minor.$patch"
+}
+
+# Function to get the latest version tag
+get_latest_version() {
+    git fetch --tags > /dev/null 2>&1
+    latest_tag=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
+    
+    if [ -z "$latest_tag" ]; then
+        echo "0.0.0"
+    else
+        echo "$latest_tag"
+    fi
 }
 
 # Main execution
@@ -82,25 +99,6 @@ echo "Version update complete!"
 cd ../ember-junction || {
     echo "Error: Could not change to ember-junction directory"
     exit 1
-}
-
-# Function to increment version based on patch number
-increment_version() {
-    local version=$1
-    local major=$(echo $version | cut -d. -f1)
-    local minor=$(echo $version | cut -d. -f2)
-    local patch=$(echo $version | cut -d. -f3)
-    
-    # If patch is 24, increment minor and reset patch to 0
-    if [ "$patch" -eq 24 ]; then
-        minor=$((minor + 1))
-        patch=0
-    else
-        # Otherwise just increment patch
-        patch=$((patch + 1))
-    fi
-    
-    echo "$major.$minor.$patch"
 }
 
 # Check if there are any uncommitted changes
