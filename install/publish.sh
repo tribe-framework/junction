@@ -17,29 +17,26 @@ increment_version() {
     if [ -z "$version" ]; then
         echo "0.0.0"
         return
-    }
+    fi
+    
+    # Remove any 'v' prefix if present
+    version="${version#v}"
     
     # Split version into major.minor.patch
     IFS='.' read -r major minor patch <<< "$version"
     
-    # Provide defaults if parts are empty
+    # Remove any non-numeric characters
+    major=$(echo "$major" | tr -dc '0-9')
+    minor=$(echo "$minor" | tr -dc '0-9')
+    patch=$(echo "$patch" | tr -dc '0-9')
+    
+    # Ensure variables are treated as numbers
     major=${major:-0}
     minor=${minor:-0}
     patch=${patch:-0}
     
-    # Convert to integers with error checking
-    if ! patch=$(($patch + 0)) 2>/dev/null; then
-        patch=0
-    fi
-    if ! minor=$(($minor + 0)) 2>/dev/null; then
-        minor=0
-    fi
-    if ! major=$(($major + 0)) 2>/dev/null; then
-        major=0
-    fi
-    
     # Increment patch, if patch reaches 24, increment minor and reset patch
-    if [ $patch -ge 24 ]; then
+    if [ "$patch" -ge 24 ]; then
         minor=$((minor + 1))
         patch=0
     else
