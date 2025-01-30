@@ -115,6 +115,8 @@ export default class AuthService extends Service {
       alert('Please define JUNCTION_SLUG in .ENV file');
     } else if (ENV.JUNCTION_SLUG == 'junction') {
       this.junctionPassword = ENV.JUNCTION_PASSWORD;
-    }
+    } /* else if () {
+      this.cookies.getCookie('junctionexpress_user_id');
+    }*/
   }
 }
