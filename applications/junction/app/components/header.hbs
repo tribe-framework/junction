@@ -94,7 +94,11 @@
 
         <HeaderNavItem>
           <div class="fs-4 px-2 px-md-3 cursor-pointer btn-group">
-            <div class="dropdown-toggle" data-bs-toggle="dropdown">
+            <div
+              id="blueprints-dropdown-btn"
+              class="dropdown-toggle"
+              data-bs-toggle="dropdown"
+            >
               <i class="fa-solid fa-circle-nodes"></i>
             </div>
             <ul
@@ -102,6 +106,26 @@
               style="max-height:400px"
               {{did-insert this.blueprints.getBlueprints}}
             >
+              <li><h6 class="dropdown-header text-capitalize">Current blueprint</h6></li>
+              <li><a
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#blueprintConsultationModal"
+                  href="#"
+                >Implementation summary</a></li>
+              <li><a
+                  {{on "click" this.blueprints.clearBlueprint}}
+                  class="dropdown-item"
+                  href="#"
+                >Clear the canvas</a></li>
+              <li><a
+                  {{on "click" this.blueprints.downloadCurrentBlueprint}}
+                  class="dropdown-item"
+                  href="#"
+                >Download current blueprint</a></li>
+
+              <li><hr class="dropdown-divider" /></li>
+
               <li><h6 class="dropdown-header text-capitalize">Switch blueprint</h6></li>
               {{#each this.blueprints.junctionBlueprints as |blueprint|}}
                 <li><a
@@ -117,24 +141,10 @@
                   >{{blueprint.attributes.modules.title}}</a></li>
               {{/each}}
 
-              <li><hr class="dropdown-divider" /></li>
-              <li><h6 class="dropdown-header text-capitalize">Start Again</h6></li>
-              <li><a
-                  {{on "click" this.blueprints.clearBlueprint}}
-                  class="dropdown-item"
-                  href="#"
-                >Clear the canvas</a></li>
-              <li><a
-                  {{on "click" this.blueprints.downloadCurrentBlueprint}}
-                  class="dropdown-item"
-                  href="#"
-                >Download current blueprint</a></li>
-
               {{#if this.blueprints.myBlueprints}}
                 <li><hr class="dropdown-divider" /></li>
 
-                <li><h6 class="dropdown-header text-capitalize">Recently used
-                    blueprints</h6></li>
+                <li><h6 class="dropdown-header text-capitalize">Recently used</h6></li>
                 {{#each this.blueprints.myBlueprints as |blueprint|}}
                   <li><a
                       {{on

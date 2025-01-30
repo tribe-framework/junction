@@ -10,6 +10,7 @@ export default class BlueprintsService extends Service {
   @service types;
   @service store;
   @service type;
+  @service auth;
 
   @tracked junctionBlueprints = [];
   @tracked myBlueprints = [];
@@ -66,10 +67,10 @@ export default class BlueprintsService extends Service {
   }
 
   @action
-  async changeBlueprint(link) {
-    this.type.loadingSearchResults = true;
-
+  async changeBlueprint(link, implementationSummary = '') {
     await this.types.saveCurrentTypes(this.types.json.modules);
+
+    this.type.loadingSearchResults = true;
 
     let data_json = await fetch(link).then(function (response) {
       return response.json();
@@ -85,7 +86,7 @@ export default class BlueprintsService extends Service {
       }
     });
 
-    types_json['webapp']['implementation_summary'] = '';
+    types_json['webapp']['implementation_summary'] = implementationSummary;
 
     if (data_json !== undefined && data_json) {
       var link_json = [];
@@ -103,7 +104,17 @@ export default class BlueprintsService extends Service {
         ...Object.assign({}, link_json),
       };
       await this.types.json.save();
-      window.location.href = '/';
+
+      if (implementationSummary != '') {
+        later(
+          this,
+          () => {
+            window.location.href = '/#showImplementationSummary';
+            window.location.reload(true);
+          },
+          300,
+        );
+      } else window.location.href = '/';
     } else {
       this.type.loadingSearchResults = false;
     }
@@ -145,21 +156,44 @@ export default class BlueprintsService extends Service {
 
   @action
   async getBlueprints() {
-    let data = await fetch(
-      'https://tribe.junction.express/api.php/blueprint',
-    ).then(function (response) {
-      return response.json();
-    });
-    this.junctionBlueprints = data.data;
-    this.myBlueprints = await this.store.query('deleted_record', {
-      modules: { deleted_type: 'blueprint_record' },
-    });
+    if (
+      this.auth.projectDescription != '' &&
+      Object.entries(this.types.json.modules).length <= 5
+    ) {
+      await this.getAI();
+    } else if (
+      this.auth.blueprintLink != '' &&
+      Object.entries(this.types.json.modules).length <= 5
+    ) {
+      this.changeBlueprint(
+        this.auth.blueprintLink,
+        this.auth.implementationSummary,
+      );
+    } else {
+      let data = await fetch(
+        'https://tribe.junction.express/api.php/blueprint',
+      ).then(function (response) {
+        return response.json();
+      });
+      this.junctionBlueprints = data.data;
+      this.myBlueprints = await this.store.query('deleted_record', {
+        modules: { deleted_type: 'blueprint_record' },
+      });
+
+      //show implementation summary
+      const currentUrl = window.location.href;
+      const url = new URL(currentUrl);
+      const hash = url.hash;
+      if (hash == '#showImplementationSummary') {
+        document.querySelector('#blueprintConsultationModal-btn').click();
+      }
+    }
   }
 
   @tracked projectDescription = this.types.json.modules.webapp
     .project_description
     ? this.types.json.modules.webapp.project_description
-    : '';
+    : this.auth.projectDescription;
 
   @tracked loadingProgress = 0;
   @tracked tryAgain = false;
@@ -251,7 +285,8 @@ export default class BlueprintsService extends Service {
             later(
               this,
               () => {
-                window.location.href = '/';
+                window.location.href = '/#showImplementationSummary';
+                window.location.reload(true);
               },
               300,
             );
