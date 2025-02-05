@@ -36,7 +36,11 @@
           {{this.yearNow}}&nbsp;&nbsp;
           <a
             href="https://github.com/org/tribe-framework"
-            class="text-decoration-none text-light"
+            class="text-decoration-none text-{{if
+                @index
+                'light'
+                this.colormodes.inverseMode
+              }}"
           ><i class="fa-brands fa-github fs-5"></i></a></div>
       </div>
 
