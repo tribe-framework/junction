@@ -7,6 +7,7 @@ import ENV from 'junction/config/environment';
 export default class TypesTrackApiModalComponent extends Component {
   @service type;
   @service colormodes;
+  @service types;
 
   @action
   copyAPILink(e) {
