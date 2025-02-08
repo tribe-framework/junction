@@ -19,9 +19,7 @@
 
   {{#each @type.modules as |module|}}
     {{#if module.list_field}}
-
       {{#if module.input_primary}}
-
         <td
           class="position-relative border-end border-1 border-dark"
           {{on "mouseover" this.showOptions}}
@@ -43,11 +41,8 @@
             @type={{@type}}
             @module={{module}}
           />
-
         </td>
-
       {{else}}
-
         <td
           class="position-relative border-end border-1 border-dark"
           {{on "mouseover" this.showOptions}}
@@ -58,9 +53,7 @@
               module.input_slug
             }}</div>
         </td>
-
       {{/if}}
-
     {{/if}}
   {{/each}}
 </tr>
