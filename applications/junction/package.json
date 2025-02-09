@@ -126,5 +126,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1"
   }
 }
