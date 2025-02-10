@@ -12,29 +12,29 @@
 increment_version() {
     local version=$1
     local major minor patch
-    
+
     # Check if version is empty
     if [ -z "$version" ]; then
         echo "0.0.0"
         return
     fi
-    
+
     # Remove any 'v' prefix if present
     version="${version#v}"
-    
+
     # Split version into major.minor.patch
     IFS='.' read -r major minor patch <<< "$version"
-    
+
     # Remove any non-numeric characters
     major=$(echo "$major" | tr -dc '0-9')
     minor=$(echo "$minor" | tr -dc '0-9')
     patch=$(echo "$patch" | tr -dc '0-9')
-    
+
     # Ensure variables are treated as numbers
     major=${major:-0}
     minor=${minor:-0}
     patch=${patch:-0}
-    
+
     # Increment patch, if patch reaches 24, increment minor and reset patch
     if [ "$patch" -ge 24 ]; then
         minor=$((minor + 1))
@@ -42,7 +42,7 @@ increment_version() {
     else
         patch=$((patch + 1))
     fi
-    
+
     echo "$major.$minor.$patch"
 }
 
@@ -50,7 +50,7 @@ increment_version() {
 get_latest_version() {
     git fetch --tags > /dev/null 2>&1
     latest_tag=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
-    
+
     if [ -z "$latest_tag" ]; then
         echo "0.0.0"
     else
