@@ -34,7 +34,7 @@
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/footnotes": "^1.1.0",
     "@editorjs/header": "^2.8.8",
-    "@editorjs/image": "^2.10.1",
+    "@editorjs/image": "^2.10.2",
     "@editorjs/list": "^2.0.4",
     "@editorjs/marker": "^1.4.0",
     "@editorjs/quote": "^2.7.6",
@@ -75,7 +75,7 @@
     "ember-fetch": "^8.1.2",
     "ember-file-upload": "^9.2.0",
     "ember-flatpickr": "^8.0.1",
-    "ember-junction": "^2.3.9",
+    "ember-junction": "^2.3.12",
     "ember-keyboard": "^9.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-math-helpers": "^4.2.1",
@@ -110,12 +110,12 @@
     "qunit": "^2.22.0",
     "qunit-dom": "^3.2.1",
     "ripplet.js": "^1.1.0",
-    "sass": "^1.83.4",
+    "sass": "^1.84.0",
     "sortablejs": "^1.15.6",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
-    "swiper": "^11.2.1",
+    "swiper": "^11.2.3",
     "tracked-built-ins": "^3.4.0",
     "uuid": "^11.0.5",
     "video.js": "^8.21.0",
@@ -126,8 +126,5 @@
   },
   "ember": {
     "edition": "octane"
-  },
-  "dependencies": {
-    "highlight.js": "^11.11.1"
   }
 }
