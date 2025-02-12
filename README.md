@@ -18,11 +18,7 @@ chmod +x ./install/publish.sh; bash ./install/publish.sh;
 wget https://raw.githubusercontent.com/tribe-framework/flame-junction-src/master/install/build.sh; chmod +x build.sh; bash ./build.sh;
 ```
 
-- Then fill in the .env file with Tribe credentials and run:
-
-```
-php sync-types.php
-```
+- Then fill in the .env file with Tribe credentials.
 
 ## Validate
 
