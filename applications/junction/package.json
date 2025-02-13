@@ -42,7 +42,6 @@
     "@editorjs/table": "^2.4.3",
     "@ember/optional-features": "^2.2.0",
     "@ember/test-helpers": "^4.0.5",
-    "@ember/test-waiters": "^3.1.0",
     "@eslint/js": "^9.19.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -53,7 +52,6 @@
     "concurrently": "^9.1.2",
     "editorjs-hyperlink": "^1.0.6",
     "ember-animated": "^2.1.0",
-    "ember-app-scheduler": "^7.0.1",
     "ember-auto-import": "^2.10.0",
     "ember-basic-dropdown": "^8.5.0",
     "ember-cli": "~6.2.0",
@@ -130,8 +128,5 @@
   },
   "ember": {
     "edition": "octane"
-  },
-  "dependencies": {
-    "@ember/string": "^4.0.0"
   }
 }
