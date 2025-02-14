@@ -205,15 +205,16 @@ export default class BlueprintsService extends Service {
         this.auth.implementationSummary,
       );
     } else {
+      this.myBlueprints = await this.store.query('blueprint_record', {
+        show_public_objects_only: false,
+      });
+
       let data = await fetch(
         'https://tribe.junction.express/api.php/blueprint',
       ).then(function (response) {
         return response.json();
       });
       this.junctionBlueprints = data.data;
-      this.myBlueprints = await this.store.query('blueprint_record', {
-        show_public_objects_only: false,
-      });
 
       //show implementation summary
       const currentUrl = window.location.href;
