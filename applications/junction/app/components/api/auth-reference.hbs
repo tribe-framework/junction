@@ -1,16 +1,51 @@
-<ul class="nav nav-tabs" id="apiAuthReference" role="tablist">
+<h1 class="text-capitalize text-center mt-5 px-0 display-2 mb-4"><i
+    class="fa-solid fa-plug"
+  ></i>
+  Junction API</h1>
+<ul
+  class="nav nav-tabs justify-content-center"
+  id="apiAuthReference"
+  role="tablist"
+>
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="apiAuthReference-home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+    <button
+      class="nav-link active"
+      id="apiAuthReference-javascript-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#javascript-tab-pane"
+      type="button"
+      role="tab"
+      aria-controls="javascript-tab-pane"
+      aria-selected="true"
+    >Javascript</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="apiAuthReference-profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="apiAuthReference-contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+    <button
+      class="nav-link"
+      id="apiAuthReference-curl-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#curl-tab-pane"
+      type="button"
+      role="tab"
+      aria-controls="curl-tab-pane"
+      aria-selected="false"
+    >cURL</button>
   </li>
 </ul>
 <div class="tab-content" id="apiAuthReferenceContent">
-  <div class="tab-pane fade show active" id="apiAuthReference-home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">...</div>
-  <div class="tab-pane fade" id="apiAuthReference-profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
-  <div class="tab-pane fade" id="apiAuthReference-contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+  <div
+    class="tab-pane fade show active"
+    id="apiAuthReference-javascript-tab-pane"
+    role="tabpanel"
+    aria-labelledby="javascript-tab"
+    tabindex="0"
+  ></div>
+  <div
+    class="tab-pane fade"
+    id="apiAuthReference-curl-tab-pane"
+    role="tabpanel"
+    aria-labelledby="curl-tab"
+    tabindex="0"
+  >...</div>
 </div>
+<div class="d-none" {{did-insert this.highlightAll}}></div>
