@@ -43,9 +43,42 @@ export default class TypesListTableTitleBarComponent extends Component {
       show_public_objects_only: false,
       page: { limit: -1, offset: 0 },
     });
+
+    var mmm = [];
+    mmm.push('id');
+    mmm.push('type');
+    mmm.push('slug');
+    mmm.push('created_on');
+    mmm.push('updated_on');
+    this.type.currentType.modules.forEach((m) => {
+      mmm.push(m.input_slug);
+    });
+
     var vvv = [];
-    data.forEach(async (obj) => {
-      await vvv.push(obj.modules);
+    vvv.push(mmm);
+
+    var nnn = [];
+    var jjj = [];
+    data.forEach((obj) => {
+      nnn = [];
+      mmm.forEach((m) => {
+        if (obj.modules[m] !== undefined) {
+          if (typeof obj.modules[m] == 'object') {
+            if (obj.modules[m].blocks !== undefined) {
+              var jjj = [];
+              obj.modules[m].blocks.forEach((o) => {
+                jjj.push(o.data.text.replace(/<\/?[^>]+(>|$)/g, ''));
+              });
+              nnn.push(jjj.join('\n'));
+            } else {
+              nnn.push(JSON.stringify(obj.modules[m]));
+            }
+          } else if (typeof obj.modules[m] == 'array') {
+            nnn.push(JSON.stringify(obj.modules[m]));
+          } else nnn.push(obj.modules[m]);
+        } else nnn.push('');
+      });
+      vvv.push(nnn);
     });
     let papa = Papa.unparse(vvv);
 
