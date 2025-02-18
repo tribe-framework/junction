@@ -1,0 +1,63 @@
+{{! Modal }}
+<div
+  class="modal fade"
+  id="csvImportExportModal"
+  tabindex="-1"
+  aria-labelledby="csvImportExportModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1
+          class="modal-title fst-italic fs-5"
+          id="csvImportExportModalLabel"
+        >Import / Export Data
+          <span
+            class="text-capitalize"
+          >{{this.type.currentType.plural}}</span></h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>To import, first download the CSV Format, fill it and then upload.
+          If you use the id column, any matching IDs with same column name will
+          be replaced.</div>
+        <div class="my-3">
+          <Input
+            @type="text"
+            @value={{this.type.csvURL}}
+            class="form-control"
+            placeholder="CSV file link"
+          />
+          <Files::Uploader
+            @updateOnUpload={{this.updateOnUpload}}
+            @placeholder="Upload CSV here"
+          />
+        </div>
+      </div>
+      <div
+        class="modal-footer d-flex align-items-center justify-content-between p-0"
+      >
+        <div class="d-flex align-items-center justify-content-start">
+          <button
+            {{on "click" this.papaUnparseFormat}}
+            type="button"
+            class="btn btn-outline-primary ms-2"
+          >CSV Format</button>
+        </div>
+        <div class="d-flex align-items-center justify-content-end">
+          <button
+            {{on "click" this.papaUnparse}}
+            type="button"
+            class="btn btn-primary ms-2"
+          >Download Complete Dataset &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
