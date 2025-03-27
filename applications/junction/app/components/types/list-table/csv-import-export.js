@@ -10,31 +10,37 @@ export default class TypesListTableCsvImportExport extends Component {
   @service type;
   @service types;
   @service store;
+  @service gzip;
 
   @action
   async updateOnUpload(e) {
     this.type.loadingSearchResults = true;
 
-    var omit = [];
+    var donotomit = [];
     this.type.currentType.modules.forEach((m, i) => {
       if (
         m.var_type === undefined ||
         (m.var_type != 'json' && m.var_type != 'array')
       ) {
-        omit.push(i + 1);
+        donotomit.push(donotomit.input_slug);
       }
     });
 
     this.type.csvURL = e.url;
 
     try {
-      const response = await fetch('/advisor_talk_2025-02-18_1739881645.csv');
+      const response = await fetch('/template_2025-02-18_1739887251.csv');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const csvText = await response.text();
+      
+      let d = await this.gzip.compressAndEncode(csvText);
+      console.log(d);
 
-      console.log(omit);
+      let ud = await this.gzip.decodeAndDecompress(d);
+      console.log(ud);
+
 
       // Stream big file in worker thread
       Papa.parse(csvText, {
@@ -43,8 +49,6 @@ export default class TypesListTableCsvImportExport extends Component {
           console.log('Row:', results.data);
         },
       });
-
-      return csvText;
     } catch (error) {
       console.error('Error fetching the CSV file:', error);
     }

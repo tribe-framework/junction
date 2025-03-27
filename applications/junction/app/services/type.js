@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import { service } from '@ember/service';
 import { A } from '@ember/array';
+import ENV from 'junction/config/environment';
 
 export default class TypeService extends Service {
   @service store;
@@ -11,6 +12,8 @@ export default class TypeService extends Service {
   @service router;
 
   @tracked currentType = null;
+
+  @tracked apiUrl = '';
 
   @tracked searchQuery = null;
   @tracked advancedSearchQuery = [];
@@ -177,6 +180,7 @@ export default class TypeService extends Service {
   @action
   async loadTypeObjects(searchResults = false) {
     var type_slug = this.currentType.slug;
+    this.apiUrl = ENV.TribeENV.API_URL + '/api.php/' + type_slug;
 
     this.initPublicForm();
 
