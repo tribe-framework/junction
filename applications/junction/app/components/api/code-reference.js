@@ -5,17 +5,18 @@ import { tracked } from '@glimmer/tracking';
 
 export default class ApiCodeReference extends Component {
   @service type;
+  @service colormodes;
 
   @tracked copiedJs = false;
   @tracked copiedCurl = false;
   @tracked copiedUrl = false;
-  
+
   @action
   async copyApiUrl() {
     try {
       await navigator.clipboard.writeText(this.type.apiUrl);
       this.copiedUrl = true;
-      
+
       // Reset the copied state after 2 seconds
       setTimeout(() => {
         this.copiedUrl = false;
@@ -24,7 +25,7 @@ export default class ApiCodeReference extends Component {
       console.error('Failed to copy: ', err);
     }
   }
-  
+
   get javascriptSnippet() {
     return `
 // Example of fetching data from your Junction API
@@ -51,7 +52,7 @@ try {
   console.error('Error fetching junction data:', error);
 }`;
   }
-  
+
   get curlSnippet() {
     return `
 # Basic GET request to fetch junction data
@@ -70,13 +71,13 @@ curl -X POST \\
     }
   }'`;
   }
-  
+
   @action
   async copyJsSnippet() {
     try {
       await navigator.clipboard.writeText(this.javascriptSnippet);
       this.copiedJs = true;
-      
+
       setTimeout(() => {
         this.copiedJs = false;
       }, 2000);
@@ -84,13 +85,13 @@ curl -X POST \\
       console.error('Failed to copy: ', err);
     }
   }
-  
+
   @action
   async copyCurlSnippet() {
     try {
       await navigator.clipboard.writeText(this.curlSnippet);
       this.copiedCurl = true;
-      
+
       setTimeout(() => {
         this.copiedCurl = false;
       }, 2000);

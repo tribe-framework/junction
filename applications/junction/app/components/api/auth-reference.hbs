@@ -90,8 +90,7 @@
   >
     <div class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}">
       <button 
-        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" 
-        {{on "click" this.copyJsSnippet}}
+        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" type="button" {{on "click" this.copyJsSnippet}}
       >
         {{#if this.copiedJs}}
           <i class="fa-solid fa-check"></i> Copied!
@@ -111,8 +110,7 @@
   >
     <div class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}">
       <button 
-        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" 
-        {{on "click" this.copyCurlSnippet}}
+        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" type="button" {{on "click" this.copyCurlSnippet}}
       >
         {{#if this.copiedCurl}}
           <i class="fa-solid fa-check"></i> Copied!

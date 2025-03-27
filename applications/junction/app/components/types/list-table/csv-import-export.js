@@ -12,47 +12,72 @@ export default class TypesListTableCsvImportExport extends Component {
   @service store;
   @service gzip;
 
+  @tracked showSave = false;
+  @tracked records = [];
+
   @action
-  async updateOnUpload(e) {
+  async handleProcessedCsvData(csvInfo) {
     this.type.loadingSearchResults = true;
 
+    const { data, headers, rowCount, errors } = csvInfo;
+
+    this.showSave = true;
+
     var donotomit = [];
+
+    if (headers.includes('id')) {
+      donotomit.push('id');
+      donotomit.push('slug');
+    }
+
     this.type.currentType.modules.forEach((m, i) => {
       if (
-        m.var_type === undefined ||
-        (m.var_type != 'json' && m.var_type != 'array')
+        m.input_multiple != true &&
+        m.input_type != 'file_uploader' &&
+        m.input_type != 'editorjs' &&
+        m.var_type != 'json' &&
+        m.var_type != 'array' &&
+        m.input_slug != 'updated_on' &&
+        m.input_slug != 'created_on' &&
+        m.input_slug != 'type'
       ) {
-        donotomit.push(donotomit.input_slug);
+        donotomit.push(m.input_slug);
       }
     });
 
-    this.type.csvURL = e.url;
+    data.forEach(row => {
+        // Filter out keys not in donotomit
+        const keysToRemove = Object.keys(row).filter(key => !donotomit.includes(key));
+        
+        // Remove those keys
+        keysToRemove.forEach(key => delete row[key]);
+    });
 
-    try {
-      const response = await fetch('/template_2025-02-18_1739887251.csv');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    // Process the CSV data
+    data.forEach(async (row) => {
+      if (row.id !== undefined) {
+        this.store.findRecord(this.type.currentType.slug, row.id).then(async (o)=>{
+          o.modules = row;
+          this.records.push(o);
+        });
+      } else {
+        const o = this.store.createRecord(this.type.currentType.slug, {
+          modules: row
+        });
+        this.records.push(o);
       }
-      const csvText = await response.text();
-      
-      let d = await this.gzip.compressAndEncode(csvText);
-      console.log(d);
+    });
 
-      let ud = await this.gzip.decodeAndDecompress(d);
-      console.log(ud);
+    this.type.loadingSearchResults = false;
+  }
 
-
-      // Stream big file in worker thread
-      Papa.parse(csvText, {
-        worker: true,
-        step: (results) => {
-          console.log('Row:', results.data);
-        },
-      });
-    } catch (error) {
-      console.error('Error fetching the CSV file:', error);
-    }
-
+  @action
+  saveAllRecords() {
+    this.type.loadingSearchResults = true;
+    this.records.forEach(async (o)=>{
+      await o.save();
+    });
+    this.showSave = false;
     this.type.loadingSearchResults = false;
   }
 
