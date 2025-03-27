@@ -14,6 +14,8 @@ export default class TypeService extends Service {
   @tracked currentType = null;
 
   @tracked apiUrl = '';
+  @tracked csvData = null;
+  @tracked showCsvSave = false;
 
   @tracked searchQuery = null;
   @tracked advancedSearchQuery = [];
@@ -80,7 +82,6 @@ export default class TypeService extends Service {
   @tracked isLive = false;
   @tracked description = '';
   @tracked coverURL = '';
-  @tracked csvURL = '';
   @tracked buttonText = '';
   @tracked thankyouText = '';
   @tracked modules = {};
@@ -167,7 +168,8 @@ export default class TypeService extends Service {
     else
       this.coverURL = this.types.json.modules[type_slug].public_form.cover_url;
 
-    this.csvURL = '';
+    this.csvData = null;
+    this.showCsvSave = false;
 
     if (this.types.json.modules[type_slug].public_form.modules === undefined)
       this.modules = {};

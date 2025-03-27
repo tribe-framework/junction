@@ -12,7 +12,6 @@ export default class TypesListTableCsvImportExport extends Component {
   @service store;
   @service gzip;
 
-  @tracked showSave = false;
   @tracked records = [];
 
   @action
@@ -21,7 +20,7 @@ export default class TypesListTableCsvImportExport extends Component {
 
     const { data, headers, rowCount, errors } = csvInfo;
 
-    this.showSave = true;
+    this.type.showCsvSave = true;
 
     var donotomit = [];
 
@@ -45,24 +44,28 @@ export default class TypesListTableCsvImportExport extends Component {
       }
     });
 
-    data.forEach(row => {
-        // Filter out keys not in donotomit
-        const keysToRemove = Object.keys(row).filter(key => !donotomit.includes(key));
-        
-        // Remove those keys
-        keysToRemove.forEach(key => delete row[key]);
+    data.forEach((row) => {
+      // Filter out keys not in donotomit
+      const keysToRemove = Object.keys(row).filter(
+        (key) => !donotomit.includes(key),
+      );
+
+      // Remove those keys
+      keysToRemove.forEach((key) => delete row[key]);
     });
 
     // Process the CSV data
     data.forEach(async (row) => {
       if (row.id !== undefined) {
-        this.store.findRecord(this.type.currentType.slug, row.id).then(async (o)=>{
-          o.modules = row;
-          this.records.push(o);
-        });
+        this.store
+          .findRecord(this.type.currentType.slug, row.id)
+          .then(async (o) => {
+            o.modules = row;
+            this.records.push(o);
+          });
       } else {
         const o = this.store.createRecord(this.type.currentType.slug, {
-          modules: row
+          modules: row,
         });
         this.records.push(o);
       }
@@ -74,10 +77,10 @@ export default class TypesListTableCsvImportExport extends Component {
   @action
   saveAllRecords() {
     this.type.loadingSearchResults = true;
-    this.records.forEach(async (o)=>{
+    this.records.forEach(async (o) => {
       await o.save();
     });
-    this.showSave = false;
+    this.type.showCsvSave = false;
     this.type.loadingSearchResults = false;
   }
 

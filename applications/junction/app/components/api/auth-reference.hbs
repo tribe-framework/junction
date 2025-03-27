@@ -34,24 +34,26 @@
   </li>
 </ul>
 
-<div class="text-center my-4">
+<div class="text-center my-4 d-none">
   <div class="input-group mx-auto" style="max-width: 600px;">
-    <input 
-      type="text" 
-      class="form-control" 
-      value={{concat this.apiUrl "/api.php/webapp/0"}} 
+    <input
+      type="text"
+      class="form-control"
+      value={{concat this.apiUrl "/api.php/webapp/0"}}
       readonly
       aria-label="API URL"
-    >
-    <button 
-      class="btn btn-primary" 
-      type="button" 
+    />
+    <button
+      class="btn btn-primary"
+      type="button"
       {{on "click" this.copyApiWebappUrl}}
     >
       {{#if this.copiedWebappUrl}}
-        <i class="fa-solid fa-check"></i> Copied!
+        <i class="fa-solid fa-check"></i>
+        Copied!
       {{else}}
-        <i class="fa-solid fa-copy"></i> Copy Fetch URL
+        <i class="fa-solid fa-copy"></i>
+        Copy Fetch URL
       {{/if}}
     </button>
   </div>
@@ -59,22 +61,24 @@
 
 <div class="text-center my-4">
   <div class="input-group mx-auto" style="max-width: 600px;">
-    <input 
-      type="text" 
-      class="form-control" 
-      value={{this.apiUrl}} 
+    <input
+      type="text"
+      class="form-control"
+      value={{this.apiUrl}}
       readonly
       aria-label="API URL"
-    >
-    <button 
-      class="btn btn-primary" 
-      type="button" 
+    />
+    <button
+      class="btn btn-primary"
+      type="button"
       {{on "click" this.copyApiUrl}}
     >
       {{#if this.copiedUrl}}
-        <i class="fa-solid fa-check"></i> Copied!
+        <i class="fa-solid fa-check"></i>
+        Copied!
       {{else}}
-        <i class="fa-solid fa-copy"></i> Copy Tribe URL
+        <i class="fa-solid fa-copy"></i>
+        Copy Tribe URL
       {{/if}}
     </button>
   </div>
@@ -88,17 +92,25 @@
     aria-labelledby="apiAuthReference-javascript-tab"
     tabindex="0"
   >
-    <div class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}">
-      <button 
-        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" type="button" {{on "click" this.copyJsSnippet}}
+    <div
+      class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}"
+    >
+      <button
+        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2"
+        type="button"
+        {{on "click" this.copyJsSnippet}}
       >
         {{#if this.copiedJs}}
-          <i class="fa-solid fa-check"></i> Copied!
+          <i class="fa-solid fa-check"></i>
+          Copied!
         {{else}}
-          <i class="fa-solid fa-copy"></i> Copy
+          <i class="fa-solid fa-copy"></i>
+          Copy
         {{/if}}
       </button>
-      <pre class="mb-0"><code class="language-javascript">{{this.javascriptSnippet}}</code></pre>
+      <pre class="mb-0"><code
+          class="language-javascript"
+        >{{this.javascriptSnippet}}</code></pre>
     </div>
   </div>
   <div
@@ -108,17 +120,25 @@
     aria-labelledby="apiAuthReference-curl-tab"
     tabindex="0"
   >
-    <div class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}">
-      <button 
-        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2" type="button" {{on "click" this.copyCurlSnippet}}
+    <div
+      class="code-container position-relative p-3 border rounded bg-{{this.colormodes.mode}}"
+    >
+      <button
+        class="btn btn-sm btn-primary position-absolute top-0 end-0 m-2"
+        type="button"
+        {{on "click" this.copyCurlSnippet}}
       >
         {{#if this.copiedCurl}}
-          <i class="fa-solid fa-check"></i> Copied!
+          <i class="fa-solid fa-check"></i>
+          Copied!
         {{else}}
-          <i class="fa-solid fa-copy"></i> Copy
+          <i class="fa-solid fa-copy"></i>
+          Copy
         {{/if}}
       </button>
-      <pre class="mb-0"><code class="language-bash">{{this.curlSnippet}}</code></pre>
+      <pre class="mb-0"><code
+          class="language-bash"
+        >{{this.curlSnippet}}</code></pre>
     </div>
   </div>
 </div>

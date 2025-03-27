@@ -24,19 +24,16 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div>To import, first <a {{on "click" this.papaUnparseFormat}} class="text-decoration-underline cursor-pointer">download the CSV Format</a>, fill it and then upload.
-          If you use the id column, any matching IDs with same column name will
-          be replaced.</div>
+        <div>To import, first
+          <a
+            {{on "click" this.papaUnparseFormat}}
+            class="text-decoration-underline cursor-pointer"
+          >download the CSV Format</a>, fill it and then upload. If you use the
+          id column, any matching IDs with same column name will be replaced.</div>
         <div class="my-3">
-          <Input
-            @type="text"
-            @value={{this.type.csvURL}}
-            class="form-control"
-            placeholder="CSV file link"
-          />
-          <Files::CsvUploader 
-            @placeholder="Upload CSV data for import" 
-            @onCsvProcessed={{this.handleProcessedCsvData}} 
+          <Files::CsvUploader
+            @placeholder="Upload CSV data for import"
+            @onCsvProcessed={{this.handleProcessedCsvData}}
           />
         </div>
       </div>
@@ -50,22 +47,24 @@
             data-bs-dismiss="modal"
           >Close</button>
         </div>
-        {{#if this.showSave}}
-        <div class="d-flex align-items-center justify-content-end">
-          <button
-            {{on "click" this.saveAllRecords}}
-            type="button"
-            class="btn btn-success btn-lg ms-2"
-          ><i class="fa-solid fa-circle-check"></i> Save uploaded objects</button>
-        </div>
+        {{#if this.type.showCsvSave}}
+          <div class="d-flex align-items-center justify-content-end">
+            <button
+              {{on "click" this.saveAllRecords}}
+              type="button"
+              class="btn btn-success btn-lg ms-2"
+            ><i class="fa-solid fa-circle-check"></i>
+              Save uploaded objects</button>
+          </div>
         {{else}}
-        <div class="d-flex align-items-center justify-content-end">
-          <button
-            {{on "click" this.papaUnparse}}
-            type="button"
-            class="btn btn-primary ms-2"
-          ><i class="fa-solid fa-download"></i> Export Complete Dataset</button>
-        </div>
+          <div class="d-flex align-items-center justify-content-end">
+            <button
+              {{on "click" this.papaUnparse}}
+              type="button"
+              class="btn btn-primary ms-2"
+            ><i class="fa-solid fa-download"></i>
+              Export Complete Dataset</button>
+          </div>
         {{/if}}
       </div>
     </div>
