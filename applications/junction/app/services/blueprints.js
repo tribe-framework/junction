@@ -267,7 +267,7 @@ export default class BlueprintsService extends Service {
           }),
         },
       );
-      let data = response.json();
+      let data = await response.json();
 
       if (data !== undefined && data && data.json) {
         if (
