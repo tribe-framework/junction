@@ -4,9 +4,15 @@ Use this repository to make changes to ember-junction blueprint. Always build ne
 
 ## Steps to publish ember-junction blueprint
 
+1. The following code copies changes from ./applications/junction/app to ../ember-junction/blueprints/ember-junction/files/app folder in the (ember-junction repo):
+
 ```
 chmod +x ./install/app.sh; bash ./install/app.sh;
 ```
+
+2. Manually commit changes on ember-junction repo.
+
+3. The following code publishes the npm package:
 
 ```
 chmod +x ./install/publish.sh; bash ./install/publish.sh;
