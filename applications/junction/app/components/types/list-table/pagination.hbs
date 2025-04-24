@@ -1,4 +1,8 @@
-<div class="fw-bold fst-italic w-100 text-center mb-2">Total {{@type.plural}}: {{@totalObjects}}</div>
+<div class="fw-bold fst-italic w-100 text-center mb-2">
+  {{#if (get @selectedRowIDs @type.slug)}}
+    <span class="text-decoration-underline cursor-pointer" {{on 'click' this.type.selectNoneSearchedIDs}}>Select none</span> | <span class="text-decoration-underline cursor-pointer" {{on 'click' this.type.selectAllSearchedIDs}}>Select all</span> | Selected: {{this.getCount (get @selectedRowIDs @type.slug)}} of
+  {{/if}}
+  Total {{@type.plural}}: {{@totalObjects}}</div>
 <nav class="px-0">
   <ul class="pagination px-0 border border-1 border-{{this.colormodes.inverseMode}} justify-content-center" style="overflow-x:scroll">
     <li class="page-item {{if (lte (get @currentPageNumber @type.slug) 1) "disabled"}}">

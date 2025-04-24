@@ -68,7 +68,7 @@
           style="border: 2px dashed #eee;"
           ondragover="event.preventDefault();"
           ondrop="event.preventDefault(); this.dispatchEvent(new CustomEvent('file-drop', {detail: event.dataTransfer.files}));"
-          {{on "file-drop" (fn this.handleFileDrop)}}
+          {{on "file-drop" this.handleFileDrop}}
         >
           <i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;{{if
             @placeholder

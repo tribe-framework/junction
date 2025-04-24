@@ -1,8 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 
 export default class TypesListTableRowComponent extends Component {
+  @service colormodes;
+
   @tracked isShowing = false;
   @tracked isSelected = false;
 

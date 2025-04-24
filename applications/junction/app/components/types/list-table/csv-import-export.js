@@ -88,17 +88,16 @@ export default class TypesListTableCsvImportExport extends Component {
     for (let record of this.records) {
       let promise = record.save().then(() => {
         setTimeout(() => {
-          this.csvSaveSuccessCount += 1
+          this.csvSaveSuccessCount += 1;
         }, 100);
-       });
+      });
 
       promises.push(promise);
     }
 
-    Promise.all(promises)
-      .then(() => {
-        this.saving = false;
-      });
+    Promise.all(promises).then(() => {
+      this.saving = false;
+    });
 
     this.type.showCsvSave = false;
     this.type.loadingSearchResults = false;

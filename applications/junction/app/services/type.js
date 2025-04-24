@@ -263,6 +263,30 @@ export default class TypeService extends Service {
   }
 
   @action
+  selectNoneSearchedIDs() {
+    this.selectedRowIDs[this.currentType.slug] = [];
+    this.selectedRowIDs = this.selectedRowIDs;
+  }
+
+  @action
+  async selectAllSearchedIDs() {
+    var chosen = [];
+    let all = await this.store.query(this.currentType.slug, {
+      show_public_objects_only: false,
+      sort: this.sortFieldQuery[this.currentType.slug],
+      page: {
+        limit: -1
+      },
+      filter: { title: this.searchQuery },
+    });
+    all.forEach((a)=>{
+      chosen.push(a.id);
+    });
+    this.selectedRowIDs[this.currentType.slug] = chosen;
+    this.selectedRowIDs = this.selectedRowIDs;
+  }
+
+  @action
   async search() {
     if (this.isAdvancedSearch) this.advancedSearch();
     else if (this.searchQuery != '') {

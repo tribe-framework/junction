@@ -11,10 +11,12 @@
     scope="row"
     {{on "click" this.toggleSelection}}
   >
-    {{@object.id}}
     {{#if this.isSelected}}
-      <i class="fa-solid fa-circle-check"></i>
+      <i class="fa-solid fa-circle-check border border-1 rounded-circle border-{{this.colormodes.inverseMode}}"></i>
+    {{else}}
+      <i class="fa-solid fa-circle border border-1 rounded-circle border-{{this.colormodes.inverseMode}}"></i>
     {{/if}}
+    {{@object.id}}
   </th>
 
   {{#each @type.modules as |module|}}
