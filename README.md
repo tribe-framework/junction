@@ -1,4 +1,4 @@
-[![Build](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml)
+[![Build Docker image](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml)
 
 # flame-junction-src
 
