@@ -64,7 +64,7 @@ RUN mkdir /var/www/phpmyadmin && \
     rm pma.tar.gz
 
 ## junction
-COPY "applications/junction/dist" "junction"
+COPY "applications/junction/dist" "junction/dist"
 
 RUN chown -R www-data: uploads/ logs/
 
