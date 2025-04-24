@@ -1,3 +1,5 @@
+[![Build](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/tribe-framework/junction/actions/workflows/docker-publish.yml)
+
 # flame-junction-src
 
 Use this repository to make changes to ember-junction blueprint. Always build new Junction for making changes. After making changes, follow steps to publish ember-junction blueprint to npmjs.com
