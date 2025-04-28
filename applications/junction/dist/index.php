@@ -1,37 +1,26 @@
-<!doctype html>
+<?php include_once("php/_init.php");?><!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
   <head>
-    <meta charset="utf-8" />
-    <title>Junction</title>
-    <meta name="description" content="Frame your data." />
-    <meta property="og:image" content="/assets/img/cover.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <?php include_once("php/_head.php");?>
+    
+    <meta property="og:image" content="/assets/img/cover.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="msapplication-config" content="/browserconfig.xml">
 
-    <meta name="junction/config/environment" content="%7B%22modulePrefix%22%3A%22junction%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22junction%22%2C%22version%22%3A%220.0.0%2B9fcc8957%22%7D%2C%22TribeENV%22%3A%7B%7D%7D" />
+    <meta name="junction/config/environment" content="%7B%22modulePrefix%22%3A%22junction%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22junction%22%2C%22version%22%3A%220.0.0%2B9fcc8957%22%7D%2C%22TribeENV%22%3A%7B%7D%7D">
 <meta name="theme-color" content="#41B3FF">
 <link rel="apple-touch-icon-precomposed" href="/favicon.png" sizes="512x512">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Junction">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link integrity="" rel="stylesheet" href="/assets/vendor.css" />
-    <link
-      integrity=""
-      rel="stylesheet"
-      href="/assets/junction.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/fontawesome.min.css"
-    />
-    <script
-      defer
-      data-domain="junction.express"
-      src="https://plausible.io/js/script.js"
-    ></script>
+    <link integrity="" rel="stylesheet" href="/assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="/assets/junction.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/fontawesome.min.css">
+    <script defer data-domain="junction.express" src="https://plausible.io/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.2/tinymce.min.js"></script>
 
       <link rel="shortcut icon" href="/favicon.ico">
@@ -84,12 +73,9 @@
     <meta name="msapplication-config" content="/browserconfig.xml">
     <link rel="yandex-tableau-widget" href="/yandex-browser-manifest.json">
 
-  </head>
+  <?php include_once("php/_head_footer.php");?></head>
   <body style="overflow-x: hidden">
-    <div
-      class="vh-100 w-100 d-flex align-items-center justify-content-center"
-      id="loadingHTML"
-    >
+    <div class="vh-100 w-100 d-flex align-items-center justify-content-center" id="loadingHTML">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -98,10 +84,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
     <script src="https://unpkg.com/@root/passphrase"></script>
-    <script src="/assets/vendor.js" integrity="sha256-ocfJIJmQ1VxKAdMp+cwQwcBQ03B0/UbiIYFI0Y0JT70= sha512-atUuVCjjGO14HKPi94ymWMQa/sOaAA/JhNQgVXrWoV5IaH40xhy5kIvp3jNHSl9YhVVBxW8T1e/u0WPml40vHg==" ></script>
-<script src="/assets/chunk.112.6a00ae50f5ebbe76f216.js" integrity="sha256-HDun/mi4BojJllYdYp6oSk+tSbAHXzzwJred7KFwU7c= sha512-E5NgOl0x9/cmvy9cHKwK2fKebkXqXQaFk2vZX+JqgMCunmfL4+C2cM5AcGeBVjiJCvF9FSD3tkvChT1NKZyMXQ==" ></script>
-<script src="/assets/chunk.524.a8bbf4a6c95a886438c4.js" integrity="sha256-1sis8EarFz/Y2GSmiMsVTZSZeEdtmMBUqOxyEoZ+aec= sha512-kwyPTVV8q/fmEXJxvk3BAFUJlo0pytHq6mFnLXC1xMv+VfWYS2dJnZ1gpSehMxaFQ+DPlY6gsj+8ELn7ZYtDtQ==" ></script>
-    <script src="/assets/junction.js" integrity="sha256-akGG2UFOICIJ4REVE03XvTWKFCQi42E98i5Evjh/ILw= sha512-yNRklAmJDb/3l9eLhK9gIgSBEtNbIdj+Bm6X2Jnkiw9OxI1CQkmZzQS0TdDaQvbXqeypAbNTCMQ4YqKivm+FLA==" ></script>
+    <script src="/assets/vendor.js" integrity="sha256-ocfJIJmQ1VxKAdMp+cwQwcBQ03B0/UbiIYFI0Y0JT70= sha512-atUuVCjjGO14HKPi94ymWMQa/sOaAA/JhNQgVXrWoV5IaH40xhy5kIvp3jNHSl9YhVVBxW8T1e/u0WPml40vHg=="></script>
+<script src="/assets/chunk.112.6a00ae50f5ebbe76f216.js" integrity="sha256-HDun/mi4BojJllYdYp6oSk+tSbAHXzzwJred7KFwU7c= sha512-E5NgOl0x9/cmvy9cHKwK2fKebkXqXQaFk2vZX+JqgMCunmfL4+C2cM5AcGeBVjiJCvF9FSD3tkvChT1NKZyMXQ=="></script>
+<script src="/assets/chunk.524.a8bbf4a6c95a886438c4.js" integrity="sha256-1sis8EarFz/Y2GSmiMsVTZSZeEdtmMBUqOxyEoZ+aec= sha512-kwyPTVV8q/fmEXJxvk3BAFUJlo0pytHq6mFnLXC1xMv+VfWYS2dJnZ1gpSehMxaFQ+DPlY6gsj+8ELn7ZYtDtQ=="></script>
+    <script src="/assets/junction.js" integrity="sha256-akGG2UFOICIJ4REVE03XvTWKFCQi42E98i5Evjh/ILw= sha512-yNRklAmJDb/3l9eLhK9gIgSBEtNbIdj+Bm6X2Jnkiw9OxI1CQkmZzQS0TdDaQvbXqeypAbNTCMQ4YqKivm+FLA=="></script>
     <script>
       document.addEventListener("focusin", (e) => {
         if (
@@ -115,5 +101,5 @@
     </script>
 
     
-  </body>
+  <?php include_once("php/_body_footer.php");?></body>
 </html>
