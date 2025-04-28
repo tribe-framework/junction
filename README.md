@@ -4,7 +4,7 @@
 
 ## Steps to publish Docker package
 
-1. The following code inside /applications/junction:
+After making changes, run the following code inside /applications/junction:
 
 ```
 rm .env; ember build -prod; php sync-dist.php;
