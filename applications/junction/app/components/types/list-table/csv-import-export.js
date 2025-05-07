@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { later } from '@ember/runloop';
 import Papa from 'papaparse';
 
 export default class TypesListTableCsvImportExport extends Component {
@@ -97,6 +98,11 @@ export default class TypesListTableCsvImportExport extends Component {
 
     Promise.all(promises).then(() => {
       this.saving = false;
+      this.type.loadTypeObjects();
+
+      later(()=>{
+        document.querySelector('#csvImportExportModal .btn-close').click();
+      }, 300);
     });
 
     this.type.showCsvSave = false;

@@ -42,14 +42,14 @@
           style="border: 2px solid #eee;"
         >
           <div>
-            <i class="fa-solid fa-check-circle text-success"></i>&nbsp;CSV
-            Processed Successfully
+            <i class="fa-solid fa-hourglass-start"></i>&nbsp;CSV
+            has been read.<br /><span class="text-primary">Would you like to save these records?</span>
           </div>
           <div class="fs-6 mt-2">
             <strong>{{this.rowCount}}</strong>
-            rows found with
+            records found with
             <strong>{{this.headers.length}}</strong>
-            columns
+            fields
           </div>
           {{#if this.processingErrors.length}}
             <div class="alert alert-warning mt-2 fs-6">
