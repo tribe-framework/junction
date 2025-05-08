@@ -100,7 +100,7 @@ export default class TypesListTableCsvImportExport extends Component {
       this.saving = false;
       this.type.loadTypeObjects();
 
-      later(()=>{
+      later(() => {
         document.querySelector('#csvImportExportModal .btn-close').click();
       }, 300);
     });

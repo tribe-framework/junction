@@ -275,11 +275,11 @@ export default class TypeService extends Service {
       show_public_objects_only: false,
       sort: this.sortFieldQuery[this.currentType.slug],
       page: {
-        limit: -1
+        limit: -1,
       },
       filter: { title: this.searchQuery },
     });
-    all.forEach((a)=>{
+    all.forEach((a) => {
       chosen.push(a.id);
     });
     this.selectedRowIDs[this.currentType.slug] = chosen;

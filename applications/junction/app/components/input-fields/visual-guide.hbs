@@ -1,0 +1,132 @@
+<div class="mb-3">
+	<div class="card px-0">
+
+		<div class="card-header border-0 text-uppercase">
+		  <i class="fa-solid fa-file-code"></i>
+		  <span class="ms-1">{{if
+		      @module.input_placeholder
+		      @module.input_placeholder
+		      "File Uploader"
+		    }}
+		    {{if
+		      @module.input_required
+		      (html-safe '<span class="text-danger">*</span>')
+		    }}</span>
+		</div>
+
+		<div class="card-body p-0 overflow-y-scroll" style="height:40vh;">
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-primary"}}
+		      @value={{this.colorPrimary}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Primary Colour</div>
+			</div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-secondary"}}
+		      @value={{this.colorSecondary}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Secondary Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-info"}}
+		      @value={{this.colorInfo}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Info Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-success"}}
+		      @value={{this.colorSuccess}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Success Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-warning"}}
+		      @value={{this.colorWarning}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Warning Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-danger"}}
+		      @value={{this.colorDanger}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Danger Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-dark"}}
+		      @value={{this.colorDark}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Dark Colour</div>
+		    </div>
+			<div class="my-3">
+		    <Input
+		      id={{concat @type.slug "-" @module.input_slug "-" @id "-color-light"}}
+		      @value={{this.colorLight}}
+		      @type="color"
+		      class="form-control"
+		      placeholder=""
+		      autocomplete="off"
+		      {{on 'change' this.updateObject}}
+		    />
+		    <div class="form-text text-end">Light Colour</div>
+		    </div>
+
+			<div class="my-3">
+		    <Textarea @value={{this.scss}} class="form-control" rows="6" />
+		    <div class="form-text text-end">app.scss</div>
+		    </div>
+		</div>
+
+		<div class="card-footer border-0">
+
+		</div>
+
+	</div>
+
+	<div class="form-text text-end">{{if
+	  @module.input_placeholder
+	  @module.input_placeholder
+	  (concat "Enter " @module.input_slug)
+	}}</div>
+</div>

@@ -171,6 +171,16 @@
                     )
                   }}
                 ><i class="fa-solid fa-cloud"></i> File Uploads</a></li>
+              <li><a
+                  class="dropdown-item"
+                  {{on
+                    "click"
+                    (fn
+                      this.changeType
+                      (get this.types.json.modules "platform_record")
+                    )
+                  }}
+                ><i class="fa-solid fa-layer-group"></i> Platforms</a></li>
               <li><LinkTo class="dropdown-item" @route="files"><i
                     class="fa-solid fa-magnifying-glass"
                   ></i>

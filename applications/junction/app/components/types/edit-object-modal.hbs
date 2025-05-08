@@ -152,6 +152,24 @@
                     @removeFromMultiField={{this.removeFromMultiField}}
                   />
 
+                {{else if (eq module.input_type "storylang-stack")}}
+                  <InputFields::StorylangStack
+                    @mutObjectModuleValue={{this.mutObjectModuleValue}}
+                    @type={{this.type.currentType}}
+                    @module={{module}}
+                    @id={{this.objectID}}
+                    @object={{this.objectModules}}
+                  />
+
+                {{else if (eq module.input_type "visual-guide")}}
+                  <InputFields::VisualGuide
+                    @mutObjectModuleValue={{this.mutObjectModuleValue}}
+                    @type={{this.type.currentType}}
+                    @module={{module}}
+                    @id={{this.objectID}}
+                    @object={{this.objectModules}}
+                  />
+
                 {{else}}
                   <InputFields::Text
                     @mutObjectModuleValue={{this.mutObjectModuleValue}}
