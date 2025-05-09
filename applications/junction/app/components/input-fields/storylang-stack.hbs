@@ -1,3 +1,4 @@
+{{#if this.object.currentObject}}
 <div class="mb-3">
   <div class="card px-0">
 
@@ -20,20 +21,16 @@
     >
       <div class="my-3">
         <Textarea
-          @value={{this.obj.platformDescription}}
+          @value={{this.object.currentObject.modules.storylang_stack.platformDescription}}
           placeholder="Describe your platform for AI to generate your initial codebase architecture"
           class="form-control border border-1 border-primary"
           rows="6"
           {{on "change" this.updateObject}}
         />
-        {{#if
-          this.object.currentObject.modules.storylang_stack.platformDescription
-        }}
           <button
             class="btn btn-sm btn-primary mt-2"
             {{on "click" this.getAI}}
           >Generate platform map using AI</button>
-        {{/if}}
       </div>
     </div>
 
@@ -48,3 +45,4 @@
       (concat "Enter " @module.input_slug)
     }}</div>
 </div>
+{{/if}}
