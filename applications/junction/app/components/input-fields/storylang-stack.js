@@ -51,7 +51,7 @@ export default class InputFieldsStorylangStack extends Component {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            project_description:
+            platform_description:
               this.object.currentObject.modules.storylang_stack
                 .platformDescription,
             simplified_types: this.types.simplifiedJson,
