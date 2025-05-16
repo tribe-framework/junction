@@ -8,6 +8,20 @@ import ENV from 'junction/config/environment';
 export default class TypesBlueprintObjectModalComponent extends Component {
   @service object;
 
+  unixTimestampToLocalTime = (unixTimestamp) => {
+    const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
+
+    return date.toLocaleDateString('en-UK', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    });
+  };
+
   @action
   copyJSON(object, e) {
     e.target.innerHTML = 'Copied!';

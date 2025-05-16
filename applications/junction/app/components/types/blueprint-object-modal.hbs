@@ -27,8 +27,13 @@
 
       {{#if this.object.currentObject}}
         <div
-          class="modal-footer d-flex align-items-center justify-content-end p-0"
+          class="modal-footer d-flex align-items-center justify-content-between p-0"
         >
+          <div
+            class="d-flex align-items-center justify-content-start"
+          >{{this.unixTimestampToLocalTime
+              this.object.currentObject.modules.created_on
+            }}</div>
           <div class="d-flex align-items-center justify-content-end">
             <button
               {{on

@@ -52,6 +52,7 @@ export default class TypesService extends Service {
       if (
         typeSlug === 'webapp' ||
         typeSlug === 'deleted_record' ||
+        typeSlug === 'platform_record' ||
         typeSlug === 'blueprint_record' ||
         typeSlug === 'file_record' ||
         typeSlug === 'apikey_record' ||
@@ -66,26 +67,30 @@ export default class TypesService extends Service {
 
       // Process each module in the content type
       typeData.modules.forEach((module) => {
-        const slug = module.input_slug;
-        let varType = module.var_type;
+        if (module.input_slug != 'content_privacy') {
+          const slug = module.input_slug;
+          let varType = module.var_type;
 
-        // Handle select options if they exist
-        if (
-          module.input_options &&
-          Array.isArray(module.input_options) &&
-          module.input_options.length > 0
-        ) {
-          // Extract all option slugs
-          const optionSlugs = module.input_options.map((option) => option.slug);
+          // Handle select options if they exist
+          if (
+            module.input_options &&
+            Array.isArray(module.input_options) &&
+            module.input_options.length > 0
+          ) {
+            // Extract all option slugs
+            const optionSlugs = module.input_options.map(
+              (option) => option.slug,
+            );
 
-          // Add the piped extension to the var_type
-          if (optionSlugs.length > 0) {
-            varType += ` | ${optionSlugs.join(', ')}`;
+            // Add the piped extension to the var_type
+            if (optionSlugs.length > 0) {
+              varType += ` | ${optionSlugs.join(', ')}`;
+            }
           }
-        }
 
-        // Add the module to the simplified type
-        simplifiedTypes.types[typeSlug][slug] = varType;
+          // Add the module to the simplified type
+          simplifiedTypes.types[typeSlug][slug] = varType;
+        }
       });
     }
 
