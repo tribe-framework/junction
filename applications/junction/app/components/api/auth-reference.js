@@ -26,7 +26,8 @@ export default class ApiAuthReference extends Component {
 const response = await fetch('${this.apiUrl}/api.php/webapp/0', {
   method: 'GET',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/vnd.api+json',
+    'Authorization': 'Bearer YOUR_API_KEY_HERE'
   }
 });
 const data = await response.json();
@@ -36,7 +37,8 @@ console.log(data);`;
   get curlSnippet() {
     return `curl -X GET \\
   '${this.apiUrl}/api.php/webapp/0' \\
-  -H 'Content-Type: application/json'`;
+  -H 'Content-Type: application/vnd.api+json' \\
+  -H 'Authorization: Bearer YOUR_API_KEY_HERE'`;
   }
 
   setApiUrl() {

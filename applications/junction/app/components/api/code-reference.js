@@ -33,7 +33,7 @@ const fetchJunctionData = async () => {
   const response = await fetch('${this.type.apiUrl}', {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/vnd.api+json'
     }
   });
   
@@ -44,30 +44,78 @@ const fetchJunctionData = async () => {
   return await response.json();
 };
 
-// Usage example
+// Example of creating data in your Junction API
+const createJunctionData = async (data) => {
+  const response = await fetch('${this.type.apiUrl}', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+      'Authorization': 'Bearer YOUR_API_KEY_HERE'
+    },
+    body: JSON.stringify({
+      data: {
+        type: '${this.type.slug}',
+        attributes: {
+          modules: {
+            title: data.title,
+            content_privacy: data.privacy || 'public',
+            // Add other attributes as needed
+            type: '${this.type.slug}'
+          }
+        }
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to create data');
+  }
+  
+  return await response.json();
+};
+
+// GET usage example
 try {
   const data = await fetchJunctionData();
   console.log('Junction data:', data);
 } catch (error) {
   console.error('Error fetching junction data:', error);
+}
+
+// POST usage example
+try {
+  const newData = await createJunctionData({
+    title: 'New ${this.type.title}',
+    privacy: 'public'
+  });
+  console.log('Created new data:', newData);
+} catch (error) {
+  console.error('Error creating data:', error);
 }`;
   }
 
   get curlSnippet() {
     return `
-# Basic GET request to fetch junction data
+# Basic GET request to fetch ${this.type.title} data
 curl -X GET \\
   '${this.type.apiUrl}' \\
-  -H 'Content-Type: application/json'
+  -H 'Content-Type: application/vnd.api+json'
 
-# POST request to create data
+# POST request to create ${this.type.title} with authorization
 curl -X POST \\
   '${this.type.apiUrl}' \\
-  -H 'Content-Type: application/json' \\
+  -H 'Content-Type: application/vnd.api+json' \\
+  -H 'Authorization: Bearer YOUR_API_KEY_HERE' \\
   -d '{
-    modules: {
-      "title": "Example Data",
-      "content_privacy": "public"
+    "data": {
+      "type": "${this.type.slug}",
+      "attributes": {
+        "modules": {
+          "title": "New ${this.type.title}",
+          "content_privacy": "public",
+          "type": "${this.type.slug}"
+        }
+      }
     }
   }'`;
   }
