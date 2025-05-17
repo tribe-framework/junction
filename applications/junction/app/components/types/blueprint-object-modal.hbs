@@ -30,10 +30,19 @@
           class="modal-footer d-flex align-items-center justify-content-between p-0"
         >
           <div
-            class="d-flex align-items-center justify-content-start"
-          >{{this.unixTimestampToLocalTime
-              this.object.currentObject.modules.created_on
-            }}</div>
+            class="d-flex align-items-center justify-content-start text-uppercase text-muted ps-2"
+          ><div
+              {{tooltip}}
+              data-bs-html="true"
+              data-bs-toggle="tooltip"
+              data-bs-title="Last updated<br>
+            {{this.unixTimestampToLocalTime
+                this.object.currentObject.modules.updated_on
+              }}<br><em>Created<br>
+            {{this.unixTimestampToLocalTime
+                this.object.currentObject.modules.created_on
+              }}</em>"
+            ><i class="fa-solid fa-circle-info"></i></div></div>
           <div class="d-flex align-items-center justify-content-end">
             <button
               {{on
