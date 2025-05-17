@@ -57,11 +57,23 @@ export default class TypesModulesNewComponent extends Component {
         });
         await this.types.json.save();
         this.modelBox.hide();
-        this.moduleName = '';
         this.types.fetchAgain();
         document.querySelector('#track-' + slug).click();
+        console.log('#' + slug + '-module-' + this.moduleName);
+        later(
+          this,
+          () => {
+            document
+              .querySelector('#' + slug + '-module-' + this.moduleName)
+              .click();
+            this.moduleName = '';
+          },
+          300,
+        );
       }
       this.colormodes.buttonUnloading(e);
+
+      moduleModal;
     } else {
       this.colormodes.buttonUnloading(e);
       alert('Module name field is compulsory.');

@@ -25,7 +25,11 @@
             data-type-slug={{type.slug}}
             role="group"
           ><button
-              title="Hold and drag to reorder"
+              title="{{if
+                this.activateReordering
+                'Hold and drag to reorder'
+                'Click to switch to this track'
+              }}"
               id="track-{{type.slug}}"
               {{on "click" (fn this.changeType type)}}
               type="button"

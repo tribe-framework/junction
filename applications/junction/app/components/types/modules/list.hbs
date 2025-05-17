@@ -21,10 +21,14 @@
               role="group"
             ><button
                 disabled
-                title="Hold and drag to reorder"
+                title="{{if
+                  @activateReordering
+                  'Hold and drag to reorder'
+                  'Click to edit module'
+                }}"
                 class="rounded-pill btn btn-outline-{{this.colormodes.inverseMode}}
                   px-3"
-                id="module-{{module.input_slug}}"
+                id="{{this.type.currentType.slug}}-module-{{module.input_slug}}"
                 type="button"
               >{{module.input_slug}}</button></div>
           {{else}}
@@ -35,13 +39,17 @@
               data-module-slug={{module.input_slug}}
               role="group"
             ><button
-                title="Hold and drag to reorder"
+                title="{{if
+                  @activateReordering
+                  'Hold and drag to reorder'
+                  'Click to edit module'
+                }}"
                 {{on "click" (fn this.module.changeModule module)}}
                 data-bs-target="#moduleModal"
                 data-bs-toggle="modal"
                 class="rounded-pill btn btn-outline-{{this.colormodes.inverseMode}}
                   px-3"
-                id="module-{{module.input_slug}}"
+                id="{{this.type.currentType.slug}}-module-{{module.input_slug}}"
                 type="button"
                 {{on
                   "mouseover"
