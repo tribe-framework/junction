@@ -85,7 +85,10 @@
 
           {{#if
             (and
-              (eq this.module.selectedInputType.slug "select")
+              (or
+                (eq this.module.selectedInputType.slug "select")
+                (eq this.module.selectedInputType.slug "number")
+              )
               (eq this.module.restrictToLinkedOnly true)
             )
           }}
