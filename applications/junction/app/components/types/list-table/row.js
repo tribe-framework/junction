@@ -2,12 +2,43 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import { Modal } from 'bootstrap';
 
 export default class TypesListTableRowComponent extends Component {
   @service colormodes;
+  @service object;
+  @service store;
 
   @tracked isShowing = false;
   @tracked isSelected = false;
+
+  @action
+  async showBlueprintObjectModal(tp, id) {
+    this.object.currentObject = await this.store.findRecord(tp, id);
+    this.object.currentType = tp;
+    let bp = new Modal(document.getElementById('blueprintObjectModal'), {});
+    bp.show();
+  }
+
+  isArray(value) {
+    return Array.isArray(value);
+  }
+
+  isCSV(value) {
+    if (typeof value !== 'string') return false;
+    // Check if it's a string with comma-separated values
+    return value.includes(',') && value.split(',').some(item => item.trim() !== '');
+  }
+
+  split(string, separator) {
+    if (typeof string !== 'string') return [];
+    return string.split(separator);
+  }
+
+  trim(string) {
+    if (typeof string !== 'string') return string;
+    return string.trim();
+  }
 
   inArray = (needle, haysack) => {
     const index = haysack.indexOf(needle);

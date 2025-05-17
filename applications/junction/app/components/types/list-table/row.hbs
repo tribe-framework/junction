@@ -50,10 +50,45 @@
           {{on "mouseover" this.showOptions}}
           {{on "mouseout" this.hideOptions}}
         >
-          <div class="text-ellipsis" {{on "touchend" this.toggleOptions}}>{{get
-              @object.modules
-              module.input_slug
-            }}</div>
+          <div class="text-ellipsis" {{on "touchend" this.toggleOptions}}>
+            {{#if module.linked_type}}
+              {{#if (this.isArray (get @object.modules module.input_slug))}}
+                <div class="d-flex flex-wrap gap-1">
+                  {{#each (get @object.modules module.input_slug) as |item|}}
+                    <div 
+                      class="badge bg-{{this.colormodes.inverseMode}} text-{{this.colormodes.mode}} text-ellipsis cursor-pointer" 
+                      title="Click to view the linked object"
+                      {{on 'click' (fn this.showBlueprintObjectModal module.linked_type item)}}
+                    >
+                      {{item}}
+                    </div>
+                  {{/each}}
+                </div>
+              {{else if (this.isCSV (get @object.modules module.input_slug))}}
+                <div class="d-flex flex-wrap gap-1">
+                  {{#each (this.split (get @object.modules module.input_slug) ",") as |item|}}
+                    <div 
+                      class="badge bg-{{this.colormodes.inverseMode}} text-{{this.colormodes.mode}} text-ellipsis cursor-pointer" 
+                      title="Click to view the linked object"
+                      {{on 'click' (fn this.showBlueprintObjectModal module.linked_type (this.trim item))}}
+                    >
+                      {{this.trim item}}
+                    </div>
+                  {{/each}}
+                </div>
+              {{else if (get @object.modules module.input_slug)}}
+                <div
+                  title="Click to view the linked object"
+                  class="badge bg-{{this.colormodes.inverseMode}} text-{{this.colormodes.mode}} text-ellipsis cursor-pointer" 
+                  {{on 'click' (fn this.showBlueprintObjectModal module.linked_type (get @object.modules module.input_slug))}}
+                >
+                  {{get @object.modules module.input_slug}}
+                </div>
+              {{/if}}
+            {{else}}
+              {{get @object.modules module.input_slug}}
+            {{/if}}
+          </div>
         </td>
       {{/if}}
     {{/if}}
