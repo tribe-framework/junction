@@ -13,6 +13,7 @@ export default class TypesListTableRowOptionsComponent extends Component {
   };
 
   @service object;
+  @service type;
   @service colormodes;
   @service blueprints;
 
@@ -42,5 +43,15 @@ export default class TypesListTableRowOptionsComponent extends Component {
     this.object.reloadingVars = false;
     let bp = new Modal(document.getElementById('copyObjectModal'), {});
     bp.show();
+  }
+
+  @action
+  async restoreRecord() {
+    this.object.currentObject = this.args.object;
+    this.object.currentObject.type = this.args.object.modules.deleted_type;
+    this.object.currentObject.modules.type = this.args.object.modules.deleted_type;
+    this.args.object.modules.deleted_type = "";
+    await this.object.currentObject.save();
+    this.type.search();
   }
 }
