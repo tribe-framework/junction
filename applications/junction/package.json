@@ -130,5 +130,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "razorpay": "^2.9.6"
   }
 }

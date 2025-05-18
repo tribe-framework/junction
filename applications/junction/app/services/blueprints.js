@@ -99,8 +99,8 @@ export default class BlueprintsService extends Service {
         this.types.json.modules = t;
         await this.types.json.save();
         window.location.href = '/';
-      } else if (j.modules.url !== undefined) {
-        let link = j.modules.url;
+      } else if (j.modules.link !== undefined) {
+        let link = j.modules.link;
 
         await this.types.saveCurrentTypes(this.types.json.modules);
 
@@ -210,7 +210,7 @@ export default class BlueprintsService extends Service {
       this.auth.blueprintLink != '' &&
       Object.entries(this.types.json.modules).length <= 5
     ) {
-      this.changeBlueprint(
+      await this.changeBlueprint(
         this.auth.blueprintLink,
         this.auth.implementationSummary,
       );
