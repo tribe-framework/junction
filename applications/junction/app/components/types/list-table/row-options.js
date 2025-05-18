@@ -19,7 +19,7 @@ export default class TypesListTableRowOptionsComponent extends Component {
 
   @action
   openBlueprintModal() {
-    this.object.currentObject = this.args.object;
+    this.object.activateCurrentObject(this.args.object);
     this.object.currentType = this.args.type;
     let bp = new Modal(document.getElementById('blueprintObjectModal'), {});
     bp.show();
@@ -28,7 +28,7 @@ export default class TypesListTableRowOptionsComponent extends Component {
   @action
   openEditModal() {
     this.object.reloadingVars = true;
-    this.object.currentObject = this.args.object;
+    this.object.activateCurrentObject(this.args.object);
     this.object.currentType = this.args.type;
     this.object.reloadingVars = false;
     let bp = new Modal(document.getElementById('editObjectModal'), {});
@@ -38,7 +38,7 @@ export default class TypesListTableRowOptionsComponent extends Component {
   @action
   openCopyModal() {
     this.object.reloadingVars = true;
-    this.object.currentObject = this.args.object;
+    this.object.activateCurrentObject(this.args.object);
     this.object.currentType = this.args.type;
     this.object.reloadingVars = false;
     let bp = new Modal(document.getElementById('copyObjectModal'), {});
@@ -47,10 +47,11 @@ export default class TypesListTableRowOptionsComponent extends Component {
 
   @action
   async restoreRecord() {
-    this.object.currentObject = this.args.object;
+    this.object.activateCurrentObject(this.args.object);
     this.object.currentObject.type = this.args.object.modules.deleted_type;
-    this.object.currentObject.modules.type = this.args.object.modules.deleted_type;
-    this.args.object.modules.deleted_type = "";
+    this.object.currentObject.modules.type =
+      this.args.object.modules.deleted_type;
+    this.args.object.modules.deleted_type = '';
     await this.object.currentObject.save();
     this.type.search();
   }

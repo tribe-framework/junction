@@ -36,7 +36,7 @@ export default class TypesService extends Service {
       });
       this.json = this.json;
       this.simplifiedJson = this.convertTypesToSimplified(this.json);
-      console.log(this.simplifiedJson);
+      //console.log(this.simplifiedJson);
     }
   }
 

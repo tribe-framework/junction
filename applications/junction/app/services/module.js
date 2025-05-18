@@ -13,9 +13,24 @@ export default class ModuleService extends Service {
   @tracked modelBox = null;
 
   inputLinkedTypesOnly = [
-    { title: 'Select (for slug based auto-linking)', slug: 'select', var: 'string', multi: false },
-    { title: 'Number (for ID based manual entry)', slug: 'number', var: 'int', multi: false },
-    { title: 'Text (for comma-separated IDs manual entry)', slug: 'text', var: 'string', multi: false },
+    {
+      title: 'Select (for slug based auto-linking)',
+      slug: 'select',
+      var: 'string',
+      multi: false,
+    },
+    {
+      title: 'Number (for ID based manual entry)',
+      slug: 'number',
+      var: 'int',
+      multi: false,
+    },
+    {
+      title: 'Text (for comma-separated IDs manual entry)',
+      slug: 'text',
+      var: 'string',
+      multi: false,
+    },
   ];
 
   inputTypes = [

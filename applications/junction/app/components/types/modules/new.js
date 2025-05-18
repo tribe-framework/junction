@@ -59,7 +59,7 @@ export default class TypesModulesNewComponent extends Component {
         this.modelBox.hide();
         this.types.fetchAgain();
         document.querySelector('#track-' + slug).click();
-        console.log('#' + slug + '-module-' + this.moduleName);
+
         later(
           this,
           () => {

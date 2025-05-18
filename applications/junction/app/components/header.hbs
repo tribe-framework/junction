@@ -64,19 +64,24 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto text-end d-flex align-items-stretch">
-          <HeaderNavItem @collapseMenu={{this.collapseMenu}} @navroute="index">
-            {{#if (eq this.colormodes.mode "light")}}
-              <div class="py-1"><Logo::Icon
-                  @width="100"
-                  @color="var(--bs-black)"
-                /></div>
-            {{else}}
-              <div class="py-1"><Logo::Icon
-                  @width="100"
-                  @color="var(--bs-white)"
-                /></div>
-            {{/if}}
-          </HeaderNavItem>
+          <li class="nav-item d-flex align-items-stretch">
+            <a
+              href="/"
+              class="nav-link pt-2 px-3 px-lg-4 d-flex align-items-center justify-content-start"
+            >
+              {{#if (eq this.colormodes.mode "light")}}
+                <div class="py-1"><Logo::Icon
+                    @width="100"
+                    @color="var(--bs-black)"
+                  /></div>
+              {{else}}
+                <div class="py-1"><Logo::Icon
+                    @width="100"
+                    @color="var(--bs-white)"
+                  /></div>
+              {{/if}}
+            </a>
+          </li>
         </ul>
       </div>
       <div class="d-flex align-items-center justify-content-end px-md-2">

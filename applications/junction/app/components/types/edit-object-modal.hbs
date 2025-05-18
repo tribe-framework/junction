@@ -1,6 +1,6 @@
-{{!--
+{{!
   This is the edit form modal which is able to edit
---}}
+}}
 {{#unless this.object.reloadingVars}}
   {{! Modal }}
   <div
@@ -16,7 +16,9 @@
     aria-hidden="true"
     {{this.onload}}
   >
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div
+      class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+    >
       <div class="modal-content">
         <div class="modal-header align-items-center">
           <div class="modal-title" id="editObjectModalLabel">
@@ -47,7 +49,8 @@
           {{yield}}
 
           {{#if (eq this.type.currentType.slug "deleted_record")}}
-            <h4>Are you sure you wish the permanently delete the selected record(s)?</h4>
+            <h4>Are you sure you wish the permanently delete the selected
+              record(s)?</h4>
           {{else}}
             {{#each this.type.currentType.modules as |module|}}
               {{#if

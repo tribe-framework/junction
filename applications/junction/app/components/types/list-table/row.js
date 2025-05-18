@@ -14,7 +14,8 @@ export default class TypesListTableRowComponent extends Component {
 
   @action
   async showBlueprintObjectModal(tp, id) {
-    this.object.currentObject = await this.store.findRecord(tp, id);
+    let o = await this.store.findRecord(tp, id);
+    this.object.activateCurrentObject(o);
     this.object.currentType = tp;
     let bp = new Modal(document.getElementById('blueprintObjectModal'), {});
     bp.show();
@@ -27,7 +28,9 @@ export default class TypesListTableRowComponent extends Component {
   isCSV(value) {
     if (typeof value !== 'string') return false;
     // Check if it's a string with comma-separated values
-    return value.includes(',') && value.split(',').some(item => item.trim() !== '');
+    return (
+      value.includes(',') && value.split(',').some((item) => item.trim() !== '')
+    );
   }
 
   split(string, separator) {

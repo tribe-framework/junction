@@ -1,7 +1,7 @@
 <div class="mb-3">
   {{#if @module.input_multiple}}
     {{#each (get @object @module.input_slug) as |field index|}}
-      <InputFields::Multi
+      <InputFields::Multi::Input
         @mutObjectModuleValue={{@mutObjectModuleValue}}
         @type={{@type}}
         @module={{@module}}
@@ -12,7 +12,7 @@
         @index={{index}}
       />
     {{else}}
-      <InputFields::Multi
+      <InputFields::Multi::Input
         @mutObjectModuleValue={{@mutObjectModuleValue}}
         @type={{@type}}
         @module={{@module}}

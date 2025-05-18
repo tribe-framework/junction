@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
-export default class InputFieldsMultiComponent extends Component {
+export default class InputFieldsMultiInput extends Component {
   @service object;
 
   get lengthMinusOne() {

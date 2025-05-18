@@ -2,7 +2,7 @@
   {{#if @module.input_multiple}}
     {{#each (get @object @module.input_slug) as |field index|}}
       {{#if field}}
-        <InputFields::Multi
+        <InputFields::Multi::Input
           @mutObjectModuleValue={{@mutObjectModuleValue}}
           @type={{@type}}
           @module={{@module}}
@@ -14,7 +14,7 @@
         />
       {{/if}}
     {{else}}
-      <InputFields::Multi
+      <InputFields::Multi::Input
         @mutObjectModuleValue={{@mutObjectModuleValue}}
         @type={{@type}}
         @module={{@module}}

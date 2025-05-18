@@ -267,7 +267,7 @@ export default class TypesEditObjectModalComponent extends Component {
         this.type.loadTypeObjects(this.type.currentType);
         this.objectID = 'new';
         this.cleanVarsIfNew();
-        this.object.currentObject = obj;
+        this.object.activateCurrentObject(obj);
 
         let editModal = Modal.getOrCreateInstance('#editObjectModal');
         editModal.hide();
@@ -367,7 +367,7 @@ export default class TypesEditObjectModalComponent extends Component {
         ? editor_object_in_type.input_placeholder
         : 'Type here...';
 
-    console.log('ejsTargets: ', ejsTarget);
+    //console.log('ejsTargets: ', ejsTarget);
 
     ejsInstance = new EditorJS({
       holder: ejsTarget,
@@ -468,7 +468,7 @@ export default class TypesEditObjectModalComponent extends Component {
         const editorsCount = editors.length;
 
         this.editorjsInstances[ejsTarget] = ejsInstance;
-        console.log(this.editorjsInstances);
+        //console.log(this.editorjsInstances);
 
         if (this.objectID == 'new') {
           ejsInstance.blocks.clear();
