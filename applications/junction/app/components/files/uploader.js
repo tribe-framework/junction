@@ -10,6 +10,7 @@ export default class FilesUploaderComponent extends Component {
   @service fileQueue;
   @service store;
   @service colormodes;
+  @service type;
 
   explodeFilename = (filename) => {
     var base = new String(filename).substring(filename.lastIndexOf('/') + 1);
@@ -46,7 +47,7 @@ export default class FilesUploaderComponent extends Component {
 
           if (this.args.updateOnUpload !== undefined)
             this.args.updateOnUpload(data.file);
-          else this.args.reload();
+          else this.type.changeType(this.type.currentType);
         } else if (data.status == 'error') {
           alert(data.error_message);
         }

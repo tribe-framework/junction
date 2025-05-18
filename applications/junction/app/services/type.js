@@ -417,7 +417,15 @@ export default class TypeService extends Service {
     this.clearSearchQuery();
     this.editorJSOnTypeChange();
     this.currentType = type;
-    this.loadTypeObjects();
+    this.loadingSearchResults = true;
     this.router.transitionTo('type', type);
+    later(
+      this,
+      () => {
+        this.loadTypeObjects();
+      },
+      300,
+    );
+    this.loadingSearchResults = false;
   }
 }

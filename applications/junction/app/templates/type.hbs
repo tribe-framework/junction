@@ -8,7 +8,7 @@
       <PageSummaryCard />
 
       {{#if (eq this.type.currentType.slug "file_record")}}
-        <Files::Uploader @reload={{this.changeType}} />
+        <Files::Uploader />
       {{/if}}
 
       {{#if (eq this.type.currentType.slug "apikey_record")}}
