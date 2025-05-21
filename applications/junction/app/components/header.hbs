@@ -107,7 +107,7 @@
               <i class="fa-solid fa-circle-nodes"></i>
             </div>
             <ul
-              class="dropdown-menu dropdown-menu-end overflow-y-scroll"
+              class="dropdown-menu dropdown-menu-end overflow-x-scroll overflow-y-scroll"
               style="max-height:400px"
             >
               <li><h6
@@ -130,6 +130,11 @@
                   class="dropdown-item"
                   href="#"
                 >Download current blueprint</a></li>
+              <li><a
+                  {{on "click" this.blueprints.downloadCurrentSimplifiedBlueprint}}
+                  class="dropdown-item"
+                  href="#"
+                >Download current simplified blueprint</a></li>
               <li><a
                   {{on "click" this.blueprints.clearBlueprint}}
                   class="dropdown-item"

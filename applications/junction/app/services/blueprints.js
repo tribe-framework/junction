@@ -91,6 +91,44 @@ export default class BlueprintsService extends Service {
   }
 
   @action
+  async downloadCurrentSimplifiedBlueprint(j = '') {
+    this.type.loadingSearchResults = true;
+
+    let types_json = this.types.simplifiedJson;
+
+    later(
+      this,
+      () => {
+        const jsonString = JSON.stringify(
+          Object.fromEntries(Object.entries(types_json)),
+          null,
+          2,
+        );
+
+        // Create a Blob from the JSON string
+        const blob = new Blob([jsonString], { type: 'application/json' });
+
+        // Create a link element
+        let t = Math.floor(new Date().getTime() / 1000);
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Blueprint-Simplified-' + t + '.types.json';
+
+        // Append to the document and trigger the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up and remove the link
+        document.body.removeChild(link);
+
+        this.type.loadingSearchResults = false;
+      },
+      1000,
+    );
+  }
+
+  @action
   async changeBlueprint(j, implementationSummary = '') {
     if (j.modules !== undefined) {
       if (!this.isValidURL(j) && j.modules.types_json !== undefined) {
