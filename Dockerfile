@@ -73,4 +73,6 @@ RUN service php8.3-fpm restart;
 EXPOSE 80
 EXPOSE 81
 
-CMD /etc/init.d/php8.3-fpm start && service nginx start && tail --follow /dev/null
+CMD /etc/init.d/php8.3-fpm start && \
+    service nginx start && \
+    tail --follow /var/www/logs/access.log /var/www/logs/error.log
