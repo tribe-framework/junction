@@ -12,4 +12,6 @@ npm run build
 # run php script to sync dist
 php sync-dist.php
 
+ln -sf ../.junction.env .env
+
 exit 0
