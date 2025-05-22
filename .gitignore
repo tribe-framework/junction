@@ -1,13 +1,14 @@
-/.vscode
-/.env
+.vscode/
 /uploads/*
-!/uploads/.gitkeep
-/node_modules
-/vendor
-/composer.phar
-*.code-workspace
-sftp-config.json
-.DS_Store
+node_modules/
+vendor/
+applications/junction/app/models/
 
-/applications/junction/app/models
+sftp-config.json
+composer.phar
+.DS_Store
+*.code-workspace
+!/uploads/.gitkeep
+*.env
+
 !/applications/junction/app/models/webapp.js

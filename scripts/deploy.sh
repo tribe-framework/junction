@@ -2,7 +2,8 @@
 
 cd applications/junction
 
-# remove .env file
+# create backup of .env then remove it
+[[ -f .env ]] && cp .env ../.junction.env
 rm .env
 
 # build for production
