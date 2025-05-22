@@ -2,13 +2,13 @@
 
 # Junction
 
-## After cloning the repo, run:
+**🚀 Build for publishing:**:
 
 ```bash
 ./scripts/deploy.sh
 ```
 
-## To re-build latest ember and ember-tribe packages
+**To re-build latest ember and ember-tribe packages**
 
 ```bash
 curl -s https://raw.githubusercontent.com/tribe-framework/junction/master/scripts/cleanup.sh | bash;
