@@ -8,14 +8,6 @@
 ./scripts/deploy.sh
 ```
 
-**To re-build latest ember and ember-tribe packages**
-
-```bash
-curl -s https://raw.githubusercontent.com/tribe-framework/junction/master/scripts/cleanup.sh | bash;
-```
-
-- Then fill in the .env file with Tribe credentials.
-
 ## Validate
 
 - Test and validate the changes by using instructions in "To re-build latest Junction".
