@@ -5,7 +5,7 @@
 ## After cloning the repo, run:
 
 ```bash
-./scripts/sync-hooks.sh
+./scripts/deploy.sh
 ```
 
 ## To re-build latest ember and ember-tribe packages
