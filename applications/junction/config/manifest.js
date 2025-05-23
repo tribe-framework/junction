@@ -7,7 +7,7 @@ module.exports = function (/* environment, appConfig */) {
   return {
     name: 'Junction',
     short_name: 'Junction',
-    description: 'Frame your data.',
+    description: 'Build your vision',
     start_url: '/',
     scope: '/',
     display: 'standalone',

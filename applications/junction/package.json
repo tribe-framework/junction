@@ -1,9 +1,9 @@
 {
   "name": "junction",
-  "version": "0.0.0",
+  "version": "1.2.19",
   "private": true,
-  "description": "Small description for junction goes here",
-  "repository": "",
+  "description": "Build your vision",
+  "repository": "https://github.com/tribe-framework/junction",
   "license": "MIT",
   "author": "",
   "directories": {
