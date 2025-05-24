@@ -137,8 +137,9 @@ export default class BlueprintsService extends Service {
         this.types.json.modules = t;
         await this.types.json.save();
         window.location.href = '/';
-      } else if (j.modules.link !== undefined) {
-        let link = j.modules.link;
+      } else if (j.modules.link !== undefined || j.modules.url !== undefined) {
+        let link =
+          j.modules.link === undefined ? j.modules.url : j.modules.link;
 
         await this.types.saveCurrentTypes(this.types.json.modules);
 
