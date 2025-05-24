@@ -50,6 +50,7 @@ export default class BlueprintsService extends Service {
 
       if (
         type_slug != 'deleted_record' &&
+        type_slug != 'platform_record' &&
         type_slug != 'blueprint_record' &&
         type_slug != 'file_record' &&
         type_slug != 'apikey_record'
@@ -131,22 +132,31 @@ export default class BlueprintsService extends Service {
   @action
   async changeBlueprint(j, implementationSummary = '') {
     if (j.modules !== undefined) {
+      this.type.loadingSearchResults = true;
+
       if (!this.isValidURL(j) && j.modules.types_json !== undefined) {
         let t = j.modules.types_json;
-        this.type.loadingSearchResults = true;
         this.types.json.modules = t;
         await this.types.json.save();
         window.location.href = '/';
       } else if (j.modules.link !== undefined || j.modules.url !== undefined) {
         let link =
           j.modules.link === undefined ? j.modules.url : j.modules.link;
-
         await this.types.saveCurrentTypes(this.types.json.modules);
 
-        this.type.loadingSearchResults = true;
+        // Instead of fetching the external URL directly
+        let response = await fetch(
+          'https://tribe.junction.express/custom/get-types.php',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ link: link }),
+          },
+        );
 
-        let response = await fetch(link);
         let data_json = await response.json();
+
+        console.log(data_json);
 
         var types_json = [];
         Object.entries(this.types.json.modules).forEach((v, i) => {
@@ -394,6 +404,7 @@ export default class BlueprintsService extends Service {
           type_slug != 'deleted_record' &&
           type_slug != 'file_record' &&
           type_slug != 'apikey_record' &&
+          type_slug != 'platform_record' &&
           type_slug != 'blueprint_record'
         ) {
           types_json[type_slug] = type_obj;
