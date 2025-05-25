@@ -33,6 +33,11 @@
       @placeholder={{@module.input_placeholder}}
       @options={{this.options}}
       @renderInPlace={{true}}
+      @verticalPosition={{if
+        (eq @module.input_slug "content_privacy")
+        "above"
+        "auto"
+      }}
       @dropdownClass="in-modal-dropdown"
       @onChange={{this.updateValue}}
       as |opt|
