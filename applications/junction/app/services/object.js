@@ -26,9 +26,9 @@ export default class ObjectService extends Service {
           let slug = m[1].input_slug;
 
           if (typeof this.currentObject.modules[slug] === 'object') {
-            this.currentObject.modules[slug] = Object.entries(
-              this.currentObject.modules[slug],
-            )[1];
+            this.currentObject.modules[slug] = Object.values(
+              this.currentObject.modules[slug]
+            );
           } else if (typeof this.currentObject.modules[slug] !== 'array') {
             if (this.currentObject.modules[slug]) {
               let om = this.currentObject.modules[slug];
