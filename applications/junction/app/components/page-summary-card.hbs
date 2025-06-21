@@ -81,8 +81,9 @@
               class="dropdown-menu dropdown-menu-md-end overflow-y-scroll"
               style="max-height:360px"
             >
-              <li><h6 class="dropdown-header text-capitalize">Blueprints
-                  available</h6></li>
+              <li><a class="dropdown-item fs-5 fw-light" href="#blueprintAIPromptModal" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i> Generate your custom blueprint</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header text-capitalize">Choose from available blueprints</h6></li>
               {{#each this.blueprints.junctionBlueprints as |blueprint|}}
                 <li><a
                     {{on
