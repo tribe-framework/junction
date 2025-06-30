@@ -47,7 +47,7 @@ RUN sed -i 's/post_max_size = 8M/post_max_size = 1024M/' "${PHP_INI_DIR}/php.ini
     sed -i "\|include /etc/nginx/sites-enabled/\*;|d" "/etc/nginx/nginx.conf"
 
 ## setup tribe
-RUN curl -L -o tribe.tar.gz https://github.com/tribe-framework/tribe/archive/refs/tags/v3.1.8.tar.gz && \
+RUN curl -L -o tribe.tar.gz https://github.com/tribe-framework/tribe/archive/refs/tags/v3.1.9.tar.gz && \
     tar -xzf tribe.tar.gz -C /var/www --strip-components=1 && \
     rm tribe.tar.gz && \
     composer u && \
