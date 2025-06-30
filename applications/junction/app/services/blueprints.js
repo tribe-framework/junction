@@ -114,7 +114,7 @@ export default class BlueprintsService extends Service {
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'Blueprint-Simplified-' + t + '.types.json';
+        link.download = 'Blueprint-' + t + '.simplified-types.json';
 
         // Append to the document and trigger the download
         document.body.appendChild(link);

@@ -43,6 +43,7 @@ export default class TypesService extends Service {
   convertTypesToSimplified = (typesJson) => {
     // Create the basic structure with a types object
     const simplifiedTypes = {
+      project_description: typesJson.modules.webapp.project_description ?? "",
       types: {},
     };
 
@@ -67,30 +68,28 @@ export default class TypesService extends Service {
 
       // Process each module in the content type
       typeData.modules.forEach((module) => {
-        if (module.input_slug != 'content_privacy') {
-          const slug = module.input_slug;
-          let varType = module.var_type;
+        const slug = module.input_slug;
+        let varType = (module.var_type ?? "string") + (module.linked_type ? " | *"+module.linked_type : "");
 
-          // Handle select options if they exist
-          if (
-            module.input_options &&
-            Array.isArray(module.input_options) &&
-            module.input_options.length > 0
-          ) {
-            // Extract all option slugs
-            const optionSlugs = module.input_options.map(
-              (option) => option.slug,
-            );
+        // Handle select options if they exist
+        if (
+          module.input_options &&
+          Array.isArray(module.input_options) &&
+          module.input_options.length > 0
+        ) {
+          // Extract all option slugs
+          const optionSlugs = module.input_options.map(
+            (option) => option.slug,
+          );
 
-            // Add the piped extension to the var_type
-            if (optionSlugs.length > 0) {
-              varType += ` | ${optionSlugs.join(', ')}`;
-            }
+          // Add the piped extension to the var_type
+          if (optionSlugs.length > 0) {
+            varType += ` | ${optionSlugs.join(', ')}`;
           }
-
-          // Add the module to the simplified type
-          simplifiedTypes.types[typeSlug][slug] = varType;
         }
+
+        // Add the module to the simplified type
+        simplifiedTypes.types[typeSlug][slug] = varType;
       });
     }
 
