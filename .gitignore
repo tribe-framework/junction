@@ -16,3 +16,9 @@
 
 # broccoli-debug
 /DEBUG/
+
+# others
+/.vscode
+*.code-workspace
+sftp-config.json
+.DS_Store
