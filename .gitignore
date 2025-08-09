@@ -1,14 +1,18 @@
-.vscode/
-/uploads/*
-node_modules/
-vendor/
-applications/junction/app/models/
+# compiled output
+/dist/
+/declarations/
 
-sftp-config.json
-composer.phar
-.DS_Store
-*.code-workspace
-!/uploads/.gitkeep
-*.env
+# dependencies
+/node_modules/
 
-!/applications/junction/app/models/webapp.js
+# misc
+/.env*
+/.pnp*
+/.eslintcache
+/coverage/
+/npm-debug.log*
+/testem.log
+/yarn-error.log
+
+# broccoli-debug
+/DEBUG/
