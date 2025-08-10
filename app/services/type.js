@@ -187,7 +187,7 @@ export default class TypeService extends Service {
 
   @action
   async loadTypeObjects(searchResults = false) {
-    if (this.currentType !== null) {
+    if (this.currentType?.slug) {
       var type_slug = this.currentType.slug;
       this.apiUrl = ENV.TribeENV.API_URL + '/api.php/' + type_slug;
 
@@ -319,7 +319,7 @@ export default class TypeService extends Service {
 
   @action
   async clearSearch() {
-    if (this.currentType !== null) {
+    if (this.currentType?.slug) {
       this.isAdvancedSearch = false;
       this.totalObjects = this.currentType.total_objects;
       this.loadingSearchResults = true;
@@ -382,7 +382,7 @@ export default class TypeService extends Service {
 
   @action
   updatePageLinks() {
-    if (this.currentType !== null) {
+    if (this.currentType?.slug) {
       this.currentNumberOfPages[this.currentType.slug] =
         Math.ceil(
           Number(this.totalObjects) /
@@ -408,7 +408,7 @@ export default class TypeService extends Service {
 
   @action
   changePageNumber(pageNumber = 1) {
-    if (this.currentType !== null) {
+    if (this.currentType?.slug) {
       this.currentPageNumber[this.currentType.slug] = pageNumber;
       this.currentPageNumber = this.currentPageNumber;
 
