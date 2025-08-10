@@ -126,57 +126,63 @@ export default class TypeService extends Service {
 
   @action
   initPublicForm() {
-    var type_slug = this.currentType.slug;
+    if (this.currentType?.slug) {
+      var type_slug = this.currentType.slug;
 
-    if (this.types.json.modules[type_slug].public_form === undefined)
-      this.types.json.modules[type_slug].public_form = {};
+      if (this.types.json.modules[type_slug].public_form === undefined)
+        this.types.json.modules[type_slug].public_form = {};
 
-    if (this.types.json.modules[type_slug].public_form.is_live === undefined)
-      this.isLive = false;
-    else this.isLive = this.types.json.modules[type_slug].public_form.is_live;
+      if (this.types.json.modules[type_slug].public_form.is_live === undefined)
+        this.isLive = false;
+      else this.isLive = this.types.json.modules[type_slug].public_form.is_live;
 
-    if (this.types.json.modules[type_slug].public_form.title === undefined)
-      this.title = '';
-    else this.title = this.types.json.modules[type_slug].public_form.title;
+      if (this.types.json.modules[type_slug].public_form.title === undefined)
+        this.title = '';
+      else this.title = this.types.json.modules[type_slug].public_form.title;
 
-    if (
-      this.types.json.modules[type_slug].public_form.description === undefined
-    )
-      this.description = '';
-    else
-      this.description =
-        this.types.json.modules[type_slug].public_form.description;
+      if (
+        this.types.json.modules[type_slug].public_form.description === undefined
+      )
+        this.description = '';
+      else
+        this.description =
+          this.types.json.modules[type_slug].public_form.description;
 
-    if (
-      this.types.json.modules[type_slug].public_form.button_text === undefined
-    )
-      this.buttonText = '';
-    else
-      this.buttonText =
-        this.types.json.modules[type_slug].public_form.button_text;
+      if (
+        this.types.json.modules[type_slug].public_form.button_text === undefined
+      )
+        this.buttonText = '';
+      else
+        this.buttonText =
+          this.types.json.modules[type_slug].public_form.button_text;
 
-    if (
-      this.types.json.modules[type_slug].public_form.thankyou_text === undefined
-    )
-      this.thankyouText = '';
-    else
-      this.thankyouText =
-        this.types.json.modules[type_slug].public_form.thankyou_text;
+      if (
+        this.types.json.modules[type_slug].public_form.thankyou_text ===
+        undefined
+      )
+        this.thankyouText = '';
+      else
+        this.thankyouText =
+          this.types.json.modules[type_slug].public_form.thankyou_text;
 
-    if (this.types.json.modules[type_slug].public_form.cover_url === undefined)
-      this.coverURL = '';
-    else
-      this.coverURL = this.types.json.modules[type_slug].public_form.cover_url;
+      if (
+        this.types.json.modules[type_slug].public_form.cover_url === undefined
+      )
+        this.coverURL = '';
+      else
+        this.coverURL =
+          this.types.json.modules[type_slug].public_form.cover_url;
 
-    this.csvData = null;
-    this.showCsvSave = false;
+      this.csvData = null;
+      this.showCsvSave = false;
 
-    if (this.types.json.modules[type_slug].public_form.modules === undefined)
-      this.modules = {};
-    else
-      this.modules = JSON.parse(
-        this.types.json.modules[type_slug].public_form.modules,
-      );
+      if (this.types.json.modules[type_slug].public_form.modules === undefined)
+        this.modules = {};
+      else
+        this.modules = JSON.parse(
+          this.types.json.modules[type_slug].public_form.modules,
+        );
+    }
   }
 
   @action
@@ -184,8 +190,6 @@ export default class TypeService extends Service {
     if (this.currentType !== null) {
       var type_slug = this.currentType.slug;
       this.apiUrl = ENV.TribeENV.API_URL + '/api.php/' + type_slug;
-
-      this.initPublicForm();
 
       if (this.selectedRowIDs[type_slug] === undefined)
         this.selectedRowIDs[type_slug] = [];
@@ -223,6 +227,8 @@ export default class TypeService extends Service {
         await this.clearSearch();
         this.updatePageLinks();
       }
+
+      this.initPublicForm();
     }
   }
 

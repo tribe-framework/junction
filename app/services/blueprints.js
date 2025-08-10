@@ -244,7 +244,7 @@ export default class BlueprintsService extends Service {
     });
 
     if (
-      Object.entries(this.types.json.modules).length <= 6 &&
+      Object.entries(this.types.json.modules).length <= 5 &&
       this.myBlueprints[0] !== undefined &&
       this.myBlueprints[0].id !== undefined
     ) {
@@ -252,12 +252,12 @@ export default class BlueprintsService extends Service {
       bp.show();
     } else if (
       this.auth.projectDescription != '' &&
-      Object.entries(this.types.json.modules).length <= 6
+      Object.entries(this.types.json.modules).length <= 5
     ) {
       await this.getAI();
     } else if (
       this.auth.blueprintLink != '' &&
-      Object.entries(this.types.json.modules).length <= 6
+      Object.entries(this.types.json.modules).length <= 5
     ) {
       await this.changeBlueprint(
         this.auth.blueprintLink,
