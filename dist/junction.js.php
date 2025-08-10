@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../../_init.php';
+require __DIR__ . '/_init.php';
 $config = new \Tribe\Config;
 $types = $config->getTypes();
 $models = '';
