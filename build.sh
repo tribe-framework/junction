@@ -16,13 +16,13 @@ fi
 html_content=$(cat dist/index.html)
 
 # Replace head, before title
-html_content=$(echo "$html_content" | sed 's|<title>|<?php include_once("php/_head.php");?><title>|g')
+html_content=$(echo "$html_content" | sed 's|<title>|<?php include_once("_head.php");?><title>|g')
 
 # Replace head-footer, before </head> ends
-html_content=$(echo "$html_content" | sed 's|</head>|<?php include_once("php/_head_footer.php");?></head>|g')
+html_content=$(echo "$html_content" | sed 's|</head>|<?php include_once("_head_footer.php");?></head>|g')
 
 # Replace body-footer, before </body> ends
-html_content=$(echo "$html_content" | sed 's|</body>|<?php include_once("php/_body_footer.php");?></body>|g')
+html_content=$(echo "$html_content" | sed 's|</body>|<?php include_once("_body_footer.php");?></body>|g')
 
 # Remove meta description tag using sed
 # This removes the entire <meta name="description" ...> tag
@@ -33,7 +33,7 @@ html_content=$(echo "$html_content" | sed 's|<meta[^>]*name="description"[^>]*>|
 html_content=$(echo "$html_content" | sed 's|<title>\([^<]*\)</title>|<title></title>|g')
 
 # Prepend _init.php include at the very beginning
-html_content="<?php include_once(\"php/_init.php\");?>$html_content"
+html_content="<?php include_once(\"_init.php\");?>$html_content"
 
 # Write the modified content to index.php
 echo "$html_content" > dist/index.php
