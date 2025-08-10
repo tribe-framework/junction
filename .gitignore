@@ -21,3 +21,13 @@
 *.code-workspace
 sftp-config.json
 .DS_Store
+
+/.vscode
+/.env
+/uploads/*
+!/uploads/.gitkeep
+/logs/*
+/vendor
+/composer.phar
+applications/phpmyadmin/
+applications/junction/
