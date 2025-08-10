@@ -8,3 +8,4 @@ $dotenv->load();
 
 //php vars file
 require_once __DIR__.'/config/config.php';
+echo $_ENV['JUNCTION_PASSWORD'];
