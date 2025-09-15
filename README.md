@@ -3,5 +3,5 @@
 **🚀 Build for publishing:**:
 
 ```bash
-./config/deploy.sh
+./deploy.sh
 ```
