@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-cd applications/junction
-rm .env
+mv .env .env.old
 npm run build
 
 # Check if dist/index.html exists
