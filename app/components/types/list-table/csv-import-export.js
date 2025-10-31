@@ -198,11 +198,13 @@ export default class TypesListTableCsvImportExport extends Component {
 
     let dd = new Date();
 
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(papa);
-    hiddenElement.target = '_blank';
+    // Create blob instead of data URI
+    const blob = new Blob([papa], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
 
-    //provide the name for the CSV file to be downloaded
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = url;
+    hiddenElement.target = '_blank';
     hiddenElement.download =
       this.type.currentType.slug +
       '_' +
@@ -211,6 +213,10 @@ export default class TypesListTableCsvImportExport extends Component {
       Math.floor(dd / 1000) +
       '.csv';
     hiddenElement.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+
     this.type.loadingSearchResults = false;
   }
 
