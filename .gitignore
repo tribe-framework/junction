@@ -25,6 +25,7 @@ sftp-config.json
 
 /.vscode
 /.env
+!/.env.sample
 /uploads/*
 !/uploads/.gitkeep
 /logs/*
