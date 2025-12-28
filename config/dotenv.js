@@ -11,8 +11,6 @@ module.exports = function (/* env */) {
       'JUNCTION_SLUG',
       'PLAUSIBLE_AUTH',
       'PLAUSIBLE_DOMAIN',
-      'PUSHER_API_KEY',
-      'PUSHER_CLUSTER',
       'HIDE_POSTCODE_ATTRIBUTION',
     ],
     fastbootAllowedKeys: [],

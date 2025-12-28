@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 mv .env .env.old
+rm package-lock.json
 npm run build
 
 # Check if dist/index.html exists
