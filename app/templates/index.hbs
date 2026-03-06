@@ -10,6 +10,12 @@
 
       <PageSummaryCard />
 
+      <div class="mt-4">
+        <h5 class="mb-1"><i class="fa-solid fa-rocket"></i>&nbsp;Deploy Dist Site</h5>
+        <p class="text-muted small mb-2">Upload a zip containing a <code>dist/</code> folder to publish it on port 12003. Previous builds are kept as rollback points.</p>
+        <Files::Dist />
+      </div>
+
       {{#if (and this.plausibleDomain this.plausibleAuth)}}
         <div class="col px-0 border border-1 border-primary mt-5">
           <iframe

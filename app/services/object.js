@@ -27,7 +27,7 @@ export default class ObjectService extends Service {
 
           if (typeof this.currentObject.modules[slug] === 'object') {
             this.currentObject.modules[slug] = Object.values(
-              this.currentObject.modules[slug]
+              this.currentObject.modules[slug],
             );
           } else if (typeof this.currentObject.modules[slug] !== 'array') {
             if (this.currentObject.modules[slug]) {

@@ -43,7 +43,7 @@ export default class TypesService extends Service {
   convertTypesToSimplified = (typesJson) => {
     // Create the basic structure with a types object
     const simplifiedTypes = {
-      project_description: typesJson.modules.webapp.project_description ?? "",
+      project_description: typesJson.modules.webapp.project_description ?? '',
       types: {},
     };
 
@@ -69,7 +69,9 @@ export default class TypesService extends Service {
       // Process each module in the content type
       typeData.modules.forEach((module) => {
         const slug = module.input_slug;
-        let varType = (module.var_type ?? "string") + (module.linked_type ? " | *"+module.linked_type : "");
+        let varType =
+          (module.var_type ?? 'string') +
+          (module.linked_type ? ' | *' + module.linked_type : '');
 
         // Handle select options if they exist
         if (
@@ -78,9 +80,7 @@ export default class TypesService extends Service {
           module.input_options.length > 0
         ) {
           // Extract all option slugs
-          const optionSlugs = module.input_options.map(
-            (option) => option.slug,
-          );
+          const optionSlugs = module.input_options.map((option) => option.slug);
 
           // Add the piped extension to the var_type
           if (optionSlugs.length > 0) {

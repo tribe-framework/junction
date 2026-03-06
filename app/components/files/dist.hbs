@@ -1,0 +1,104 @@
+<div class="row mt-3 row-cols-1 g-3 mx-0">
+  <div class="card px-0 mx-0 border-0">
+    <div class="card-body p-0">
+
+      {{! ── Hidden file input ── }}
+      <input
+        type="file"
+        id="dist-zip-input"
+        accept=".zip"
+        class="d-none"
+        {{on "change" this.onFileSelected}}
+      />
+
+      {{! ── Drop zone ── }}
+      {{#if this.isUploading}}
+        <div
+          class="text-center text-{{this.colormodes.inverseMode}} w-100 fs-4 p-5"
+          style="border: 2px dashed #eee;"
+        >
+          <i class="fa-solid fa-rocket fa-spin"></i>&nbsp;Deploying… ({{this.uploadProgress}}%)
+          <div class="progress mt-3" role="progressbar" aria-valuenow="{{this.uploadProgress}}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{this.uploadProgress}}%"></div>
+          </div>
+        </div>
+
+      {{else if this.deployedOk}}
+        <div
+          class="text-center w-100 fs-5 p-4"
+          style="border: 2px solid #eee;"
+        >
+          <div class="text-success mb-2">
+            <i class="fa-solid fa-circle-check"></i>&nbsp;Deployed successfully to port 12003
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm" {{on "click" this.reset}}>
+            <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Deploy another build
+          </button>
+        </div>
+
+      {{else if this.errorMessage}}
+        <div
+          class="text-center w-100 fs-5 p-4"
+          style="border: 2px dashed #dc3545;"
+        >
+          <div class="text-danger mb-2">
+            <i class="fa-solid fa-circle-xmark"></i>&nbsp;{{this.errorMessage}}
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm" {{on "click" this.reset}}>
+            <i class="fa-solid fa-rotate-left"></i>&nbsp;Try again
+          </button>
+        </div>
+
+      {{else}}
+        <div
+          class="text-center w-100 fs-4 p-5 {{if this.isDragging "text-primary" "text-muted"}}"
+          style="border: 2px dashed {{if this.isDragging "#0d6efd" "#eee"}}; cursor: pointer;"
+          role="button"
+          {{on "click" this.triggerSelectFile}}
+          {{on "dragover" this.onDragOver}}
+          {{on "dragleave" this.onDragLeave}}
+          {{on "drop" this.onDrop}}
+        >
+          {{#if this.isDragging}}
+            <i class="fa-solid fa-wand-magic-sparkles fa-spin"></i>&nbsp;Drop to deploy
+          {{else}}
+            <i class="fa-solid fa-box-archive"></i>&nbsp;Drop a&nbsp;<strong>dist.zip</strong>&nbsp;here, or click to select
+            <div class="fs-6 text-muted mt-2">The zip must contain a <code>dist/</code> folder (or its contents at the root)</div>
+          {{/if}}
+        </div>
+      {{/if}}
+
+    </div>
+  </div>
+
+  {{! ── Version history ── }}
+  {{#if (or this.versions.length this.isLoadingVersions)}}
+    <div class="card px-0 mx-0 border-0 mt-2">
+      <div class="card-header px-0 bg-transparent border-bottom d-flex align-items-center justify-content-between">
+        <span class="fs-6 fw-semibold"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Previous versions (up to 7)</span>
+        <button type="button" class="btn btn-link btn-sm p-0 text-muted" {{on "click" this.loadVersions}}>
+          <i class="fa-solid fa-arrows-rotate {{if this.isLoadingVersions "fa-spin"}}"></i>
+        </button>
+      </div>
+      <div class="card-body px-0 pt-2 pb-0">
+        {{#if this.isReverting}}
+          <div class="text-muted small py-2"><i class="fa-solid fa-spinner fa-spin"></i>&nbsp;Reverting…</div>
+        {{else}}
+          {{#each this.versions as |v|}}
+            <div class="d-flex align-items-center justify-content-between py-1 border-bottom">
+              <span class="small text-muted font-monospace">{{v.label}}</span>
+              <button
+                type="button"
+                class="btn btn-outline-warning btn-sm py-0 px-2"
+                {{on "click" (fn this.revertToVersion v.timestamp)}}
+              >
+                <i class="fa-solid fa-rotate-left"></i>&nbsp;Revert
+              </button>
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+
+</div>
