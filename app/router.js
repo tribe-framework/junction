@@ -12,4 +12,5 @@ Router.map(function () {
   this.route('files');
   this.route('public', { path: '/public/form/:slug' });
   this.route('docs');
+  this.route('dist');
 });

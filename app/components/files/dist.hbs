@@ -2,36 +2,88 @@
   <div class="card px-0 mx-0 border-0">
     <div class="card-body p-0">
 
-      {{! ── Hidden file input ── }}
+      {{! ── Hidden inputs ── }}
       <input
         type="file"
         id="dist-zip-input"
         accept=".zip"
         class="d-none"
-        {{on "change" this.onFileSelected}}
+        {{on "change" this.onZipSelected}}
       />
+      <input
+        type="file"
+        id="dist-folder-input"
+        class="d-none"
+        webkitdirectory
+        multiple
+        {{on "change" this.onFolderSelected}}
+      />
+
+      {{! ── Target selector ── }}
+      <div
+        class="btn-group w-100 mb-3"
+        role="group"
+        aria-label="Deployment target"
+      >
+        <button
+          type="button"
+          class="btn btn-sm
+            {{if (eq this.target 'dist') 'btn-primary' 'btn-outline-primary'}}"
+          {{on "click" (fn this.setTarget "dist")}}
+        >
+          <i class="fa-brands fa-html5"></i>&nbsp;dist
+          <span class="opacity-50 ms-1 small">/uploads/sites/dist</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm
+            {{if
+              (eq this.target 'dist-php')
+              'btn-primary'
+              'btn-outline-primary'
+            }}"
+          {{on "click" (fn this.setTarget "dist-php")}}
+        >
+          <i class="fa-brands fa-php"></i>&nbsp;dist-php
+          <span class="opacity-50 ms-1 small">/uploads/sites/dist-php</span>
+        </button>
+      </div>
 
       {{! ── Drop zone ── }}
       {{#if this.isUploading}}
         <div
-          class="text-center text-{{this.colormodes.inverseMode}} w-100 fs-4 p-5"
+          class="text-center text-{{this.colormodes.inverseMode}}
+            w-100 fs-4 p-5"
           style="border: 2px dashed #eee;"
         >
-          <i class="fa-solid fa-rocket fa-spin"></i>&nbsp;Deploying… ({{this.uploadProgress}}%)
-          <div class="progress mt-3" role="progressbar" aria-valuenow="{{this.uploadProgress}}" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{this.uploadProgress}}%"></div>
+          <i class="fa-solid fa-rocket fa-spin"></i>&nbsp;Deploying to
+          <strong>{{this.target}}</strong>… ({{this.uploadProgress}}%)
+          <div
+            class="progress mt-3"
+            role="progressbar"
+            aria-valuenow="{{this.uploadProgress}}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              style="width: {{this.uploadProgress}}%"
+            ></div>
           </div>
         </div>
 
       {{else if this.deployedOk}}
-        <div
-          class="text-center w-100 fs-5 p-4"
-          style="border: 2px solid #eee;"
-        >
+        <div class="text-center w-100 fs-5 p-4" style="border: 2px solid #eee;">
           <div class="text-success mb-2">
-            <i class="fa-solid fa-circle-check"></i>&nbsp;Deployed successfully to port 12003
+            <i class="fa-solid fa-circle-check"></i>&nbsp;Deployed successfully
+            to
+            <strong>{{this.target}}</strong>
           </div>
-          <button type="button" class="btn btn-outline-secondary btn-sm" {{on "click" this.reset}}>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            {{on "click" this.reset}}
+          >
             <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Deploy another build
           </button>
         </div>
@@ -44,26 +96,66 @@
           <div class="text-danger mb-2">
             <i class="fa-solid fa-circle-xmark"></i>&nbsp;{{this.errorMessage}}
           </div>
-          <button type="button" class="btn btn-outline-secondary btn-sm" {{on "click" this.reset}}>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            {{on "click" this.reset}}
+          >
             <i class="fa-solid fa-rotate-left"></i>&nbsp;Try again
           </button>
         </div>
 
       {{else}}
+        {{! ── Idle drop zone ── }}
         <div
-          class="text-center w-100 fs-4 p-5 {{if this.isDragging "text-primary" "text-muted"}}"
-          style="border: 2px dashed {{if this.isDragging "#0d6efd" "#eee"}}; cursor: pointer;"
+          class="text-center w-100 fs-5 p-5
+            {{if this.isDragging 'text-primary' 'text-muted'}}"
+          style="border: 2px dashed {{if
+            this.isDragging
+            '#0d6efd'
+            '#eee'
+          }}; cursor: pointer;"
           role="button"
-          {{on "click" this.triggerSelectFile}}
           {{on "dragover" this.onDragOver}}
           {{on "dragleave" this.onDragLeave}}
           {{on "drop" this.onDrop}}
         >
           {{#if this.isDragging}}
-            <i class="fa-solid fa-wand-magic-sparkles fa-spin"></i>&nbsp;Drop to deploy
+            <div class="fs-4">
+              <i class="fa-solid fa-wand-magic-sparkles fa-spin"></i>&nbsp;Drop
+              to deploy to
+              <strong>{{this.target}}</strong>
+            </div>
           {{else}}
-            <i class="fa-solid fa-box-archive"></i>&nbsp;Drop a&nbsp;<strong>dist.zip</strong>&nbsp;here, or click to select
-            <div class="fs-6 text-muted mt-2">The zip must contain a <code>dist/</code> folder (or its contents at the root)</div>
+            <div class="fs-4 mb-3">
+              <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Drop a folder or
+              <code>.zip</code>
+              here
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-center gap-2 flex-wrap"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm"
+                {{on "click" this.triggerSelectZip}}
+              >
+                <i class="fa-solid fa-file-zipper"></i>&nbsp;Select zip file
+              </button>
+              <span class="text-muted small">or</span>
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm"
+                {{on "click" this.triggerSelectFolder}}
+              >
+                <i class="fa-solid fa-folder-open"></i>&nbsp;Select folder
+              </button>
+            </div>
+            <div class="fs-6 text-muted mt-3">
+              Deploying to
+              <strong class="text-body">{{this.target}}</strong>
+              — the current live folder is backed up automatically
+            </div>
           {{/if}}
         </div>
       {{/if}}
@@ -74,18 +166,37 @@
   {{! ── Version history ── }}
   {{#if (or this.versions.length this.isLoadingVersions)}}
     <div class="card px-0 mx-0 border-0 mt-2">
-      <div class="card-header px-0 bg-transparent border-bottom d-flex align-items-center justify-content-between">
-        <span class="fs-6 fw-semibold"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Previous versions (up to 7)</span>
-        <button type="button" class="btn btn-link btn-sm p-0 text-muted" {{on "click" this.loadVersions}}>
-          <i class="fa-solid fa-arrows-rotate {{if this.isLoadingVersions "fa-spin"}}"></i>
+      <div
+        class="card-header px-0 bg-transparent border-bottom d-flex align-items-center justify-content-between"
+      >
+        <span class="fs-6 fw-semibold">
+          <i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Previous versions
+          of
+          <strong>{{this.target}}</strong>
+          (up to 7)
+        </span>
+        <button
+          type="button"
+          class="btn btn-link btn-sm p-0 text-muted"
+          {{on "click" this.loadVersions}}
+        >
+          {{#if this.isLoadingVersions}}
+            <i class="fa-solid fa-arrows-rotate fa-spin"></i>
+          {{else}}
+            <i class="fa-solid fa-arrows-rotate"></i>
+          {{/if}}
         </button>
       </div>
       <div class="card-body px-0 pt-2 pb-0">
         {{#if this.isReverting}}
-          <div class="text-muted small py-2"><i class="fa-solid fa-spinner fa-spin"></i>&nbsp;Reverting…</div>
+          <div class="text-muted small py-2"><i
+              class="fa-solid fa-spinner fa-spin"
+            ></i>&nbsp;Reverting…</div>
         {{else}}
           {{#each this.versions as |v|}}
-            <div class="d-flex align-items-center justify-content-between py-1 border-bottom">
+            <div
+              class="d-flex align-items-center justify-content-between py-1 border-bottom"
+            >
               <span class="small text-muted font-monospace">{{v.label}}</span>
               <button
                 type="button"

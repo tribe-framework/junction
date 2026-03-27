@@ -95,21 +95,4 @@ export default class TypesService extends Service {
 
     return simplifiedTypes;
   };
-
-  @action
-  async saveCurrentTypes(t) {
-    let d = new Date().toLocaleString();
-    let obj = this.store.createRecord('blueprint_record', {
-      modules: {
-        title: t.webapp.name + ' (last used on ' + d + ')',
-        is_types: true,
-        types_json: t,
-        content_privacy: 'private',
-      },
-    });
-    await obj.save();
-
-    obj.modules.deleted_slug = obj.slug;
-    await obj.save();
-  }
 }

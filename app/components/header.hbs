@@ -131,7 +131,10 @@
                   href="#"
                 >Download current blueprint</a></li>
               <li><a
-                  {{on "click" this.blueprints.downloadCurrentSimplifiedBlueprint}}
+                  {{on
+                    "click"
+                    this.blueprints.downloadCurrentSimplifiedBlueprint
+                  }}
                   class="dropdown-item"
                   href="#"
                 >Download current simplified blueprint</a></li>
@@ -187,16 +190,10 @@
                     )
                   }}
                 ><i class="fa-solid fa-cloud"></i> File Uploads</a></li>
-              <li class="d-none"><a
-                  class="dropdown-item"
-                  {{on
-                    "click"
-                    (fn
-                      this.changeType
-                      (get this.types.json.modules "platform_record")
-                    )
-                  }}
-                ><i class="fa-solid fa-layer-group"></i> Platforms</a></li>
+              <li><LinkTo class="dropdown-item" @route="dist"><i
+                    class="fa-solid fa-layer-group"
+                  ></i>
+                  Dist Uploads</LinkTo></li>
               <li><LinkTo class="dropdown-item" @route="files"><i
                     class="fa-solid fa-magnifying-glass"
                   ></i>
