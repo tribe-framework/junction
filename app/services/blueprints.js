@@ -142,7 +142,6 @@ export default class BlueprintsService extends Service {
       } else if (j.modules.link !== undefined || j.modules.url !== undefined) {
         let link =
           j.modules.link === undefined ? j.modules.url : j.modules.link;
-        await this.types.saveCurrentTypes(this.types.json.modules);
 
         // Instead of fetching the external URL directly
         let response = await fetch(
@@ -213,8 +212,6 @@ export default class BlueprintsService extends Service {
 
     if (userResponse) {
       this.type.loadingSearchResults = true;
-
-      await this.types.saveCurrentTypes(this.types.json.modules);
 
       var types_json = [];
       Object.entries(this.types.json.modules).forEach((v, i) => {
@@ -305,7 +302,6 @@ export default class BlueprintsService extends Service {
     if (this.projectDescription != '') {
       this.loadingProgress = 5;
       this.totalTime = 5;
-      await this.types.saveCurrentTypes(this.types.json.modules);
 
       this.intervalId = setInterval(this.progressLoading, 5000);
 
