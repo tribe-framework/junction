@@ -43,7 +43,7 @@ export default class TypesService extends Service {
   convertTypesToSimplified = (typesJson) => {
     // Create the basic structure with a types object
     const simplifiedTypes = {
-      project_description: typesJson.modules.webapp.project_description ?? '',
+      project_description: typesJson.modules.webapp?.project_description ?? '',
       types: {},
     };
 
