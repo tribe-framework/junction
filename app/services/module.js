@@ -93,7 +93,10 @@ export default class ModuleService extends Service {
     this.linkedTypesAvailable.push('Select linked track');
 
     Object.entries(this.types.json.modules).forEach((tp) => {
-      if (tp[1].slug != 'webapp' && tp[1].slug.includes('_record') === false) {
+      if (
+        tp[1].slug != 'webapp' &&
+        tp[1]?.slug?.includes('_record') === false
+      ) {
         this.linkedTypesAvailable.push(tp[1].slug);
       }
     });

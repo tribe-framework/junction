@@ -3,5 +3,5 @@
 **🚀 Build for publishing:**:
 
 ```bash
-./build.sh
+bash build.sh
 ```
