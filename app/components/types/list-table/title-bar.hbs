@@ -64,6 +64,13 @@
         data-bs-target="#csvImportExportModal"
         class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
       ><i class="fa-solid fa-file-csv"></i> Data Exchange</button>
+
+      <button
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#findDuplicatesModal"
+        class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+      ><i class="fa-solid fa-copy"></i> Find Duplicates</button>
     {{/if}}
 
     {{#if
