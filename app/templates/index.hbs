@@ -10,11 +10,11 @@
 
       <PageSummaryCard />
 
-      {{#if (and this.plausibleDomain this.plausibleAuth)}}
+      {{#if this.plausibleEmbedUrl}}
         <div class="col px-0 border border-1 border-primary mt-5">
           <iframe
             plausible-embed
-            src="https://plausible.io/share/{{this.plausibleDomain}}?auth={{this.plausibleAuth}}&embed=true&theme={{this.colormodes.mode}}"
+            src={{this.plausibleEmbedUrl}}
             scrolling="yes"
             frameborder="0"
             loading="lazy"

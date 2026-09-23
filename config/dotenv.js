@@ -9,9 +9,8 @@ module.exports = function (/* env */) {
     clientAllowedKeys: [
       'JUNCTION_PASSWORD',
       'JUNCTION_SLUG',
-      'PLAUSIBLE_AUTH',
-      'PLAUSIBLE_DOMAIN',
-      'HIDE_POSTCODE_ATTRIBUTION',
+      'PLAUSIBLE_EMBED_URL',
+      'HIDE_TRIBE_ATTRIBUTION',
     ],
     fastbootAllowedKeys: [],
     failOnMissingKey: false,

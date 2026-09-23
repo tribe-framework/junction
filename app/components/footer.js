@@ -8,8 +8,8 @@ export default class FooterComponent extends Component {
   @tracked yearNow = new Date().getFullYear();
 
   get hidePostcodeAttribution() {
-    if (ENV.HIDE_POSTCODE_ATTRIBUTION !== undefined)
-      return ENV.HIDE_POSTCODE_ATTRIBUTION;
+    if (ENV.HIDE_TRIBE_ATTRIBUTION !== undefined)
+      return ENV.HIDE_TRIBE_ATTRIBUTION;
     else return false;
   }
 }

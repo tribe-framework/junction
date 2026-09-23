@@ -10,7 +10,7 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
 
-    <meta name="junction/config/environment" content="%7B%22modulePrefix%22%3A%22junction%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22junction%22%2C%22version%22%3A%222.0.6%2B44d766df%22%7D%2C%22TribeENV%22%3A%7B%7D%7D" />
+    <meta name="junction/config/environment" content="%7B%22modulePrefix%22%3A%22junction%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22junction%22%2C%22version%22%3A%222.0.7%2B6069171e%22%7D%2C%22TribeENV%22%3A%7B%7D%7D" />
 <meta name="theme-color" content="#41B3FF">
 <link rel="apple-touch-icon-precomposed" href="/favicon.png" sizes="512x512">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,11 +30,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/fontawesome.min.css"
     />
-    <script
-      defer
-      data-domain="junction.express"
-      src="https://plausible.io/js/script.js"
-    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.2/tinymce.min.js"></script>
 
       <link rel="shortcut icon" href="/favicon.ico">
@@ -101,10 +96,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
     <script src="https://unpkg.com/@root/passphrase"></script>
-    <script src="/assets/vendor.js" integrity="sha256-QzvEShU1vfoASJEd5C6PqsExPXrqi0bj34SEKqQ7oXs= sha512-3XgSjZcMjqkUXF7acyGuy2Pvlup6BlHUz9dkqw7kcFuEDy0MJjWuUo5QcBUvnKsPXrLV3CGTxAb5KCeAmQptsQ==" ></script>
-<script src="/assets/chunk.643.ee459dbd3f2c419eafe4.js" integrity="sha256-0SG65vydp28PPyQSo51lFAlA7phet3jp2OxaH/0wV8U= sha512-JuOy06qnQSLWdRy4ULBYVfbneA5SawW1wyUjSyk67h0r+KMg4DVOCiaoKvWFrNQX5qMEJNimcL6nIzOHn6N8Fw==" ></script>
-<script src="/assets/chunk.524.363ca302bf8f3e5954e3.js" integrity="sha256-RlZpIXLw1icx8lfDfbhgkBvygDOdlwR0ddtid5Vmm54= sha512-a2qim/3f7e7OzzmQlM7n965nn3EBRSnp5fU0x5v4f+Q7BfIhQVgQyxX2LZK8k/MupR/zWYPJgsqJj1DDs/L1AQ==" ></script>
-    <script src="/assets/junction.js" integrity="sha256-TwaDHIgKZncSfoddaW/qsMxJlbE1YJ9/+Z8ztRccEaU= sha512-/h6rWH8aJKwsdGvC0Cy8RiYgCiw8T1y/np3T6Q6nZ6020tujsI630mpIlm47TKoP1D+H1zs/Gh2HyQ/oWT+HIA==" ></script>
+    <script src="/assets/vendor.js" integrity="sha256-DDfSo8i5pgsMtXosd6p+/MvUJnsq/B5nSpGFoWdG+Y8= sha512-8tfxhUpnC7YRd9Q2xNpcV+3R7dwDXvwOPDga6e/Sve5AsozoYZmCZP6DdjsRP8uOYWbnAzOXd/gUxdGJ4y6fuw==" ></script>
+<script src="/assets/chunk.659.ea7d6a1c51865e3d6f2a.js" integrity="sha256-rt/OPRGgUS2rjOrNq7GhIQg8i9DQl211JrytMq1Jm+w= sha512-tFaE38Reni0nuLas3oBaB/47D4DHAdelSwDIUAUxdqyAwQm+VVmGMnFxLd8GJjvtEJ6A7YoVNbH/kKxP2NUg8g==" ></script>
+<script src="/assets/chunk.276.b8630543813ccf8a7092.js" integrity="sha256-BC+GxE/IO9f40h2vvAq14XBLexUHQTuTJyfI+O8Fns4= sha512-+6WQuBqdkRGzAK0Jibum8VDRpHACpPTgOtGotFIqNx670M8nLXD4I3lHhtqvkYeXuRc9RyI3bLQ13YnxVczShw==" ></script>
+<script src="/assets/chunk.524.7dfe7ae3977554edc24e.js" integrity="sha256-tzTv5nGBIxq3dX8jTr8cVbYHi6EoFVpqqMNqWqeG4iw= sha512-cYDEq8jgyBv1B7TmQVcV5krM4MYl2KyX7aYYDsrsI4KVGJFRH4SIdL4fcHqK7mcclTaoSnvxUURliRwRvXr8vw==" ></script>
+    <script src="/assets/junction.js" integrity="sha256-7LdKD2cnMTpTLWHFa+7Io/E0BydGAbo/cdvvKb+Ot5M= sha512-llKYoD8uR0+pm0VNOGQKii456SYze97KZ4eEAxyKxR9171kyhPzWVptwu6/e/geyFEyKdQ2UAoxviBn35IdKJw==" ></script>
     <script>
       document.addEventListener("focusin", (e) => {
         if (
