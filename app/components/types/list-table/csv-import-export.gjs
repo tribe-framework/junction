@@ -1,0 +1,332 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { later } from '@ember/runloop';
+import Papa from 'papaparse';
+import { on } from '@ember/modifier';
+import CsvUploader from '../../files/csv-uploader.gjs';
+import htmlSafe from 'ember-cli-string-helpers/helpers/html-safe';
+import { concat } from '@ember/helper';
+
+export default class TypesListTableCsvImportExport extends Component {
+  @service colormodes;
+  @service object;
+  @service type;
+  @service types;
+  @service store;
+  @service gzip;
+
+  @tracked records = [];
+  @tracked saving = false;
+  @tracked csvRecordLength;
+  @tracked csvSaveSuccessCount = 0;
+
+  @action
+  async handleProcessedCsvData(csvInfo) {
+    this.type.loadingSearchResults = true;
+
+    const { data, headers, rowCount, errors } = csvInfo;
+
+    this.type.showCsvSave = true;
+
+    var donotomit = [];
+
+    if (headers.includes('id')) {
+      donotomit.push('id');
+      donotomit.push('slug');
+    }
+
+    this.type.currentType.modules.forEach((m, i) => {
+      if (
+        m.input_multiple != true &&
+        m.input_type != 'file_uploader' &&
+        m.input_type != 'editorjs' &&
+        m.var_type != 'json' &&
+        m.var_type != 'array' &&
+        m.input_slug != 'updated_on' &&
+        m.input_slug != 'created_on' &&
+        m.input_slug != 'type'
+      ) {
+        donotomit.push(m.input_slug);
+      }
+    });
+
+    data.forEach((row) => {
+      // Filter out keys not in donotomit
+      const keysToRemove = Object.keys(row).filter(
+        (key) => !donotomit.includes(key),
+      );
+
+      // Remove those keys
+      keysToRemove.forEach((key) => delete row[key]);
+    });
+
+    // Process the CSV data
+    data.forEach(async (row) => {
+      if (row.id !== undefined) {
+        this.store
+          .findRecord(this.type.currentType.slug, row.id)
+          .then(async (o) => {
+            o.modules = row;
+            this.records.push(o);
+          });
+      } else {
+        const o = this.store.createRecord(this.type.currentType.slug, {
+          modules: row,
+        });
+        this.records.push(o);
+      }
+    });
+
+    this.type.loadingSearchResults = false;
+  }
+
+  @action
+  saveAllRecords() {
+    this.type.loadingSearchResults = true;
+    this.saving = true;
+    this.csvSaveSuccessCount = 0;
+    this.csvRecordLength = this.records.length;
+
+    let promises = [];
+    for (let record of this.records) {
+      let promise = record.save().then(() => {
+        setTimeout(() => {
+          this.csvSaveSuccessCount += 1;
+        }, 100);
+      });
+
+      promises.push(promise);
+    }
+
+    Promise.all(promises).then(() => {
+      this.saving = false;
+      this.type.loadTypeObjects();
+
+      later(() => {
+        document.querySelector('#csvImportExportModal .btn-close').click();
+      }, 300);
+    });
+
+    this.type.showCsvSave = false;
+    this.type.loadingSearchResults = false;
+  }
+
+  @action
+  papaUnparseFormat(e) {
+    e.preventDefault();
+    this.type.loadingSearchResults = true;
+
+    var mmm = [];
+    mmm.push('id');
+    this.type.currentType.modules.forEach((m) => {
+      if (
+        m.var_type === undefined ||
+        (m.var_type != 'json' && m.var_type != 'array')
+      ) {
+        mmm.push(m.input_slug);
+      }
+    });
+
+    var vvv = [];
+    vvv.push(mmm);
+
+    let papa = Papa.unparse(vvv);
+
+    let dd = new Date();
+
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(papa);
+    hiddenElement.target = '_blank';
+
+    //provide the name for the CSV file to be downloaded
+    hiddenElement.download =
+      'format_' +
+      this.type.currentType.slug +
+      '_' +
+      dd.toISOString().split('T')[0] +
+      '_' +
+      Math.floor(dd / 1000) +
+      '.csv';
+    hiddenElement.click();
+    this.type.loadingSearchResults = false;
+  }
+
+  @action
+  async papaUnparse() {
+    this.type.loadingSearchResults = true;
+    let data = await this.store.query(this.type.currentType.slug, {
+      sort: '-id',
+      show_public_objects_only: false,
+      page: { limit: -1, offset: 0 },
+    });
+
+    var mmm = [];
+    mmm.push('id');
+    mmm.push('type');
+    mmm.push('slug');
+    mmm.push('created_on');
+    mmm.push('updated_on');
+    this.type.currentType.modules.forEach((m) => {
+      mmm.push(m.input_slug);
+    });
+
+    var vvv = [];
+    vvv.push(mmm);
+
+    var nnn = [];
+    var jjj = [];
+    data.forEach((obj) => {
+      nnn = [];
+      mmm.forEach((m) => {
+        if (obj.modules[m] !== undefined) {
+          if (typeof obj.modules[m] == 'object') {
+            if (obj.modules[m].blocks !== undefined) {
+              var jjj = [];
+              obj.modules[m].blocks.forEach((o) => {
+                jjj.push(o.data.text.replace(/<\/?[^>]+(>|$)/g, ''));
+              });
+              nnn.push(jjj.join('\n'));
+            } else {
+              nnn.push(JSON.stringify(obj.modules[m]));
+            }
+          } else if (typeof obj.modules[m] == 'array') {
+            nnn.push(JSON.stringify(obj.modules[m]));
+          } else nnn.push(obj.modules[m]);
+        } else nnn.push('');
+      });
+      vvv.push(nnn);
+    });
+    let papa = Papa.unparse(vvv);
+
+    let dd = new Date();
+
+    // Create blob instead of data URI
+    const blob = new Blob([papa], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = url;
+    hiddenElement.target = '_blank';
+    hiddenElement.download =
+      this.type.currentType.slug +
+      '_' +
+      dd.toISOString().split('T')[0] +
+      '_' +
+      Math.floor(dd / 1000) +
+      '.csv';
+    hiddenElement.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+
+    this.type.loadingSearchResults = false;
+  }
+
+  get percentage() {
+    return ((this.csvSaveSuccessCount / this.csvRecordLength) * 100).toFixed(1);
+  }
+  <template>
+    {{! Modal }}
+    <div
+      class="modal fade"
+      id="csvImportExportModal"
+      tabindex="-1"
+      aria-labelledby="csvImportExportModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title fst-italic fs-5"
+              id="csvImportExportModalLabel"
+            >Import / Export Data
+              <span
+                class="text-capitalize"
+              >{{this.type.currentType.plural}}</span></h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div>To import, first
+              <a
+                href="#/"
+                {{on "click" this.papaUnparseFormat}}
+                class="text-decoration-underline cursor-pointer"
+              >download the CSV Format</a>, fill it and then upload. If you use
+              the id column, any matching IDs with same column name will be
+              replaced.
+            </div>
+            <div class="my-3">
+              <CsvUploader
+                @placeholder="Upload CSV data for import"
+                @onCsvProcessed={{this.handleProcessedCsvData}}
+              />
+            </div>
+          </div>
+
+          <div
+            class="modal-footer d-flex align-items-center justify-content-between p-0"
+          >
+            <div class="d-flex align-items-center justify-content-start">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm me-2"
+                data-bs-dismiss="modal"
+              >Close</button>
+            </div>
+
+            {{#if this.saving}}
+              <div class="flex-grow-1">
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Animated striped example"
+                  aria-valuenow={{this.csvSaveSuccessCount}}
+                  aria-valuemin="0"
+                  aria-valuemax={{this.csvRecordLength}}
+                >
+                  <div
+                    class="progress-bar progress-bar-striped progress-bar-animated"
+                    style={{htmlSafe (concat "width: " this.percentage "%")}}
+                  >
+                    {{this.percentage}}%
+                  </div>
+                </div>
+              </div>
+            {{else}}
+              {{#if this.type.showCsvSave}}
+                <div class="d-flex align-items-center justify-content-end">
+                  <button
+                    {{on "click" this.saveAllRecords}}
+                    type="button"
+                    class="btn btn-primary btn-lg ms-2"
+                  ><i class="fa-solid fa-circle-check"></i>
+                    Yes, save these records
+                  </button>
+                </div>
+              {{else}}
+                <div class="d-flex align-items-center justify-content-end">
+                  <button
+                    {{on "click" this.papaUnparse}}
+                    type="button"
+                    class="btn btn-outline-primary ms-2"
+                  ><i class="fa-solid fa-download"></i>
+                    Export Complete Dataset
+                  </button>
+                </div>
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+}

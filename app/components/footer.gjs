@@ -1,0 +1,73 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import ENV from 'junction/config/environment';
+import { service } from '@ember/service';
+import Flame from './logo/flame.gjs';
+
+export default class FooterComponent extends Component {
+  @service colormodes;
+  @tracked yearNow = new Date().getFullYear();
+
+  get hidePostcodeAttribution() {
+    if (ENV.HIDE_TRIBE_ATTRIBUTION !== undefined)
+      return ENV.HIDE_TRIBE_ATTRIBUTION;
+    else return false;
+  }
+  <template>
+    <footer
+      class="mt-auto text-{{if @index 'light' this.colormodes.inverseMode}}
+        bg-{{if @index 'black' this.colormodes.mode}}
+        border-0 pt-6 mt-5 pb-5 mb-0"
+    >
+
+      <div class="container">
+        {{#unless this.hidePostcodeAttribution}}
+          <div class="row">
+            <div class="col-md small my-2">
+              <div
+                class="d-flex align-items-center justify-content-lg-start justify-content-center"
+              >
+                <div class="d-flex align-items-center justify-content-start">
+                  <span class="me-2">Built with</span><i
+                    class="fa-solid fa-heart text-danger fs-5"
+                  ></i><span class="mx-2">by</span>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-start mt-n1"
+                >
+                  <a
+                    href="https://tribe-framework.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ><Flame
+                      @width="25"
+                      @color="var(--bs-{{if
+                        @index
+                        'light'
+                        this.colormodes.inverseMode
+                      }})"
+                    /></a>
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center my-3 justify-content-lg-start justify-content-center"
+              ><span style="transform: scaleX(-1);">&copy;</span>&nbsp;2019 -
+                {{this.yearNow}}&nbsp;&nbsp;
+                <a
+                  href="https://github.com/tribe-framework"
+                  class="text-decoration-none text-{{if
+                      @index
+                      'light'
+                      this.colormodes.inverseMode
+                    }}"
+                ><i class="fa-brands fa-github fs-5"></i></a></div>
+            </div>
+
+            <div class="col-md small my-2">
+            </div>
+          </div>
+        {{/unless}}
+      </div>
+    </footer>
+  </template>
+}

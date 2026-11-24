@@ -3,7 +3,6 @@ import ENV from 'junction/config/environment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import fetch from 'fetch';
 
 export default class AuthService extends Service {
   @service router;

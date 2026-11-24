@@ -1,6 +1,14 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+
 module.exports = function (environment) {
+  const envFile = path.join(__dirname, '..', '.env');
+  if (fs.existsSync(envFile)) {
+    process.loadEnvFile(envFile);
+  }
+
   const ENV = {
     modulePrefix: 'junction',
     environment,
@@ -18,6 +26,11 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    JUNCTION_PASSWORD: process.env.JUNCTION_PASSWORD,
+    JUNCTION_SLUG: process.env.JUNCTION_SLUG,
+    PLAUSIBLE_EMBED_URL: process.env.PLAUSIBLE_EMBED_URL,
+    HIDE_TRIBE_ATTRIBUTION: process.env.HIDE_TRIBE_ATTRIBUTION,
   };
 
   if (environment === 'development') {

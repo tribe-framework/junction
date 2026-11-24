@@ -20,12 +20,12 @@
 /.vscode
 *.code-workspace
 sftp-config.json
-/.DS_Store
-.DS_Store
+*.DS_Store
 
 /.vscode
 /.env
 !/.env.sample
+!/.env.development
 /uploads/*
 !/uploads/.gitkeep
 /logs/*

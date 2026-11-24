@@ -1,0 +1,220 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { Modal } from 'bootstrap';
+import { action } from '@ember/object';
+import not from 'ember-truth-helpers/helpers/not';
+import or from 'ember-truth-helpers/helpers/or';
+import eq from 'ember-truth-helpers/helpers/eq';
+import and from 'ember-truth-helpers/helpers/and';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import PageLengthSelector from './page-length-selector.gjs';
+import SearchBox from './search-box.gjs';
+import { get } from '@ember/helper';
+import { on } from '@ember/modifier';
+
+export default class TypesListTableTitleBarComponent extends Component {
+  @service colormodes;
+  @service object;
+  @service type;
+  @service types;
+  @service store;
+
+  @action
+  openMultiModal() {
+    this.object.reloadingVars = true;
+    this.object.currentObject = null;
+    this.object.reloadingVars = false;
+    let bp = new Modal(
+      document.getElementById(
+        'editObjectModal-' + this.type.currentType.slug + '-multi',
+      ),
+      {},
+    );
+    bp.show();
+  }
+
+  @action
+  openNewModal() {
+    this.object.reloadingVars = true;
+    this.object.currentObject = null;
+    this.object.reloadingVars = false;
+    let bp = new Modal(document.getElementById('editObjectModal'), {});
+    bp.show();
+  }
+  <template>
+    {{#if
+      (not (or (eq @type.slug "deleted_record") (eq @type.slug "file_record")))
+    }}
+      <div
+        id="trackOptionButtons"
+        class="position-absolute top-0 start-0 d-none"
+      >
+        <button
+          id="removeTrackButton"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModel"
+          class="btn btn-outline-danger btn-sm m-1"
+        ><i class="fa-solid fa-triangle-exclamation"></i> Remove Track</button>
+        <button
+          id="editTrackButton"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#editModel"
+          class="btn btn-outline-{{this.colormodes.inverseMode}} btn-sm m-1"
+        ><i class="fa-solid fa-edit"></i> Edit Track</button>
+      </div>
+    {{/if}}
+
+    <div class="container-xxl">
+
+      <h1
+        class="text-capitalize text-center mt-5 px-0 display-2 mb-4
+          {{if (eq @type.slug 'deleted_record') 'text-danger'}}"
+      >
+        {{@type.plural}}
+      </h1>
+
+      <div class="col-lg-9 mx-auto px-0 mb-4 text-center">
+
+        {{#if
+          (and
+            (notEq this.type.currentType.slug "deleted_record")
+            (notEq this.type.currentType.slug "apikey_record")
+            (notEq this.type.currentType.slug "platform_record")
+          )
+        }}
+          {{#if
+            (and
+              this.types.json.modules.webapp.implementation_summary
+              this.types.json.modules.webapp.project_description
+            )
+          }}
+            <button
+              class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#sampleDataPromptModal"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i>
+              Sample Data</button>
+          {{/if}}
+
+          <button
+            class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#publicFormModal"
+          ><i class="fa-solid fa-list-check"></i> Public Form</button>
+
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#csvImportExportModal"
+            class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+          ><i class="fa-solid fa-file-csv"></i> Data Exchange</button>
+
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#findDuplicatesModal"
+            class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+          ><i class="fa-solid fa-copy"></i> Find Duplicates</button>
+        {{/if}}
+
+        {{#if
+          (and
+            (notEq this.type.currentType.slug "deleted_record")
+            (notEq this.type.currentType.slug "file_record")
+            (notEq this.type.currentType.slug "apikey_record")
+            (notEq this.type.currentType.slug "platform_record")
+          )
+        }}
+          <button
+            data-bs-target="#trackAPIModal"
+            data-bs-toggle="modal"
+            class="btn rounded-pill m-1 btn-outline-{{this.colormodes.inverseMode}}"
+            type="button"
+          ><i class="fa-solid fa-code"></i> Track API</button>
+        {{/if}}
+      </div>
+
+      <div class="row col-lg-9 mx-auto px-0 mb-4">
+        <div
+          class="order-3 order-lg-1 col-lg-3 px-0 col-12 my-1 d-flex justify-content-end"
+        >
+          <PageLengthSelector
+            @updatePageLength={{@updatePageLength}}
+            @currentPageLength={{@currentPageLength}}
+            @type={{@type}}
+          />
+        </div>
+
+        <div
+          class="order-2 order-lg-2 col-lg-5 px-0 col-12 my-1 d-flex justify-content-end"
+        >
+          <SearchBox
+            @type={{@type}}
+            @search={{@search}}
+            @clearSearch={{@clearSearch}}
+            @advancedSearch={{@advancedSearch}}
+            @showClearSearchButton={{@showClearSearchButton}}
+            @searchQuery={{@searchQuery}}
+            @advancedSearchQuery={{@advancedSearchQuery}}
+            @clearSearchQuery={{@clearSearchQuery}}
+            @changePageNumber={{@changePageNumber}}
+          />
+        </div>
+
+        {{#unless @type.readonly}}
+          <div
+            class="order-1 order-lg-3 col-lg-4 px-0 col-12 my-1 d-flex justify-content-end"
+          >
+            {{#if
+              (and
+                (get @selectedRowIDs @type.slug) (notEq @type.editable false)
+              )
+            }}
+              <button
+                {{on "click" this.openMultiModal}}
+                type="button"
+                class="btn btn-info fw-normal w-100 border border-1 border-{{this.colormodes.inverseMode}}
+                  border-start-0"
+              ><i class="fa-solid fa-layer-group"></i>&nbsp;Multi-edit</button>
+            {{/if}}
+
+            <button
+              {{on "click" this.openNewModal}}
+              type="button"
+              class="btn text-capitalize btn-primary fw-normal w-100 border border-1 border-{{this.colormodes.inverseMode}}
+                border-start-sm-1 border-start-md-0"
+            ><i class="fa-solid fa-plus"></i>&nbsp;New {{@type.name}}</button>
+          </div>
+        {{/unless}}
+
+        {{#if (eq @type.slug "deleted_record")}}
+          <div
+            class="order-1 order-lg-3 col-lg-4 px-0 col-12 my-1 d-flex justify-content-end"
+          >
+            {{#if (get @selectedRowIDs @type.slug)}}
+              <button
+                {{on "click" this.openMultiModal}}
+                type="button"
+                class="btn btn-danger fw-normal w-100 border border-1 border-{{this.colormodes.inverseMode}}
+                  border-start-0"
+              ><i class="fa-solid fa-trash-alt"></i>&nbsp;Delete permanently</button>
+            {{else}}
+              <button
+                type="button"
+                class="btn btn-outline-{{this.colormodes.inverseMode}}
+                  fw-normal w-100 border border-1 border-{{this.colormodes.inverseMode}}
+                  border-start-0"
+              ><i class="fa-solid fa-trash-alt"></i>&nbsp;Select to delete
+                permanently</button>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </template>
+}

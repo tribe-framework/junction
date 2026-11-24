@@ -3,19 +3,19 @@ import ENV from 'junction/config/environment';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import Model, { attr } from '@ember-data/model';
-import { getOwner } from '@ember/application';
+import Model, { attr } from '@warp-drive/legacy/model';
+import { getOwner } from '@ember/owner';
 
 export default class TypesService extends Service {
   @service store;
-  @tracked json = this.store.peekRecord('webapp', 0, {
+  @tracked json = this.store.peekRecord('webapp', '0', {
     include: ['total_objects'],
   });
 
   @action
   async fetchAgain() {
     if (ENV.TribeENV.API_URL !== undefined && ENV.TribeENV.API_URL != '') {
-      this.json = await this.store.findRecord('webapp', 0, {});
+      this.json = await this.store.findRecord('webapp', '0', {});
       let owner = getOwner(this);
 
       Object.entries(this.json.modules).forEach(([modelName, modelData]) => {
@@ -31,7 +31,7 @@ export default class TypesService extends Service {
         }
       });
 
-      this.json = await this.store.findRecord('webapp', 0, {
+      this.json = await this.store.findRecord('webapp', '0', {
         include: ['total_objects'],
       });
       this.json = this.json;

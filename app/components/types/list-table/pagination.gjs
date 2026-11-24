@@ -1,0 +1,132 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { get, fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import lte from 'ember-truth-helpers/helpers/lte';
+import gt from 'ember-truth-helpers/helpers/gt';
+import dec from '@nullvoxpopuli/ember-composable-helpers/helpers/dec';
+import or from 'ember-truth-helpers/helpers/or';
+import eq from 'ember-truth-helpers/helpers/eq';
+import lt from 'ember-truth-helpers/helpers/lt';
+import add from 'ember-math-helpers/helpers/add';
+import gte from 'ember-truth-helpers/helpers/gte';
+import inc from '@nullvoxpopuli/ember-composable-helpers/helpers/inc';
+
+export default class TypesListTablePagination extends Component {
+  @service type;
+
+  getCount = (i) => {
+    return i.length;
+  };
+  <template>
+    <div class="fw-bold fst-italic w-100 text-center mb-2">
+      {{#if (get @selectedRowIDs @type.slug)}}
+        <span
+          class="text-decoration-underline cursor-pointer"
+          {{on "click" this.type.selectNoneSearchedIDs}}
+        >Select none</span>
+        |
+        <span
+          class="text-decoration-underline cursor-pointer"
+          {{on "click" this.type.selectAllSearchedIDs}}
+        >Select all</span>
+        | Selected:
+        {{this.getCount (get @selectedRowIDs @type.slug)}}
+        of
+      {{/if}}
+      Total
+      {{@type.plural}}:
+      {{@totalObjects}}</div>
+    <nav class="px-0">
+      <ul
+        class="pagination px-0 border border-1 border-{{this.colormodes.inverseMode}}
+          justify-content-center"
+        style="overflow-x:scroll"
+      >
+        <li
+          class="page-item
+            {{if (lte (get @currentPageNumber @type.slug) 1) 'disabled'}}"
+        >
+          {{#if (gt (get @currentPageNumber @type.slug) 1)}}
+            <div
+              class="page-link border-1 border-top-0 border-bottom-0 border-{{this.colormodes.inverseMode}}
+                {{if
+                  (lte (get @currentPageNumber @type.slug) 1)
+                  'text-{{this.colormodes.mode}}'
+                  'text-{{this.colormodes.inverseMode}}'
+                }}"
+              {{on
+                "click"
+                (fn @changePageNumber (dec (get @currentPageNumber @type.slug)))
+              }}
+            ><i class="fa-solid fa-chevron-left"></i></div>
+          {{else}}
+            <div
+              class="page-link border-1 border-top-0 border-bottom-0 border-{{this.colormodes.inverseMode}}
+                {{if
+                  (lte (get @currentPageNumber @type.slug) 1)
+                  'text-{{this.colormodes.mode}}'
+                  'text-{{this.colormodes.inverseMode}}'
+                }}"
+            ><i class="fa-solid fa-chevron-left"></i></div>
+          {{/if}}
+        </li>
+
+        {{#each @pageLinks as |pageNumber|}}
+          {{#if
+            (or
+              (eq pageNumber (get @currentPageNumber @type.slug))
+              (eq pageNumber 1)
+              (eq pageNumber 2)
+              (lt pageNumber (add 3 (get @currentPageNumber @type.slug)))
+            )
+          }}
+            <li class="page-item">
+              <div
+                class="page-link border-1 border-top-0 border-bottom-0 border-{{this.colormodes.inverseMode}}
+                  {{if
+                    (eq (get @currentPageNumber @type.slug) pageNumber)
+                    'text-{{this.colormodes.mode}} bg-{{this.colormodes.inverseMode}}'
+                    'text-{{this.colormodes.inverseMode}}'
+                  }}"
+                {{on "click" (fn @changePageNumber pageNumber)}}
+              >{{pageNumber}}</div>
+            </li>
+          {{/if}}
+        {{/each}}
+
+        <li
+          class="page-item
+            {{if
+              (gte (get @currentPageNumber @type.slug) @numberOfPages)
+              'disabled'
+            }}"
+        >
+          {{#if (gte (get @currentPageNumber @type.slug) @numberOfPages)}}
+            <div
+              class="page-link border-1 border-top-0 border-bottom-0 border-{{this.colormodes.inverseMode}}
+                {{if
+                  (gte (get @currentPageNumber @type.slug) @numberOfPages)
+                  'text-{{this.colormodes.mode}}'
+                  'text-{{this.colormodes.inverseMode}}'
+                }}"
+            ><i class="fa-solid fa-chevron-right"></i></div>
+          {{else}}
+            <div
+              class="page-link border-1 border-top-0 border-bottom-0 border-{{this.colormodes.inverseMode}}
+                {{if
+                  (gte (get @currentPageNumber @type.slug) @numberOfPages)
+                  'text-{{this.colormodes.mode}}'
+                  'text-{{this.colormodes.inverseMode}}'
+                }}"
+              {{on
+                "click"
+                (fn @changePageNumber (inc (get @currentPageNumber @type.slug)))
+              }}
+            ><i class="fa-solid fa-chevron-right"></i></div>
+          {{/if}}
+        </li>
+      </ul>
+    </nav>
+  </template>
+}
