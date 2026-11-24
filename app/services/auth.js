@@ -124,10 +124,16 @@ export default class AuthService extends Service {
     if (response?.ok) {
       this.isLoggedIn = true;
       window.location.assign(this.urlAfterLogin());
+    } else if (response?.status === 401) {
+      alert('Incorrect password.');
     } else if (response?.status === 429) {
       alert('Too many failed attempts. Try again later.');
     } else {
-      alert('Incorrect password.');
+      const body = await response?.json().catch(() => null);
+      alert(
+        body?.error ??
+          `Login failed. Tribe responded with ${response?.status ?? 'no response'}.`,
+      );
     }
   }
 
