@@ -17,8 +17,6 @@ export default class ApplicationRoute extends Route {
   @tracked currentSlugName = window.location.pathname.split('/')[2];
 
   async beforeModel() {
-    await this.auth.getJunctionPassword();
-    await this.types.fetchAgain();
     this.auth.goToRouteAfterLogin = this.currentRouteName
       ? this.currentRouteName == 'track'
         ? 'type'
@@ -26,21 +24,18 @@ export default class ApplicationRoute extends Route {
       : 'index';
     this.auth.goToSlugAfterLogin = this.currentSlugName;
 
-    if (
+    const needsLogin =
       this.auth.goToRouteAfterLogin != 'auth' &&
-      this.auth.goToRouteAfterLogin != 'public'
-    ) {
-      this.auth.checkIfLoggedIn().then(async (checkIfLoggedIn) => {
-        if (
-          this.auth.goToRouteAfterLogin != 'auth' &&
-          this.auth.goToRouteAfterLogin != 'public' &&
-          !checkIfLoggedIn
-        ) {
-          this.router.transitionTo('auth');
-        } else {
-          await this.blueprints.getBlueprints();
-        }
-      });
+      this.auth.goToRouteAfterLogin != 'public';
+
+    const isLoggedIn = needsLogin ? await this.auth.checkIfLoggedIn() : false;
+
+    await this.types.fetchAgain();
+
+    if (needsLogin && !isLoggedIn) {
+      this.router.transitionTo('auth');
+    } else if (isLoggedIn) {
+      await this.blueprints.getBlueprints();
     }
   }
 

@@ -20,7 +20,8 @@
 /.vscode
 *.code-workspace
 sftp-config.json
-*.DS_Store
+.DS_Store
+*/.DS_Store
 
 /.vscode
 /.env

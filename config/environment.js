@@ -27,7 +27,6 @@ module.exports = function (environment) {
       // when it is created
     },
 
-    JUNCTION_PASSWORD: process.env.JUNCTION_PASSWORD,
     JUNCTION_SLUG: process.env.JUNCTION_SLUG,
     PLAUSIBLE_EMBED_URL: process.env.PLAUSIBLE_EMBED_URL,
     HIDE_TRIBE_ATTRIBUTION: process.env.HIDE_TRIBE_ATTRIBUTION,

@@ -6,147 +6,146 @@ import { service } from '@ember/service';
 
 export default class AuthService extends Service {
   @service router;
-  @service cookies;
   @service type;
-  @service types;
-  @service blueprints;
 
-  @tracked inputPassword;
+  @tracked inputPassword = '';
   @tracked isLoggedIn = false;
-  @tracked junctionPassword = '';
   @tracked goToRouteAfterLogin = 'index';
   @tracked goToSlugAfterLogin = '';
   @tracked projectDescription = '';
   @tracked implementationSummary = '';
   @tracked blueprintLink = '';
 
-  checkIfLoggedIn = async () => {
-    this.type.loadingSearchResults = true;
-    let cookiePassword = this.cookies.getCookie(ENV.JUNCTION_SLUG);
+  constructor() {
+    super(...arguments);
+    this.installTribeSession();
+  }
 
-    if (
-      cookiePassword !== '' &&
-      this.junctionPassword !== '' &&
-      cookiePassword == this.junctionPassword
-    ) {
-      this.type.loadingSearchResults = false;
-      return true;
-    } else if (
-      cookiePassword !== null &&
-      ENV.JUNCTION_SLUG &&
-      this.junctionPassword == ''
-    ) {
-      this.inputPassword = cookiePassword;
-      await this.submitPassword();
-      this.type.loadingSearchResults = false;
-      return true;
-    } else {
-      this.type.loadingSearchResults = false;
+  tribeUrl(path) {
+    return (ENV.TribeENV?.API_URL ?? '').replace(/\/+$/, '') + path;
+  }
+
+  isTribeUrl(url) {
+    const apiUrl = ENV.TribeENV?.API_URL ?? '';
+    if (!apiUrl || !url) return false;
+    try {
+      const base = new URL(apiUrl, window.location.href);
+      const target = new URL(String(url), window.location.href);
+      const basePath = base.pathname.replace(/\/+$/, '') + '/';
+      return (
+        target.origin === base.origin &&
+        (target.pathname + '/').startsWith(basePath)
+      );
+    } catch {
       return false;
     }
+  }
+
+  installTribeSession() {
+    if (window.__tribeSessionInstalled) return;
+    window.__tribeSessionInstalled = true;
+
+    const isTribeUrl = (url) => this.isTribeUrl(url);
+
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = (input, init = {}) => {
+      const url =
+        typeof input === 'string' || input instanceof URL ? input : input?.url;
+      if (isTribeUrl(url)) {
+        return nativeFetch(input, { ...init, credentials: 'include' });
+      }
+      return nativeFetch(input, init);
+    };
+
+    const nativeOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+      this.__tribeRequest = isTribeUrl(url);
+      return nativeOpen.call(this, method, url, ...rest);
+    };
+
+    const nativeSend = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function (body) {
+      if (this.__tribeRequest) this.withCredentials = true;
+      return nativeSend.call(this, body);
+    };
+  }
+
+  checkIfLoggedIn = async () => {
+    this.type.loadingSearchResults = true;
+    try {
+      const response = await fetch(this.tribeUrl('/auth.php?action=status'), {
+        headers: { Accept: 'application/json' },
+      });
+      const body = response.ok ? await response.json() : null;
+      this.isLoggedIn = body?.authenticated === true;
+    } catch {
+      this.isLoggedIn = false;
+    }
+    this.type.loadingSearchResults = false;
+    return this.isLoggedIn;
   };
+
+  urlAfterLogin() {
+    if (
+      !this.goToRouteAfterLogin ||
+      this.goToRouteAfterLogin == 'index' ||
+      this.goToRouteAfterLogin == 'auth'
+    ) {
+      return this.router.urlFor('index');
+    }
+    if (this.goToSlugAfterLogin) {
+      return this.router.urlFor(
+        this.goToRouteAfterLogin,
+        this.goToSlugAfterLogin,
+      );
+    }
+    return this.router.urlFor(this.goToRouteAfterLogin);
+  }
 
   @action
   async submitPassword() {
     this.type.loadingSearchResults = true;
-    if (
-      ENV.JUNCTION_SLUG == 'junction' &&
-      this.inputPassword !== '' &&
-      this.junctionPassword !== '' &&
-      this.inputPassword == this.junctionPassword
-    ) {
-      this.cookies.setCookie(ENV.JUNCTION_SLUG, this.inputPassword);
-      this.type.loadingSearchResults = false;
-      this.justGoToRouteAfterLogin();
-    } else if (ENV.JUNCTION_SLUG !== undefined && ENV.JUNCTION_SLUG != '') {
-      await fetch('https://tribe.junction.express/custom/auth/access.php', {
-        method: 'post',
+    let response;
+    try {
+      response = await fetch(this.tribeUrl('/auth.php?action=login'), {
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          slug: ENV.JUNCTION_SLUG,
-          password: this.inputPassword,
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then(async (response) => {
-          if (response !== undefined && response.authenticated === true) {
-            this.types.json.modules.webapp.name = response.title;
-            await this.types.json.save();
-            this.cookies.setCookie(ENV.JUNCTION_SLUG, this.inputPassword);
-            this.type.loadingSearchResults = false;
-            this.justGoToRouteAfterLogin();
-          } else {
-            this.type.loadingSearchResults = false;
-            alert('Incorrect password.');
-          }
-        });
+        body: JSON.stringify({ password: this.inputPassword ?? '' }),
+      });
+    } catch {
+      response = null;
+    }
+    this.inputPassword = '';
+    this.type.loadingSearchResults = false;
+
+    if (response?.ok) {
+      this.isLoggedIn = true;
+      window.location.assign(this.urlAfterLogin());
+    } else if (response?.status === 429) {
+      alert('Too many failed attempts. Try again later.');
+    } else {
+      alert('Incorrect password.');
     }
   }
 
   @action
   async justGoToRouteAfterLogin() {
-    if (
-      this.goToRouteAfterLogin == 'index' ||
-      this.goToRouteAfterLogin == 'auth'
-    )
-      this.router.transitionTo('index');
-    else {
-      this.type.currentType = this.types.json.modules[this.goToSlugAfterLogin];
-      this.router.transitionTo(
-        this.goToRouteAfterLogin,
-        this.goToSlugAfterLogin,
-      );
-    }
+    window.location.assign(this.urlAfterLogin());
   }
 
   @action
   async logout() {
-    await this.cookies.eraseCookie('junctionexpress_user_email');
-    await this.cookies.eraseCookie('junctionexpress_user_id');
-    await this.cookies.eraseCookie(ENV.JUNCTION_SLUG);
-    window.location.href = 'https://junction.express';
-  }
-
-  @action
-  async getJunctionPassword() {
-    if (ENV.JUNCTION_SLUG == undefined || ENV.JUNCTION_SLUG == '') {
-      alert('Please define JUNCTION_SLUG in .ENV file');
-    } else if (ENV.JUNCTION_SLUG == 'junction') {
-      this.junctionPassword = ENV.JUNCTION_PASSWORD;
-    } else if (
-      this.cookies.getCookie('junctionexpress_user_id') !== undefined
-    ) {
-      let user_id = this.cookies.getCookie('junctionexpress_user_id');
-      await fetch('https://tribe.junction.express/custom/auth/access.php', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          slug: ENV.JUNCTION_SLUG,
-          user_id: user_id,
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then(async (response) => {
-          if (response !== undefined && response.authenticated === true) {
-            this.cookies.setCookie(ENV.JUNCTION_SLUG, response.password);
-            this.type.loadingSearchResults = false;
-            this.justGoToRouteAfterLogin();
-          }
-        });
+    try {
+      await fetch(this.tribeUrl('/auth.php?action=logout'), {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+      });
+    } finally {
+      this.isLoggedIn = false;
+      window.location.assign(this.router.urlFor('auth'));
     }
   }
 }
