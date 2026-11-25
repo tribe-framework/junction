@@ -282,7 +282,7 @@ export default class VersionUpgradesModalComponent extends Component {
                         this.junction.installed
                         "unknown"
                       }}</span></div>
-                  <div>Latest release:
+                  <div>Latest build:
                     {{#if this.junction.latest}}
                       <a
                         class="font-monospace"
