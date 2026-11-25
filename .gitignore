@@ -3,6 +3,7 @@
 
 # dependencies
 /node_modules/
+/dist/
 
 # misc
 /.env*
@@ -15,7 +16,6 @@
 
 # broccoli-debug
 /DEBUG/
-
 # others
 /.vscode
 *.code-workspace
