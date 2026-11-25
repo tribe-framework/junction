@@ -276,25 +276,18 @@ export default class HeaderComponent extends Component {
                         )
                       }}
                     ><i class="fa-solid fa-plug"></i> Junction API</a></li>
+                  <li><hr class="dropdown-divider" /></li>
                   <li><a
                       class="dropdown-item"
                       data-bs-toggle="modal"
                       data-bs-target="#typesWebapp"
                     ><i class="fa-solid fa-gear"></i> Settings</a></li>
-                  <li><hr class="dropdown-divider" /></li>
                   <li><a
-                      target="new"
                       class="dropdown-item"
-                      href="https://junction.express/junctions"
-                    ><i class="fa-solid fa-table-cells-large"></i>
-                      My Junctions</a></li>
-                  <li><a
-                      target="new"
-                      class="dropdown-item"
-                      href="https://junction.express/?showHome=true"
-                    ><i class="fa-solid fa-arrow-up-right-from-square"></i>
-                      Visit homepage</a></li>
-                  <li><hr class="dropdown-divider" /></li>
+                      data-bs-toggle="modal"
+                      data-bs-target="#versionUpgradesModal"
+                    ><i class="fa-solid fa-circle-up"></i>
+                      Version upgrades</a></li>
                   <li><a
                       {{on "click" this.auth.logout}}
                       class="dropdown-item"

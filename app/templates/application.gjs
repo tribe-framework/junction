@@ -14,6 +14,7 @@ import TrackApiModal from '../components/types/track-api-modal.gjs';
 import New from '../components/types/modules/new.gjs';
 import Modal0 from '../components/types/public/modal.gjs';
 import FindDuplicates from '../components/types/list-table/find-duplicates.gjs';
+import VersionUpgradesModal from '../components/version-upgrades/modal.gjs';
 <template>
   {{pageTitle "Junction"}}
 
@@ -35,4 +36,5 @@ import FindDuplicates from '../components/types/list-table/find-duplicates.gjs';
   <New />
   <Modal0 />
   <FindDuplicates />
+  <VersionUpgradesModal />
 </template>

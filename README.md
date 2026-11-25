@@ -12,11 +12,11 @@ Junction does not use an API key. It logs in with the live server's `JUNCTION_PA
 
 1. Copy `.env.sample` to `.env` and set these values:
 
-   | Variable            | Value                                                                                      |
-   | ------------------- | ------------------------------------------------------------------------------------------ |
-   | `TRIBE_API_URL`     | The address of the local dev server, as printed by Vite. Default: `http://localhost:5173`. |
-   | `TRIBE_LIVE_URL`    | The address of the live Tribe, for example `https://tribe.domain.tld`.                     |
-   | `JUNCTION_LIVE_URL` | The live server's `JUNCTION_URL`, exactly as set in its `.env`.                            |
+   | Variable | Value |
+   | --- | --- |
+   | `TRIBE_API_URL` | The address of the local dev server, fixed to `http://localhost:4200` in `vite.config.mjs`. |
+   | `TRIBE_LIVE_URL` | The address of the live Tribe, for example `https://tribe.domain.tld`. |
+   | `JUNCTION_LIVE_URL` | The live server's `JUNCTION_URL`, exactly as set in its `.env`. |
 
 2. Start the dev server:
 
