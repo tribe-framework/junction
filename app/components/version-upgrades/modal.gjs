@@ -394,8 +394,7 @@ export default class VersionUpgradesModalComponent extends Component {
           </div>
 
           <div class="modal-footer p-1 small text-muted justify-content-start">
-            Uploads and the database are never changed. Only the version before
-            the last update is kept, and a revert removes it.
+            Version upgrades only affect the software code. Your uploaded files and content remain intact.
           </div>
         </div>
       </div>
